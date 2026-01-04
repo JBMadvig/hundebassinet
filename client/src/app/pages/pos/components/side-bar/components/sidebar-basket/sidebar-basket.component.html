@@ -1,0 +1,9 @@
+<article class="h-full overflow-y-auto bg-gray-50">
+  <ul class="px-1 py-2 flex flex-col gap-y-1">
+    @for (item of basketItems(); track item.id) {
+      <li class="custom-css-content-line-left rounded-md overflow-hidden p-2 border border-gray-600 ">
+        <app-basket-item [item]="item" />
+      </li>
+    }
+  </ul>
+</article>
