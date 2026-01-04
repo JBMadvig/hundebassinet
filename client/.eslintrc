@@ -5,7 +5,9 @@
   ],
   "settings": {
     "import/resolver": {
-      "typescript": {}
+      "typescript": {
+        "project": "./tsconfig.json"
+      }
     }
   },
   "parser": "@typescript-eslint/parser",
@@ -26,6 +28,9 @@
       "files": [
         "*.ts"
       ],
+      "parserOptions": {
+        "project": ["**/tsconfig.json"]
+      },
       "extends": [
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
