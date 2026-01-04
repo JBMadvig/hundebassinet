@@ -1,0 +1,31 @@
+<div class="flex flex-row items-stretch w-full">
+  <button
+    class="flex items-center justify-center rounded-tl-md rounded-bl-md bg-gray-500 px-1 text-gray-100"
+    [ngClass]="{
+      'opacity-20 cursor-default pointer-events-none': currentCount() < 2,
+    }"
+    (click)="onCountDown()"
+    [disabled]="currentCount() < 2"
+  >
+    <svg fill="currentColor" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg">
+      <!--Boxicons v3.0.6 https://boxicons.com | License  https://docs.boxicons.com/free-->
+      <path d="M3 11h18v2H3z"></path>
+    </svg>
+  </button>
+  <span class="text-md flex w-full items-center justify-center bg-gray-300 px-4 font-semibold text-gray-950">
+    {{ currentCount() }}
+  </span>
+  <button
+    class="flex items-center justify-center rounded-tr-md rounded-br-md bg-gray-500 px-1 text-gray-100"
+    [ngClass]="{
+      'opacity-20 cursor-default pointer-events-none': currentCount() === limit() && limit() !== null,
+    }"
+    (click)="onCountUp()"
+    [disabled]="currentCount() === limit() && limit() !== null"
+  >
+    <svg fill="currentColor" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg">
+      <!--Boxicons v3.0.6 https://boxicons.com | License  https://docs.boxicons.com/free-->
+      <path d="M3 13h8v8h2v-8h8v-2h-8V3h-2v8H3z"></path>
+    </svg>
+  </button>
+</div>
