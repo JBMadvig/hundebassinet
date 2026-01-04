@@ -1,0 +1,19 @@
+<article class="grid grid-cols-[auto_1fr_auto] grid-rows-1 items-center gap-1.5 px-2 py-2">
+  <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-green-700">
+    <p class="text-xl text-white">{{ userNameInitalComputedValue() }}</p>
+  </div>
+  <div>
+    <p>{{ userDetail.name }}</p>
+    <div class="flex flex-row items-center gap-x-1">
+      <p class="flex flex-row gap-1 text-xs italic">
+        <span>ID:</span>
+        <span>{{ userDetail.id }}</span>
+      </p>
+      <app-badge [badgeText]="userDetail.role" [badgeType]="'role'" />
+    </div>
+  </div>
+  <div>
+    <p class="text-xs text-right">Balance:</p>
+    <p class="text-lg font-semibold text-amber-600">{{ userDetail.balance }} DKK</p>
+  </div>
+</article>
