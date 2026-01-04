@@ -1,0 +1,5 @@
+<section class="w-full border-t border-gray-500 px-4 py-2 overflow-x-auto flex flex-row gap-4">
+  @for (category of currentStockFilter(); track category) {
+    <app-filter-bar-button [item]="category"></app-filter-bar-button>
+  }
+</section>
