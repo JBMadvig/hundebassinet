@@ -2,12 +2,13 @@
 
 @source './**/*.{html,ts,css}';
 
-/* @theme { */
+@theme {
   /* --font-*: initial; */
   /* --font-sans: Arial, Verdana, sans-serif; */
 
-  /* --color-primary: #f18f01; */
-/* } */
+  --color-primary: #f18f01;
+  --color-warning: #fb2c36;
+}
 
 /*
   The default border color has changed to `currentColor` in Tailwind CSS v4,
