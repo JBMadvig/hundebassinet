@@ -20,6 +20,15 @@ export const routes: CustomRoute[] = [
         },
     },
     {
+        path: 'pos',
+        pathMatch: 'full',
+        loadComponent: () => import('./pages/pos/pos.component')
+            .then(m => m.PosComponent),
+        data: {
+            id: 'pos',
+        },
+    },
+    {
         path: '**',
         redirectTo: 'landing',
     },
