@@ -1,0 +1,37 @@
+<button (click)="basketService.addItemToBasket(item())"
+    class="grid w-full cursor-pointer grid-cols-1 grid-rows-[auto_1fr] overflow-y-hidden rounded-xl border border-gray-700"
+  >
+    <app-item-type-header [itemTypeId]="item().primaryItemCategory" />
+    <div class="grid grid-cols-1 grid-rows-[1fr_auto] gap-1 px-4 py-2">
+      <div class="relative">
+        <p class="inline-flex h-30 w-full items-center justify-center bg-blue-400"></p>
+        <div class="absolute top-2 left-2 flex flex-row flex-wrap gap-1">
+          @if (item().primaryItemCategory) {
+            <app-badge [badgeText]="item().primaryItemCategory" [badgeType]="'primaryItemCategory'" />
+          }
+          @if (item().secondaryItemCategory) {
+            <app-badge [badgeText]="item().secondaryItemCategory" [badgeType]="'secondaryItemCategory'" />
+          }
+        </div>
+        <!-- TODO: Add image of item in database that can be fetched
+        <img class="mx-auto h-10 w-10" alt="Item image" [src]="item().imageUrl" /> -->
+      </div>
+      <div>
+        <h3 class="text-xl font-semibold text-left">{{ item().name }}</h3>
+        <div class="grid grid-flow-row grid-cols-1 text-sm text-gray-400">
+          <p class="flex flex-row gap-x-1 font-semibold text-gray-500">
+            <span>{{ item().averagePrice }},-</span>
+            <span>DKK</span>
+          </p>
+          <p class="flex flex-row gap-x-1">
+            <span>{{ item().currentStock }}</span>
+            <span>in stock</span>
+          </p>
+          <p class="flex flex-row gap-x-1">
+            <span class="font-semibold">Updated:</span>
+            <span>{{ item().lastUpated | date: 'short' }}</span>
+          </p>
+        </div>
+      </div>
+    </div>
+</button>
