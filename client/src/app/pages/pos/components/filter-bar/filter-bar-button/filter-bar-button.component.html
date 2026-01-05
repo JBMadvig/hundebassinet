@@ -1,6 +1,9 @@
 <button
-  class="rounded-md px-4 py-4 font-semibold text-white cursor-pointer"
-  [ngClass]="categoryBackground()"
+  class="rounded-md px-4 py-4 font-semibold text-gray-900 cursor-pointer"
+  [ngClass]="[categoryBackground(),
+    currentFilter() === itemCategory() ? 'border-2 border-black' : 'border border-transparent'
+  ]"
+  (click)="onClick()"
 >
-  <p>{{ item().toLocaleUpperCase() }}</p>
+  <p>{{ itemCategory().toLocaleUpperCase() }}</p>
 </button>

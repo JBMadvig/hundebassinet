@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, input } from '@angular/core';
+import { Component, computed, input, output } from '@angular/core';
 
-import { Item } from '../../../../../shared/types/items.types';
+import { PrimaryItemCategoriesType } from '../../../../../shared/types/items.types';
 
 @Component({
     selector: 'app-filter-bar-button',
@@ -13,24 +13,51 @@ import { Item } from '../../../../../shared/types/items.types';
 })
 export class FilterBarButtonComponent {
 
-    public item = input.required<Item['primaryItemCategory']>();
+    public itemCategory = input.required<PrimaryItemCategoriesType | 'all'>();
+    public currentFilter = input.required<PrimaryItemCategoriesType | 'all'>();
+
+    public filterChange = output<PrimaryItemCategoriesType | 'all'>();
 
     public categoryBackground = computed(() => {
-        switch (this.item()) {
+        switch (this.itemCategory()) {
             case 'beer':
-                return 'bg-amber-500';
+                if(this.currentFilter() === 'beer') {
+                    return 'bg-amber-500';
+                }
+                return 'bg-amber-200';
             case 'cider':
-                return 'bg-green-500';
+                if(this.currentFilter() === 'cider') {
+                    return 'bg-green-500';
+                }
+                return 'bg-green-200';
             case 'wine':
-                return 'bg-purple-500';
+                if(this.currentFilter() === 'wine') {
+                    return 'bg-purple-500';
+                }
+                return 'bg-purple-200';
             case 'spirit':
-                return 'bg-red-500';
+                if(this.currentFilter() === 'spirit') {
+                    return 'bg-red-500';
+                }
+                return 'bg-red-200';
             case 'soda':
-                return 'bg-blue-500';
+                if(this.currentFilter() === 'soda') {
+                    return 'bg-blue-500';
+                }
+                return 'bg-blue-200';
             case 'other':
-                return 'bg-gray-500';
+                if(this.currentFilter() === 'other') {
+                    return 'bg-gray-500';
+                }
+                return 'bg-gray-200';
+            case 'all':
+                return 'bg-yellow-200';
             default:
-                return 'bg-gray-500';
+                return 'bg-stone-500';
         }
     });
+
+    public onClick() {
+        this.filterChange.emit(this.itemCategory());
+    }
 }

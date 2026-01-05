@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed } from '@angular/core';
+import { Component, computed, output, signal } from '@angular/core';
 
-import { Item } from '../../../../shared/types/items.types';
+import { Item, PrimaryItemCategoriesType } from '../../../../shared/types/items.types';
 import { testItems } from '../../testdata';
 import { FilterBarButtonComponent } from './filter-bar-button/filter-bar-button.component';
 
@@ -18,9 +18,18 @@ export class FilterBarComponent {
 
     private items: Item[] = testItems;
 
+    public currentFilter = signal<PrimaryItemCategoriesType | 'all'>('all');
+
+    public currentFilterOutput = output<PrimaryItemCategoriesType | 'all'>();
+
     public currentStockFilter = computed(() => {
         const inStockItems = this.items.filter(item => item.currentStock > 0);
         const categories = inStockItems.map(item => item.primaryItemCategory);
         return [ ...new Set(categories) ];
     });
+
+    public onFilterChange(newFilter: PrimaryItemCategoriesType | 'all') {
+        this.currentFilter.set(newFilter);
+        this.currentFilterOutput.emit(newFilter);
+    }
 }
