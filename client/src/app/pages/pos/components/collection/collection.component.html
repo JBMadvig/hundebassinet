@@ -1,7 +1,7 @@
 <section class="grid h-full w-full grid-rows-[1fr_auto] overflow-hidden">
-  <div class="overflow-y-auto">
+  <div class="overflow-y-auto scroll-smooth">
     <ul class="grid w-full grid-flow-row grid-cols-[repeat(auto-fill,minmax(230px,1fr))] gap-2 p-2">
-      @for (item of categorySortedItemsComputedValue(); track item.id) {
+      @for (item of sortAndFilterCategories(); track item.id) {
         <li class="max-w-[350px]">
           <app-item [item]="item"></app-item>
         </li>
@@ -9,6 +9,6 @@
     </ul>
   </div>
   <div>
-    <app-filter-bar />
+    <app-filter-bar (currentFilterOutput)="filterByCategory.set($event)" />
   </div>
 </section>

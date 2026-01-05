@@ -1,6 +1,6 @@
-import { Component, computed } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 
-import { Item } from '../../../../shared/types/items.types';
+import { Item, PrimaryItemCategoriesType } from '../../../../shared/types/items.types';
 import { testItems } from '../../testdata';
 import { FilterBarComponent } from '../filter-bar/filter-bar.component';
 import { ItemComponent } from './item/item.component';
@@ -18,9 +18,18 @@ export class CollectionComponent {
 
     public items: Item[] = testItems;
 
-    public categorySortedItemsComputedValue = computed(()=> {
+    public filterByCategory = signal<PrimaryItemCategoriesType | 'all'>('all');
+
+    public sortAndFilterCategories = computed(()=> {
+        // Filter items based on selected category
+        let filteredItems: Item[];
+        if (this.filterByCategory() === 'all') {
+            filteredItems = this.items;
+        } else {
+            filteredItems = this.items.filter(item => item.primaryItemCategory === this.filterByCategory());
+        }
         // Sort items by primaryItemCategory. Return as Item[]
-        return this.items.slice().sort((a, b) => {
+        return filteredItems.slice().sort((a, b) => {
             if (a.primaryItemCategory < b.primaryItemCategory) {
                 return -1;
             }
@@ -30,4 +39,5 @@ export class CollectionComponent {
             return 0;
         });
     });
+
 }
