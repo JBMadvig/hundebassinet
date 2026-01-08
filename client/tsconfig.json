@@ -27,7 +27,8 @@
       "@interceptors/*": [ "app/shared/interceptors/*" ],
       "@lib/*": [ "app/lib/*" ],
       "@pipes/*": [ "app/shared/pipes/*" ],
-      "@services/*": [ "app/shared/services/*" ]
+      "@services/*": [ "app/shared/services/*" ],
+      "@types/*": [ "app/shared/types/*" ]
     }
   },
   "angularCompilerOptions": {

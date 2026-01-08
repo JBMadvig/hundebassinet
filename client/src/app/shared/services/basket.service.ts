@@ -1,11 +1,11 @@
 import { computed, Injectable, signal } from '@angular/core';
 
-import { Item, ItemWithQuantity } from './../../../shared/types/items.types';
+import { Item, ItemWithQuantity } from '../types/items.types';
 
 @Injectable({
     providedIn: 'root',
 })
-export class BasketServiceService {
+export class BasketService {
 
     public basketItems = signal<ItemWithQuantity[]> ([]);
 

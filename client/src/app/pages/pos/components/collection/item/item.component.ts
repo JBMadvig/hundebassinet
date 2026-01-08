@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, input } from '@angular/core';
 
-import { BadgeComponent } from '../../../../../shared/components/badge/badge.component';
+import { BadgeComponent } from '@components/badge/badge.component';
+import { BasketService } from '@services/basket.service';
+
 import { Item } from '../../../../../shared/types/items.types';
-import { BasketServiceService } from './../../../../../pages/pos/services/basket-service.service';
 import { ItemTypeHeaderComponent } from './item-type-header/item-type-header.component';
 
 @Component({
@@ -17,7 +18,7 @@ import { ItemTypeHeaderComponent } from './item-type-header/item-type-header.com
     styleUrl: './item.component.css',
 })
 export class ItemComponent {
-    public basketService = inject(BasketServiceService);
+    public basketService = inject(BasketService);
 
     public item = input.required<Item>();
 }

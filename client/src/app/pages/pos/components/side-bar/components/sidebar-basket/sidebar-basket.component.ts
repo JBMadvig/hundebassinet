@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 
-import { BasketServiceService } from './../../../../../../pages/pos/services/basket-service.service';
+import { BasketService } from '@services/basket.service';
+
 import { BasketItemComponent } from './basket-item/basket-item.component';
 
 @Component({
@@ -12,7 +13,7 @@ import { BasketItemComponent } from './basket-item/basket-item.component';
     styleUrl: './sidebar-basket.component.css',
 })
 export class SidebarBasketComponent {
-    private basketService = inject(BasketServiceService);
+    private basketService = inject(BasketService);
 
     public basketItems = this.basketService.basketItems;
 

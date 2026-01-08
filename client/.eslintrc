@@ -1,11 +1,10 @@
 {
   "root": true,
-  "ignorePatterns": [
-    "projects/**/*"
-  ],
+  "ignorePatterns": ["projects/**/*"],
   "settings": {
     "import/resolver": {
       "typescript": {
+        "alwaysTryTypes": true,
         "project": "./tsconfig.json"
       }
     }
@@ -15,19 +14,14 @@
     "project": "./tsconfig.json",
     "tsconfigRootDir": "./"
   },
-  "plugins": [
-    "@typescript-eslint",
-    "simple-import-sort"
-  ],
+  "plugins": ["@typescript-eslint", "simple-import-sort"],
   "env": {
     "browser": true,
     "node": true
   },
   "overrides": [
     {
-      "files": [
-        "*.ts"
-      ],
+      "files": ["*.ts"],
       "parserOptions": {
         "project": ["**/tsconfig.json"]
       },
@@ -79,10 +73,7 @@
             "functions": "always-multiline"
           }
         ],
-        "semi": [
-          "error",
-          "always"
-        ],
+        "semi": ["error", "always"],
         "indent": [
           "error",
           4,
@@ -90,18 +81,9 @@
             "SwitchCase": 1
           }
         ],
-        "eol-last": [
-          "error",
-          "always"
-        ],
-        "object-curly-spacing": [
-          "error",
-          "always"
-        ],
-        "array-bracket-spacing": [
-          "error",
-          "always"
-        ],
+        "eol-last": ["error", "always"],
+        "object-curly-spacing": ["error", "always"],
+        "array-bracket-spacing": ["error", "always"],
         "no-trailing-spaces": "error",
         "comma-spacing": [
           "error",
@@ -118,29 +100,16 @@
                 "^@angular",
                 "^([a-z/-]+|@(?!components|decorators|directives|environment|guards|pipes|interceptors|lib|services|src)).+"
               ],
-              [
-                "^@\\w"
-              ],
-              [
-                "^\\.\\.(?!/?$)",
-                "^\\.\\./?$",
-                "^\\./(?=.*/)(?!/?$)",
-                "^\\.(?!/?$)",
-                "^\\./?$"
-              ]
+              ["^@\\w"],
+              ["^\\.\\.(?!/?$)", "^\\.\\./?$", "^\\./(?=.*/)(?!/?$)", "^\\.(?!/?$)", "^\\./?$"]
             ]
           }
         ]
       }
     },
     {
-      "files": [
-        "*.html"
-      ],
-      "extends": [
-        "plugin:@angular-eslint/template/recommended",
-        "plugin:@angular-eslint/template/accessibility"
-      ],
+      "files": ["*.html"],
+      "extends": ["plugin:@angular-eslint/template/recommended", "plugin:@angular-eslint/template/accessibility"],
       "rules": {
         "@angular-eslint/template/no-autofocus": "off"
       }

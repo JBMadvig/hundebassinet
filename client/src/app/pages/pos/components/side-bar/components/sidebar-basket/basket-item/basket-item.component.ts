@@ -1,8 +1,8 @@
 import { Component, computed, ElementRef, Host, HostListener, inject, input, signal, viewChild } from '@angular/core';
 
 import { CounterComponent } from '@components/counter/counter.component';
+import { BasketService } from '@services/basket.service';
 
-import { BasketServiceService } from './../../../../../../../pages/pos/services/basket-service.service';
 import { ItemWithQuantity } from './../../../../../../../shared/types/items.types';
 
 @Component({
@@ -15,7 +15,7 @@ import { ItemWithQuantity } from './../../../../../../../shared/types/items.type
 })
 export class BasketItemComponent {
 
-    public basketService = inject(BasketServiceService);
+    public basketService = inject(BasketService);
 
     private dialogRef = viewChild<ElementRef<HTMLDivElement>>('deleteItemDialog');
 
