@@ -1,4 +1,4 @@
-<section class="flex w-full flex-row gap-4 overflow-x-auto border-t border-gray-500 px-4 py-2">
+<section class="flex w-full flex-row gap-4 overflow-x-auto px-4 py-2">
   @for (category of currentStockFilter(); track category) {
     <app-filter-bar-button
       [currentFilter]="currentFilter()"
@@ -6,11 +6,17 @@
       (filterChange)="onFilterChange($event)"
     ></app-filter-bar-button>
   }
-  @if (currentFilter() !== 'all') {
+  <div 
+    class="transition-all duration-300 ease-in-out"
+    [ngClass]="{
+      'opacity-100 max-w-xs': currentFilter() !== 'all',
+      'opacity-0 max-w-0 overflow-hidden': currentFilter() === 'all'
+    }"
+  >
     <app-filter-bar-button
       [currentFilter]="currentFilter()"
       (filterChange)="onFilterChange($event)"
       itemCategory="all"
     />
-  }
+  </div>
 </section>
