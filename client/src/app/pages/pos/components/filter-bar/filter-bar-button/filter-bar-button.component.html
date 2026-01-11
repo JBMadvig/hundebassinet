@@ -1,8 +1,8 @@
 <button
-  class="border-text-prime-white hover:bg-text-prime-white hover:text-bg-prime-dark cursor-pointer rounded-l-full rounded-r-full border-2 px-4 py-4 font-semibold text-prime-white transition-all duration-200 ease-in-out"
+  class="border-text-prime-white hover:bg-text-prime-white hover:text-bg-prime-dark cursor-pointer rounded-l-full rounded-r-full border-2 px-4 py-4 font-semibold text-prime-white"
   (click)="onClick()"
 >
-  <p class="flex flex-row transition-all duration-500 ease-in-out">
+  <p class="flex flex-row transition-all duration-250 ease-in-out">
     <span>
       @switch (itemCategory()) {
         @case ('beer') {
@@ -65,7 +65,7 @@
       }
     </span>
     <span
-      class="overflow-hidden whitespace-nowrap transition-all duration-500 ease-in-out"
+      class="overflow-hidden whitespace-nowrap transition-all duration-250 ease-in-out"
       [ngClass]="{
         'ml-2 max-w-xs opacity-100': currentFilter() === itemCategory() || itemCategory() === 'all',
         'ml-0 max-w-0 opacity-0': currentFilter() !== itemCategory() && itemCategory() !== 'all',
