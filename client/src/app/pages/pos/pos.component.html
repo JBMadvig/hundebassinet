@@ -1,6 +1,9 @@
-<div class="background grid h-screen grid-cols-[1fr_auto]">
+<div class="background grid h-screen max-h-dvh grid-cols-[1fr_auto] gap-2">
   <div class="overflow-hidden">
     <app-collection />
   </div>
-  <app-sidebar />
+  <div class="grid grid-cols-1 grid-rows-[auto_1fr] gap-2">
+    <app-sidebar-user-details />
+    <app-sidebar />
+  </div>
 </div>
