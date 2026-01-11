@@ -1,9 +1,10 @@
 <section
-  class="grid h-full w-[480px] grid-cols-1 grid-rows-[auto_1fr_auto] overflow-hidden border-l border-gray-700 bg-prime-white rounded-tr-lg rounded-tl-lg"
+  class="grid h-full max-h-[calc(100dvh-76px)] w-[480px] grid-cols-1 grid-rows-[auto_1fr_auto] gap-y-4 rounded-tl-lg rounded-tr-lg border-l border-gray-700 pb-4"
 >
-  <div class="custom-css-content-line-left">
-    <app-sidebar-user-details />
+  <div class="h-full overflow-hidden">
+    <app-sidebar-basket />
   </div>
-  <app-sidebar-basket />
-  <app-sidebar-purchase [currentBalance]="user.balance" />
+  @if (basketItemsAmount() > 0) {
+    <button class="h-12 w-full rounded-md bg-prime-green2 text-white">Purchase</button>
+  }
 </section>

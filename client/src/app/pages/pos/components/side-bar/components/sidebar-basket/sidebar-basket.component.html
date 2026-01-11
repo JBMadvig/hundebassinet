@@ -1,9 +1,31 @@
-<article class="h-full overflow-y-auto bg-gray-50">
-  <ul class="px-1 py-2 flex flex-col gap-y-1">
-    @for (item of basketItems(); track item.id) {
-      <li class="custom-css-content-line-left rounded-md overflow-hidden p-2 border border-gray-600 ">
-        <app-basket-item [item]="item" />
-      </li>
-    }
-  </ul>
+<article class="basketContainer grid h-full grid-cols-1 grid-rows-[1fr_auto] bg-gray-50 pb-4">
+  <div class="h-fulloverflow-y-auto transition-all duration-250 ease-in-out">
+    <ul class="flex flex-col gap-y-1 px-1 py-2">
+      @for (item of basketItems(); track item.id) {
+        <li class="custom-css-content-line-left overflow-hidden rounded-md border border-gray-600 p-2">
+          <app-basket-item [item]="item" />
+        </li>
+      }
+    </ul>
+  </div>
+  @if (basketItems().length > 0) {
+    <div
+      class="grid-rows-auto grid grid-cols-1 gap-2 border-t border-text-blue/25 p-2 transition-all duration-250 ease-in-out"
+    >
+      <p class="flex flex-row justify-between">
+        <span>Balance after purchase</span>
+        <span
+          class="italic"
+          [ngClass]="{
+            'text-prime-red': user().balance - totalPrice() < 0,
+            'text-prime-green': user().balance - totalPrice() >= 0,
+          }"
+          >{{ user().balance - totalPrice() }}&nbsp;,-</span
+        >
+      </p>
+      <p class="flex flex-row justify-between text-xl font-bold text-prime-orange">
+        <span>Subtotal</span><span>{{ totalPrice() }}&nbsp;,-</span>
+      </p>
+    </div>
+  }
 </article>

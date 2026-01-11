@@ -1,21 +1,22 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
-import { mockUsers } from '../../testdata';
+import { BasketService } from '@services/basket.service';
+import { UserService } from '@services/user.service';
+
 import { SidebarBasketComponent } from './components/sidebar-basket/sidebar-basket.component';
-import { SidebarPurchaseComponent } from './components/sidebar-purchase/sidebar-purchase.component';
-import { SidebarUserDetailsComponent } from './components/sidebar-user-details/sidebar-user-details.component';
 
 @Component({
     selector: 'app-sidebar',
     imports: [
         SidebarBasketComponent,
-        SidebarPurchaseComponent,
-        SidebarUserDetailsComponent,
     ],
     templateUrl: './sidebar.component.html',
     styleUrl: './sidebar.component.css',
 })
 export class SideBarComponent {
+    private userService = inject(UserService);
+    private basketService = inject(BasketService);
 
-    public user = mockUsers[0];
+    public user = this.userService.userData;
+    public basketItemsAmount = this.basketService.totalItemsCount;
 }

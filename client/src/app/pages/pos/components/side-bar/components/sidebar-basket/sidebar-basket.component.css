@@ -10,3 +10,7 @@
     background-color: lightskyblue;
     content: '';
 }
+
+.basketContainer {
+  mask: conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) 50%/16px 100%
+}
