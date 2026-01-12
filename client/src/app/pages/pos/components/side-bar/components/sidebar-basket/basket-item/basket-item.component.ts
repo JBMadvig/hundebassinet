@@ -1,4 +1,4 @@
-import { Component, computed, ElementRef, Host, HostListener, inject, input, signal, viewChild } from '@angular/core';
+import { Component, computed, ElementRef, HostListener, inject, input, signal, viewChild } from '@angular/core';
 
 import { CounterComponent } from '@components/counter/counter.component';
 import { BasketService } from '@services/basket.service';

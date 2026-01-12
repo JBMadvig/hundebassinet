@@ -1,32 +1,33 @@
-import { Component, computed, signal } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 
-import { Item, PrimaryItemCategoriesType } from '../../../../shared/types/items.types';
+import { CollectionService } from '@services/collection.service';
+
+import { Item } from '../../../../shared/types/items.types';
 import { testItems } from '../../testdata';
-import { FilterBarComponent } from '../filter-bar/filter-bar.component';
 import { ItemComponent } from './item/item.component';
 
 @Component({
     selector: 'app-collection',
     imports: [
         ItemComponent,
-        FilterBarComponent,
     ],
     templateUrl: './collection.component.html',
     styleUrl: './collection.component.css',
 })
 export class CollectionComponent {
+    private collectionService = inject(CollectionService);
 
     public items: Item[] = testItems;
 
-    public filterByCategory = signal<PrimaryItemCategoriesType | 'all'>('all');
+    public currentFilter = this.collectionService.currentFilter;
 
     public sortAndFilterCategories = computed(()=> {
         // Filter items based on selected category
         let filteredItems: Item[];
-        if (this.filterByCategory() === 'all') {
+        if (this.currentFilter() === 'all') {
             filteredItems = this.items;
         } else {
-            filteredItems = this.items.filter(item => item.primaryItemCategory === this.filterByCategory());
+            filteredItems = this.items.filter(item => item.primaryItemCategory === this.currentFilter());
         }
         // Sort items by primaryItemCategory. Return as Item[]
         return filteredItems.slice().sort((a, b) => {

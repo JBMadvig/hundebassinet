@@ -1,5 +1,4 @@
-<section class="grid h-full w-full grid-rows-[auto_1fr] overflow-hidden py-2">
-  <app-filter-bar (currentFilterOutput)="filterByCategory.set($event)" />
+<section class="grid h-full w-full grid-rows-1 overflow-hidden">
   <div class="overflow-y-auto scroll-smooth">
     <ul class="grid w-full grid-flow-row grid-cols-[repeat(auto-fill,minmax(230px,1fr))] gap-2 p-2">
       @for (item of sortAndFilterCategories(); track item.id) {
