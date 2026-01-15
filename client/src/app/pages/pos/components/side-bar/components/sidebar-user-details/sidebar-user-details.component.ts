@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, computed } from '@angular/core';
 
 import { BadgeComponent } from '../../../../../../shared/components/badge/badge.component';
@@ -7,10 +7,8 @@ import { User } from '../../../../../../shared/types/user.types';
 @Component({
     selector: 'app-sidebar-user-details',
     imports: [
-        CommonModule,
-        BadgeComponent,
-
-    ],
+    BadgeComponent
+],
     templateUrl: './sidebar-user-details.component.html',
     styleUrl: './sidebar-user-details.component.css',
 })

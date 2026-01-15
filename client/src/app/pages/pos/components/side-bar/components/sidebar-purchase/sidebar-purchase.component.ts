@@ -1,13 +1,11 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, computed, inject, input } from '@angular/core';
 
 import { BasketService } from '@services/basket.service';
 
 @Component({
     selector: 'app-sidebar-purchase',
-    imports: [
-        CommonModule,
-    ],
+    imports: [],
     templateUrl: './sidebar-purchase.component.html',
     styleUrl: './sidebar-purchase.component.css',
 })
