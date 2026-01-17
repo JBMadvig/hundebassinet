@@ -34,8 +34,4 @@ export class BasketItemComponent {
             this.deleteItemDialogOpen.set(false);
         }
     }
-
-    public clearItemFromBasket(item: ItemWithQuantity) {
-        // Remove the item completely from the basket
-    }
 }

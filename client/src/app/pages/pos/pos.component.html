@@ -1,5 +1,5 @@
 <div class="background h-screen flex flex-col py-2">
-  <div class="grid grid-cols-[1fr_400px] items-start gap-4">
+  <div class="grid grid-cols-[1fr_var(--spacing-sidebar)] items-start gap-4">
     <app-filter-bar (currentFilterOutput)="collectionService.currentFilter.set($event)" />
     <app-sidebar-user-details />
   </div>
@@ -13,7 +13,7 @@
       class="sticky top-0 h-full overflow-hidden transition-all transition-discrete duration-300 ease-in-out"
       [ngClass]="{
         'ml-0 w-0': !isItemsInBasket(),
-        'col-start-2 row-start-1 ml-4 w-[475px]': isItemsInBasket(),
+        'col-start-2 row-start-1 ml-4 w-sidebar': isItemsInBasket(),
       }"
     >
       <app-sidebar />

@@ -1,14 +1,14 @@
-
 import { Component, computed } from '@angular/core';
 
-import { BadgeComponent } from '../../../../../../shared/components/badge/badge.component';
+import { BadgeComponent } from '@components/badge/badge.component';
+
 import { User } from '../../../../../../shared/types/user.types';
 
 @Component({
     selector: 'app-sidebar-user-details',
     imports: [
-    BadgeComponent
-],
+        BadgeComponent,
+    ],
     templateUrl: './sidebar-user-details.component.html',
     styleUrl: './sidebar-user-details.component.css',
 })

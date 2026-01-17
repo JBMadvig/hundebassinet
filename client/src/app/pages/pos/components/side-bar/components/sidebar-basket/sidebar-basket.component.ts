@@ -16,8 +16,8 @@ import { BasketItemComponent } from './basket-item/basket-item.component';
     styleUrl: './sidebar-basket.component.css',
 })
 export class SidebarBasketComponent {
-    private basketService = inject(BasketService);
     private userService = inject(UserService);
+    public basketService = inject(BasketService);
 
     public basketItems = this.basketService.basketItems;
     public basketItemsAmount = this.basketService.totalItemsCount;
