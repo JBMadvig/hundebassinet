@@ -1,0 +1,72 @@
+@if (visible()) {
+  <div
+    class="fixed top-0 left-0 z-21 flex h-full w-full items-start justify-center bg-black/50 pt-[5.75rem]"
+    [ngClass]="{
+      'scroll-styling': theme() === 'dark',
+    }"
+    (keypress)="clickOutside($event)"
+    (mousedown)="clickOutside($event)"
+    tabindex="-1"
+  >
+    <!-- removed from BSP
+    [ngClass]="{
+      'text-font-primary': theme() === 'light',
+      'text-gray-light': theme() === 'dark',
+    }"
+    -->
+    <div class="max-w-3/4 overflow-hidden">
+      <!-- removed from BSP
+      [ngClass]="{
+        'bg-white': theme() === 'light',
+        'text-font-tertiary bg-bg-dark-gray': theme() === 'dark',
+      }"
+    -->
+      <div #dialog class="modal-grid h-auto w-full rounded-lg p-4 pt-2 shadow-lg">
+        <header>
+          <div class="grid grid-cols-[auto_1fr_auto] gap-x-2">
+            <div class="flex items-center gap-x-2">
+              @if (icon()) {
+                <i>
+                  <ng-content select="[dialogIcon]"></ng-content>
+                </i>
+              }
+              <h2>{{ dialogTitle() | uppercase }}</h2>
+            </div>
+            <div class="w-full self-center">
+              <ng-content select="[headerAction]"></ng-content>
+            </div>
+            <button class="cursor-pointer self-start" (click)="onHandleClose()">
+              <!-- removed from BSP
+              [ngClass]="{
+                  'hover:text-gray': theme() === 'light',
+                  'hover:text-white': theme() === 'dark',
+                }" 
+              -->
+              <i>
+                <svg fill="currentColor" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                  <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+                  <path
+                    d="M14.83 7.76 12 10.59 9.17 7.76 7.76 9.17 10.59 12l-2.83 2.83 1.41 1.41L12 13.41l2.83 2.83 1.41-1.41L13.41 12l2.83-2.83z"
+                  ></path>
+                  <path
+                    d="M12 2C9.33 2 6.82 3.04 4.93 4.93S2 9.33 2 12s1.04 5.18 2.93 7.07c1.95 1.95 4.51 2.92 7.07 2.92s5.12-.97 7.07-2.92S22 14.67 22 12s-1.04-5.18-2.93-7.07A9.93 9.93 0 0 0 12 2m5.66 15.66c-3.12 3.12-8.19 3.12-11.31 0-1.51-1.51-2.34-3.52-2.34-5.66s.83-4.15 2.34-5.66S9.87 4 12.01 4s4.15.83 5.66 2.34 2.34 3.52 2.34 5.66-.83 4.15-2.34 5.66Z"
+                  ></path>
+                </svg>
+              </i>
+            </button>
+          </div>
+          <hr
+            class="my-2"
+            [ngClass]="{
+              'border-gray-500': theme() === 'light',
+              'border-gray-900': theme() === 'dark',
+            }"
+          />
+        </header>
+        <main>
+          <ng-content></ng-content>
+        </main>
+      </div>
+    </div>
+  </div>
+}
