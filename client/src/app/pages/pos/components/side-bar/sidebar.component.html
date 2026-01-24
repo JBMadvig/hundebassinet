@@ -5,6 +5,22 @@
     <app-sidebar-basket />
   </div>
   @if (basketItemsAmount() > 0) {
-    <button class="h-12 w-full rounded-md bg-prime-green2 text-white">Purchase</button>
+    <app-button (handleClick)="openPurchaseConfirmationDialog.set(true)" label="Purchase" />
   }
 </section>
+
+@if(openPurchaseConfirmationDialog()) {
+  <app-dialog [(visible)]="openPurchaseConfirmationDialog" dialogTitle="Confirm Purchase">
+    <div class="flex flex-col items-start justify-center px-8 py-4">
+      <h2 class="mb-4 text-left text-2xl font-bold">Confirm Purchase</h2>
+      <p class="mb-4 flex flex-col gap-2">
+        <span> Are you sure you want to complete this purchase? </span>
+        <span>This will deduct {{ totalPrice() }}&nbsp;,- from your balance.</span>
+      </p>
+      <div class="grid grid-cols-2 gap-x-2 w-full">
+        <app-button label="Confirm Purchase" (handleClick)="openPurchaseConfirmationDialog.set(false)" />
+        <app-button label="Cancel" variant="subtle" (handleClick)="openPurchaseConfirmationDialog.set(false)" />
+      </div>
+    </div>
+  </app-dialog>
+}

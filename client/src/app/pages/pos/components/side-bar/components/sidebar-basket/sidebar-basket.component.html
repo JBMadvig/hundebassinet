@@ -3,7 +3,7 @@
     <span>Basket</span>
     <button
       class="transition-al flex cursor-pointer items-center justify-center rounded-full border border-gray-600 p-2 text-gray-600 duration-200 ease-in-out hover:border-warning hover:text-warning"
-      (click)="basketService.clearBasket()"
+      (click)="showDialog.set(true)"
     >
       <svg fill="currentColor" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
         <!--Boxicons v3.0.6 https://boxicons.com | License  https://docs.boxicons.com/free-->
@@ -44,3 +44,16 @@
     </div>
   }
 </article>
+
+<app-dialog [(visible)]="showDialog" dialogTitle="Clear basket">
+  <div class="flex flex-col items-start justify-center">
+    <p class="mb-4 flex flex-col gap-2">
+      <span> Are you sure you want to clear your basket? </span>
+      <span>This will remove all items you have currently selected.</span>
+    </p>
+    <div class="grid grid-cols-2 gap-x-2 w-full">
+      <app-button label="Close" variant="subtle" (handleClick)="showDialog.set(false)" />
+      <app-button label="Clear Basket" (handleClick)="basketService.clearBasket(); showDialog.set(false)" />
+    </div>
+  </div>
+</app-dialog>

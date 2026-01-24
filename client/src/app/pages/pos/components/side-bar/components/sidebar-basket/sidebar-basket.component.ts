@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 
+import { ButtonComponent } from '@components/button/button.component';
+import { DialogComponent } from '@components/dialog/dialog.component';
 import { BasketService } from '@services/basket.service';
 import { UserService } from '@services/user.service';
 
@@ -11,6 +13,8 @@ import { BasketItemComponent } from './basket-item/basket-item.component';
     imports: [
         BasketItemComponent,
         CommonModule,
+        DialogComponent,
+        ButtonComponent,
     ],
     templateUrl: './sidebar-basket.component.html',
     styleUrl: './sidebar-basket.component.css',
@@ -18,6 +22,8 @@ import { BasketItemComponent } from './basket-item/basket-item.component';
 export class SidebarBasketComponent {
     private userService = inject(UserService);
     public basketService = inject(BasketService);
+
+    public showDialog = signal(false);
 
     public basketItems = this.basketService.basketItems;
     public basketItemsAmount = this.basketService.totalItemsCount;
