@@ -3,16 +3,20 @@
     "ignorePatterns": [],
     "settings": {
       "import/resolver": {
-        "typescript": {}
+        "typescript": {
+          "alwaysTryTypes": true,
+          "project": "./tsconfig.json",
+          "extensions": [".ts", ".js"]
+      },
+      "node": {
+        "extensions": [".js", ".ts"]
+      }
       }
     },
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
-      "project": [
-        "./tsconfig.json"
-      ],
-      "tsconfigRootDir": "./"
-    },
+        "project": ["**/tsconfig.json"]
+      },
     "plugins": [
       "@typescript-eslint",
       "simple-import-sort"
