@@ -18,9 +18,9 @@ export class FilterBarComponent {
 
     private items: Item[] = testItems;
 
-    public currentFilter = signal<PrimaryItemCategoriesType | 'all'>('all');
+    public currentFilter = signal<PrimaryItemCategoriesType | 'all' | 'search'>('all');
 
-    public currentFilterOutput = output<PrimaryItemCategoriesType | 'all'>();
+    public currentFilterOutput = output<PrimaryItemCategoriesType | 'all' | 'search'>();
 
     public currentStockFilter = computed(() => {
         const inStockItems = this.items.filter(item => item.currentStock > 0);
@@ -28,7 +28,7 @@ export class FilterBarComponent {
         return [ ...new Set(categories) ];
     });
 
-    public onFilterChange(newFilter: PrimaryItemCategoriesType | 'all') {
+    public onFilterChange(newFilter: PrimaryItemCategoriesType | 'all' | 'search') {
         this.currentFilter.set(newFilter);
         this.currentFilterOutput.emit(newFilter);
     }

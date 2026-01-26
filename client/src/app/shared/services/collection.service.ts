@@ -7,7 +7,7 @@ import { PrimaryItemCategoriesType } from './../..//shared/types/items.types';
 })
 export class CollectionService {
 
-    public currentFilter = signal<PrimaryItemCategoriesType | 'all'>('all');
+    public currentFilter = signal<PrimaryItemCategoriesType | 'all' | 'search'>('all');
 
     constructor() { }
 }

@@ -1,8 +1,14 @@
 <button
   class="border-text-prime-white hover:bg-text-prime-white hover:text-bg-prime-dark cursor-pointer rounded-full border-2 px-4 py-4 font-semibold text-prime-white"
+  [ngClass]="{
+    'bg-white text-blue-950': currentFilter() === 'search' && itemCategory() === 'search',
+  }"
   (click)="onClick()"
 >
-  <p class="flex flex-row transition-all duration-250 ease-in-out">
+  <p class="flex flex-row transition-all duration-250 ease-in-out"
+  [ngClass]="{
+    'text-blue-950': currentFilter() === 'search' && itemCategory() === 'search',
+  }">
     <span>
       @switch (itemCategory()) {
         @case ('beer') {
@@ -63,6 +69,14 @@
             ></path>
           </svg>
         }
+        @case ('search') {
+          <svg fill="currentColor" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+            <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+            <path
+              d="M18 10c0-4.41-3.59-8-8-8s-8 3.59-8 8 3.59 8 8 8c1.85 0 3.54-.63 4.9-1.69l5.1 5.1L21.41 20l-5.1-5.1A8 8 0 0 0 18 10M4 10c0-3.31 2.69-6 6-6s6 2.69 6 6-2.69 6-6 6-6-2.69-6-6"
+            ></path>
+          </svg>
+        }
       }
     </span>
     <span
@@ -70,6 +84,7 @@
       [ngClass]="{
         'ml-2 max-w-xs opacity-100': currentFilter() === itemCategory() || itemCategory() === 'all',
         'ml-0 max-w-0 opacity-0': currentFilter() !== itemCategory() && itemCategory() !== 'all',
+        'bg-white text-blue-950': currentFilter() === 'search' && itemCategory() === 'search',
       }"
       >{{ itemCategory().toLocaleUpperCase() }}</span
     >

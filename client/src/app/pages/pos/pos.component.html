@@ -1,6 +1,8 @@
 <div class="background h-screen flex flex-col py-2">
   <div class="grid grid-cols-[1fr_var(--spacing-sidebar)] items-start gap-4">
-    <app-filter-bar (currentFilterOutput)="collectionService.currentFilter.set($event)" />
+    <div>
+      <app-filter-bar (currentFilterOutput)="collectionService.currentFilter.set($event)" />
+    </div>
     <app-sidebar-user-details />
   </div>
   <div class="grid w-full h-full grid-cols-[1fr_auto] overflow-hidden">

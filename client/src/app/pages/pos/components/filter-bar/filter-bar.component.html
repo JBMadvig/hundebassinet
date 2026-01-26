@@ -6,11 +6,16 @@
       (filterChange)="onFilterChange($event)"
     ></app-filter-bar-button>
   }
-  <div 
+  <app-filter-bar-button
+    [currentFilter]="currentFilter()"
+    (filterChange)="onFilterChange($event)"
+    itemCategory="search"
+  />
+  <div
     class="transition-all duration-300 ease-in-out"
     [ngClass]="{
-      'opacity-100 max-w-xs': currentFilter() !== 'all',
-      'opacity-0 max-w-0 overflow-hidden': currentFilter() === 'all'
+      'max-w-xs opacity-100': currentFilter() !== 'all',
+      'max-w-0 overflow-hidden opacity-0': currentFilter() === 'all',
     }"
   >
     <app-filter-bar-button
