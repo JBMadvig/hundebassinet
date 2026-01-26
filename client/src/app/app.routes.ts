@@ -11,6 +11,15 @@ interface CustomRoute extends Route {
 
 export const routes: CustomRoute[] = [
     {
+        path: 'users',
+        pathMatch: 'full',
+        loadComponent: () => import('./pages/users/users.component')
+            .then(m => m.UsersComponent),
+        data: {
+            id: 'users',
+        },
+    },
+    {
         path: 'landing',
         pathMatch: 'full',
         loadComponent: () => import('./pages/landing/landing.component')
