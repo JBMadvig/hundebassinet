@@ -1,0 +1,59 @@
+@if (valueFormGroup && valueFormControl) {
+  @if (label()) {
+    <label class="inline-block text-xs" [for]="controlId">{{ label() }}</label>
+    @if (isRequired()) {
+      <span class="hover:cursor-default">&#42;</span>
+    }
+  }
+  @if (enabled) {
+    <div
+      class="box-border flex items-center rounded-full border p-2 align-middle bg-prime-white"
+      [ngClass]="{
+        'border-l-0': noLeftBorder(),
+        'border-error': isInvalid(),
+        'border-gray-400': !isInvalid() && theme() === 'light',
+        'border-gray-600': !isInvalid() && theme() === 'dark',
+      }"
+      [formGroup]="valueFormGroup"
+    >
+      @if (icon()) {
+        <i
+          class="fa-xs px-2 {{ icon() }}"
+          [ngClass]="{
+            'text-text-blue': theme() === 'light',
+            'text-gray-400': theme() === 'dark',
+          }"
+        ></i>
+      }
+      <input
+        class="box-border w-full font-bold text-xl border-gray-400 bg-prime-white placeholder-gray-400 placeholder:italic focus:outline-hidden"
+        [ngClass]="{ 'ml-2': !icon() }"
+        [appAutoFocus]="autofocus()"
+        [formControlName]="controlName"
+        [max]="max()"
+        [min]="min()"
+        [placeholder]="placeholder()"
+        [type]="type()"
+        [value]="value()"
+        (blur)="onBlur()"
+        (focus)="onFocus()"
+        (input)="onInput()"
+      />
+    </div>
+  } @else {
+    <div
+      class="box-border flex items-center rounded-sm border border-gray-400 bg-gray-200 py-1 align-middle text-gray-400"
+      [ngClass]="{ 'border-l-0': noLeftBorder() }"
+    >
+      @if (icon()) {
+        <i class="fa-xs px-2 text-text-blue" [ngClass]="icon()"></i>
+      }
+      <span
+        class="box-border w-full border-gray-400 bg-transparent text-xs focus:outline-hidden"
+        [ngClass]="{ italic: placeholder }"
+      >
+        {{ formattedValue }}
+      </span>
+    </div>
+  }
+}

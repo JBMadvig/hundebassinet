@@ -1,14 +1,33 @@
-<div class="background h-screen flex flex-col py-2">
+<div class="background flex h-screen flex-col py-2">
   <div class="grid grid-cols-[1fr_var(--spacing-sidebar)] items-start gap-4">
-    <div>
+    <div
+      class="grid w-full grid-cols-1 transition-all duration-200 ease-in-out"
+      [ngClass]="{
+        'grid-rows-1': collectionService.currentFilter() !== 'search',
+        'grid-rows-auto': collectionService.currentFilter() === 'search',
+      }"
+    >
       <app-filter-bar (currentFilterOutput)="collectionService.currentFilter.set($event)" />
+      @if (collectionService.currentFilter() === 'search') {
+        <form class="transition-all ease-in-out duration-200py-2 px-4" [ngClass]="{
+          'h-full': collectionService.currentFilter() === 'search',
+          'h-0': collectionService.currentFilter() !== 'search',
+        }" [formGroup]="searchForm" headerAction>
+          <app-input-field
+            #search
+            autofocus
+            formControlName="search"
+            icon="fa-solid fa-user"
+            ngDefaultControl
+            placeholder="Search for products"
+          />
+        </form>
+      }
     </div>
     <app-sidebar-user-details />
   </div>
-  <div class="grid w-full h-full grid-cols-[1fr_auto] overflow-hidden">
-    <div
-      class="overflow-hidden transition-all transition-discrete duration-300 ease-in-out"
-    >
+  <div class="grid h-full w-full grid-cols-[1fr_auto] overflow-hidden">
+    <div class="overflow-hidden transition-all transition-discrete duration-300 ease-in-out">
       <app-collection />
     </div>
     <div

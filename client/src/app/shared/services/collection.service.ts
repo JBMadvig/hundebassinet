@@ -9,5 +9,7 @@ export class CollectionService {
 
     public currentFilter = signal<PrimaryItemCategoriesType | 'all' | 'search'>('all');
 
+    public searchQuery = signal<string>('');
+
     constructor() { }
 }

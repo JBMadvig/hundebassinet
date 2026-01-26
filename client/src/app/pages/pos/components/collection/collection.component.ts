@@ -20,15 +20,22 @@ export class CollectionComponent {
     public items: Item[] = testItems;
 
     public currentFilter = this.collectionService.currentFilter;
+    public searchQuery = this.collectionService.searchQuery;
 
     public sortAndFilterCategories = computed(()=> {
         // Filter items based on selected category
         let filteredItems: Item[];
-        if (this.currentFilter() === 'all') {
-            filteredItems = this.items;
-        } else {
-            filteredItems = this.items.filter(item => item.primaryItemCategory === this.currentFilter());
+        switch (this.currentFilter()) {
+            case 'all':
+                filteredItems = this.items;
+                break;
+            case 'search':
+                filteredItems = this.items.filter(item => item.name.toLowerCase().includes(this.searchQuery().toLowerCase()));
+                break;
+            default:
+                filteredItems = this.items.filter(item => item.primaryItemCategory === this.currentFilter());
         }
+
         // Sort items by primaryItemCategory. Return as Item[]
         return filteredItems.slice().sort((a, b) => {
             if (a.primaryItemCategory < b.primaryItemCategory) {
