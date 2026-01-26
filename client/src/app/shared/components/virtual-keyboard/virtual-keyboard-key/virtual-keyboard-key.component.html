@@ -1,0 +1,67 @@
+@let key = this.key();
+@let isShift = this.isShift();
+@let isCapsLock = this.isCapsLock();
+
+<button
+  class="h-12 min-w-12 cursor-pointer rounded-md border shadow-sm transition-all duration-100 ease-in-out hover:-translate-y-0.5 hover:bg-gray-400"
+  [ngClass]="{
+    'min-w-24': key.value === 'Backspace' || key.value === 'Shift',
+    'min-w-16': key.value === 'Tab',
+    'min-w-20': key.value === 'CapsLock' || key.value === 'Enter',
+    'min-w-52': key.value === 'Space',
+    'border-prime-green2 bg-prime-green text-white':
+      (key.value === 'CapsLock' && isCapsLock) || (key.value === 'Shift' && isShift),
+    'border-gray-300 bg-white text-text-blue': (key.value !== 'CapsLock' && isCapsLock) || (key.value !== 'Shift' && isShift),
+    'min-w-12':
+      key.value !== 'Backspace' &&
+      key.value !== 'Shift' &&
+      key.value !== 'Tab' &&
+      key.value !== 'CapsLock' &&
+      key.value !== 'Enter' &&
+      key.value !== 'Space',
+  }"
+  (click)="handleKeyPress()"
+>
+  <p
+    class="flex flex-row items-center px-2 text-center"
+    [ngClass]="{
+      'justify-between': key.value === 'Backspace' || key.value === 'Enter',
+      'justify-center': key.value !== 'Backspace' && key.value !== 'Enter',
+    }"
+  >
+    @if (key.value === 'Backspace') {
+      <span>
+        <svg fill="currentColor" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg">
+          <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+          <path d="m6 12 6 5v-4h6v-2h-6V7z"></path>
+        </svg>
+      </span>
+    }
+    <span>
+      @if (key.shift && isShift) {
+        {{ key.shift }}
+      } @else {
+        @if (
+          key.value === 'Space' ||
+          key.value === 'Tab' ||
+          key.value === 'CapsLock' ||
+          key.value === 'Shift' ||
+          key.value === 'Backspace' ||
+          key.value === 'Enter'
+        ) {
+          {{ key.value }}
+        } @else {
+          {{ isShift || isCapsLock ? key.value.toUpperCase() : key.value }}
+        }
+      }
+    </span>
+    @if (key.value === 'Enter') {
+      <span>
+        <svg fill="currentColor" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg">
+          <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+          <path d="M18 12c0 1.65-1.35 3-3 3H9v-3l-5 4 5 4v-3h6c2.76 0 5-2.24 5-5V4h-2z"></path>
+        </svg>
+      </span>
+    }
+  </p>
+</button>

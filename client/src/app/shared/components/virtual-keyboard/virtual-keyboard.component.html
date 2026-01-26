@@ -1,0 +1,64 @@
+<div class="mx-auto max-w-4xl p-4">
+  <div class="rounded-xl bg-white p-4 shadow-md">
+    <!-- Row 1 Start -->
+    <div class="mb-1.5 flex flex-row justify-center gap-1.5">
+      @for (key of virtualKeysRow1; track key.id) {
+        <app-virtual-keyboard-key
+          [isCapsLock]="isCapsLock()"
+          [isShift]="isShift()"
+          [key]="key"
+          (keyPressed)="handleKeyPress($event.value)"
+        />
+      }
+    </div>
+    <!-- Row 1 End -->
+    <!-- Row 2 Start -->
+    <div class="mb-1.5 flex flex-row justify-center gap-1.5">
+      @for (key of virtualKeysRow2; track key.id) {
+        <app-virtual-keyboard-key
+          [isCapsLock]="isCapsLock()"
+          [isShift]="isShift()"
+          [key]="key"
+          (keyPressed)="handleKeyPress($event.value)"
+        />
+      }
+    </div>
+    <!-- Row 2 End -->
+    <!-- Row 3 Start -->
+    <div class="mb-1.5 flex flex-row justify-center gap-1.5">
+      @for (key of virtualKeysRow3; track key.id) {
+        <app-virtual-keyboard-key
+          [isCapsLock]="isCapsLock()"
+          [isShift]="isShift()"
+          [key]="key"
+          (keyPressed)="handleKeyPress($event.value)"
+        />
+      }
+    </div>
+    <!-- Row 3 End -->
+    <!-- Row 4 Start -->
+    <div class="mb-1.5 flex flex-row justify-center gap-1.5">
+      @for (key of virtualKeysRow4; track key.id) {
+        <app-virtual-keyboard-key
+          [isCapsLock]="isCapsLock()"
+          [isShift]="isShift()"
+          [key]="key"
+          (keyPressed)="handleKeyPress($event.value)"
+        />
+      }
+    </div>
+    <!-- Row 4 End -->
+    <!-- Row 5 Start -->
+    <div class="mb-1.5 flex flex-row justify-center gap-1.5">
+      @for (key of virtualKeysRow5; track key.id) {
+        <app-virtual-keyboard-key
+          [isCapsLock]="isCapsLock()"
+          [isShift]="isShift()"
+          [key]="key"
+          (keyPressed)="handleKeyPress($event.value)"
+        />
+      }
+    </div>
+    <!-- Row 5 End -->
+  </div>
+</div>
