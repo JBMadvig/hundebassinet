@@ -10,4 +10,5 @@ export interface User {
     updatedAt: Date;
     // Valuta is ISO 4217 format, e.g., 'USD', 'EUR', 'DKK'
     valuta: string;
+    avatarUrl: string;
 }

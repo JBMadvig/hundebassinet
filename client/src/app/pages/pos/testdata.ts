@@ -105,6 +105,7 @@ export const mockUsers: User[] = [
         valuta: 'DKK',
         createdAt: new Date('2024-01-15'),
         updatedAt: new Date('2025-12-28'),
+        avatarUrl: 'assets/hundebassinet_logo.webp',
     },
     {
         id: '0002',
@@ -115,6 +116,7 @@ export const mockUsers: User[] = [
         valuta: 'DKK',
         createdAt: new Date('2024-03-20'),
         updatedAt: new Date('2025-12-29'),
+        avatarUrl: 'assets/hundebassinet_logo.webp',
     },
     {
         id: '0003',
@@ -125,6 +127,7 @@ export const mockUsers: User[] = [
         valuta: 'DKK',
         createdAt: new Date('2023-11-10'),
         updatedAt: new Date('2025-12-29'),
+        avatarUrl: 'assets/hundebassinet_logo.webp',
     },
     {
         id: '0004',
@@ -135,6 +138,7 @@ export const mockUsers: User[] = [
         valuta: 'DKK',
         createdAt: new Date('2024-06-05'),
         updatedAt: new Date('2025-12-27'),
+        avatarUrl: 'assets/hundebassinet_logo.webp',
     },
     {
         id: '0005',
@@ -145,5 +149,6 @@ export const mockUsers: User[] = [
         valuta: 'DKK',
         createdAt: new Date('2024-08-14'),
         updatedAt: new Date('2025-12-29'),
+        avatarUrl: 'assets/hundebassinet_logo.webp',
     },
 ];

@@ -1,8 +1,8 @@
 import { Component, computed } from '@angular/core';
 
-import { BadgeComponent } from '@components/badge/badge.component';
-
+import { BadgeComponent } from '../../../../../../shared/components/badge/badge.component';
 import { User } from '../../../../../../shared/types/user.types';
+import { mockUsers } from '../../../../testdata';
 
 @Component({
     selector: 'app-sidebar-user-details',
@@ -15,16 +15,7 @@ import { User } from '../../../../../../shared/types/user.types';
 export class SidebarUserDetailsComponent {
 
     // TODO: Delete this hardcoded user and fetch the logged in user from auth service
-    public userDetail: User = {
-        id: '0001',
-        name: 'Jonas Madvig',
-        email: 'jonas.e.madvig@gmail.com',
-        role: 'sudo-admin',
-        balance: 300.00,
-        valuta: 'DKK',
-        createdAt: new Date('2024-01-15'),
-        updatedAt: new Date('2025-12-28'),
-    };
+    public userDetail: User = mockUsers[0];
 
     public userNameInitalComputedValue = computed((): string => {
         if (!this.userDetail?.name) {
