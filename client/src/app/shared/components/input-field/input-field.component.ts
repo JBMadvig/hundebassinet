@@ -93,6 +93,12 @@ export class InputFieldComponent implements OnInit {
      */
     public isRequired = signal<boolean>(false);
 
+    /**
+     * Signal to show or hide the password input field.
+     * Default is false.
+     */
+    public toggleShowPassword = signal<boolean>(false);
+
     public controlId = generateId(10);
     public valueFormGroup?: FormGroup;
     public valueFormControl?: FormControl;
@@ -139,5 +145,9 @@ export class InputFieldComponent implements OnInit {
 
     public onBlur() {
         this.focus.emit(false);
+    }
+
+    public togglePasswordVisibility() {
+        this.toggleShowPassword.update(value => !value);
     }
 }

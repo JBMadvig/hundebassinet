@@ -33,12 +33,32 @@
         [max]="max()"
         [min]="min()"
         [placeholder]="placeholder()"
-        [type]="type()"
+        [type]="type() === 'password' && !toggleShowPassword() ? 
+        'password' : type() === 'password' && toggleShowPassword() ? 
+        'text' : type()"
         [value]="value()"
         (blur)="onBlur()"
         (focus)="onFocus()"
         (input)="onInput()"
       />
+      @if (type() === 'password') {
+        <button
+          type="button"
+          class="ml-2 flex items-center justify-center text-gray-600 hover:text-gray-800 focus:outline-none transition-colors"
+          (click)="togglePasswordVisibility()"
+        >
+          @if (toggleShowPassword()) {
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 9a3 3 0 1 0 0 6 3 3 0 1 0 0-6"></path>
+              <path d="M12 19c7.63 0 9.93-6.62 9.95-6.68.07-.21.07-.43 0-.63-.02-.07-2.32-6.68-9.95-6.68s-9.93 6.61-9.95 6.67c-.07.21-.07.43 0 .63.02.07 2.32 6.68 9.95 6.68Zm0-12c5.35 0 7.42 3.85 7.93 5-.5 1.16-2.58 5-7.93 5s-7.42-3.84-7.93-5c.5-1.16 2.58-5 7.93-5"></path>
+            </svg>
+          } @else {
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+              <path d="m21.95 12.32-1.9-.64C19.98 11.9 18.16 17 12 17s-7.98-5.1-8.05-5.32l-1.9.63s.28.8.93 1.81L.7 15.85l1.21 1.6 2.3-1.74c.58.62 1.29 1.24 2.16 1.77l-1.51 2.48L6.57 21l1.62-2.65c.83.3 1.78.5 2.82.59v3.05h2v-3.05c1.05-.08 1.99-.29 2.82-.59L17.45 21l1.71-1.04-1.51-2.48c.87-.53 1.58-1.15 2.16-1.77l2.3 1.74 1.21-1.6-2.28-1.73c.65-1.01.92-1.79.93-1.81Z"></path>
+            </svg>
+          }
+        </button>
+      }
     </div>
   } @else {
     <div
