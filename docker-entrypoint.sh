@@ -13,8 +13,9 @@ set -e
     echo "🚀 Initiating replica set..."
     mongosh --eval 'rs.initiate({_id: "rs0", members: [{ _id: 0, host: "mongodb:27017" }]})' > /dev/null 2>&1
 
-    echo "🗂️ Creating temporary collection..."
-    mongosh --eval 'db.getSiblingDB("mfan").createCollection("tmps")' > /dev/null 2>&1
+    echo "🗂️ Creating collections..."
+    # mongosh --eval 'db.getSiblingDB("mfan").createCollection("tmps")' > /dev/null 2>&1
+    mongosh --eval 'db.getSiblingDB("mfan").createCollection("users")' > /dev/null 2>&1
   fi
 ) &
 
