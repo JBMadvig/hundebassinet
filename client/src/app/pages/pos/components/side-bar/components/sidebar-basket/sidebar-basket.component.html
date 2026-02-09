@@ -1,3 +1,5 @@
+@let userData = user();
+
 <article class="basketContainer grid h-full grid-cols-1 grid-rows-[auto_1fr_auto] bg-gray-50 pb-4">
   <div class="flex w-full items-center justify-between p-2 text-xl font-bold">
     <span>Basket</span>
@@ -27,17 +29,19 @@
     <div
       class="grid-rows-auto grid grid-cols-1 gap-2 border-t border-text-blue/25 p-2 transition-all duration-250 ease-in-out"
     >
-      <p class="flex flex-row justify-between">
-        <span>Balance after purchase</span>
-        <span
-          class="italic"
-          [ngClass]="{
-            'text-prime-red': user().balance - totalPrice() < 0,
-            'text-prime-green': user().balance - totalPrice() >= 0,
-          }"
-          >{{ user().balance - totalPrice() }}&nbsp;,-</span
-        >
-      </p>
+      @if (userData !== null) {
+        <p class="flex flex-row justify-between">
+          <span>Balance after purchase</span>
+          <span
+            class="italic"
+            [ngClass]="{
+              'text-prime-red': userData.balance - totalPrice() < 0,
+              'text-prime-green': userData.balance - totalPrice() >= 0,
+            }"
+            >{{ userData.balance - totalPrice() }}&nbsp;,-</span
+          >
+        </p>
+      }
       <p class="flex flex-row justify-between text-xl font-bold text-prime-orange">
         <span>Subtotal</span><span>{{ totalPrice() }}&nbsp;,-</span>
       </p>
@@ -51,9 +55,9 @@
       <span> Are you sure you want to clear your basket? </span>
       <span>This will remove all items you have currently selected.</span>
     </p>
-    <div class="grid grid-cols-2 gap-x-2 w-full">
-      <app-button label="Close" variant="subtle" (handleClick)="showDialog.set(false)" />
-      <app-button label="Clear Basket" (handleClick)="basketService.clearBasket(); showDialog.set(false)" />
+    <div class="grid w-full grid-cols-2 gap-x-2">
+      <app-button (handleClick)="showDialog.set(false)" label="Close" variant="subtle" />
+      <app-button (handleClick)="basketService.clearBasket(); showDialog.set(false)" label="Clear Basket" />
     </div>
   </div>
 </app-dialog>

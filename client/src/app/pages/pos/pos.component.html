@@ -24,7 +24,7 @@
         </form>
       }
     </div>
-    <app-sidebar-user-details />
+    <app-sidebar-user-details (openSettings)="openSettings.set(true)" />
   </div>
   <div class="grid h-full w-full grid-cols-[1fr_auto] overflow-hidden">
     <div class="overflow-hidden transition-all transition-discrete duration-300 ease-in-out">
@@ -41,3 +41,5 @@
     </div>
   </div>
 </div>
+
+<app-settings [(visible)]="openSettings"></app-settings>

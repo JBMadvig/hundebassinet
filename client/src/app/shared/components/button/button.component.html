@@ -1,9 +1,9 @@
 @switch (variant()) {
   @case ('solid') {
     <button
-      class="grid w-full grid-cols-1 grid-rows-1 border rounded-full leading-4 text-white transition-all"
+      class="grid w-full grid-cols-1 grid-rows-1 rounded-full border leading-4 text-white transition-all"
       [ngClass]="{
-        'border-gray-400 bg-gray-400 justify-items-center': loading() || isDisabled(),
+        'justify-items-center border-gray-400 bg-gray-400': loading() || isDisabled(),
         'border-prime-green bg-prime-green2 hover:brightness-110': !loading() && !isDisabled(),
         'p-3 text-sm': size() === 'medium',
         'p-2 text-xs': size() === 'small',
@@ -35,7 +35,7 @@
 
   @case ('subtle') {
     <button
-      class="w-full border border-gray rounded-full leading-4 text-gray-900 transition-all"
+      class="border-gray w-full rounded-full border leading-4 text-gray-900 transition-all"
       [ngClass]="{
         'bg-gray-400': loading() || isDisabled(),
         'bg-gray-300 hover:bg-gray-200': !loading() && !isDisabled(),
@@ -47,7 +47,7 @@
       (click)="onClick($event)"
     >
       @if (loading()) {
-          <div class="loader"></div>
+        <div class="loader"></div>
       } @else {
         @if (icon()) {
           <i class="text-xs">
@@ -62,7 +62,7 @@
 
   @case ('subtle-dark') {
     <button
-      class="grid w-full grid-cols-1 grid-rows-1 border rounded-full leading-4 text-white transition-all"
+      class="grid w-full grid-cols-1 grid-rows-1 rounded-full border leading-4 text-white transition-all"
       [ngClass]="{
         'bg-bg-dark': loading() || isDisabled(),
         'border-gray-darkish bg-gray-dark hover:bg-transparent': !loading() && !isDisabled(),
@@ -96,7 +96,7 @@
 
   @case ('danger') {
     <button
-      class="w-full border rounded-full leading-4 text-gray-dark transition-all"
+      class="text-gray-dark w-full rounded-full border leading-4 transition-all"
       [ngClass]="{
         'border-gray bg-warning/90 hover:brightness-100': loading() || isDisabled(),
         'border-gray-dark bg-warning': !loading() && !isDisabled(),
@@ -130,12 +130,48 @@
     >
       @if (icon()) {
         <i class="text-xs">
-            <ng-content select="[buttonIcon]"></ng-content>
-          </i>
+          <ng-content select="[buttonIcon]"></ng-content>
+        </i>
       }
 
       @if (label()) {
         <span class="text-xs">
+          {{ label() }}
+        </span>
+      }
+    </button>
+  }
+  @case ('menu-text') {
+    <button
+      class="grid grid-flow-col items-center gap-x-1 leading-4 text-primary"
+      [ngClass]="{
+        'p-3 text-xl': size() === 'medium',
+        'p-2 text-2xl': size() === 'small',
+        'hover:text-black': textVariant() === 'primary',
+        'hover:text-white': textVariant() === 'light',
+      }"
+      [disabled]="loading() || isDisabled()"
+      [type]="type()"
+      (click)="onClick($event)"
+    >
+      @if (icon()) {
+        <i
+          [ngClass]="{
+            'text-2xl': size() === 'medium',
+            'text-xl': size() === 'small',
+          }"
+        >
+          <ng-content select="[buttonIcon]"></ng-content>
+        </i>
+      }
+
+      @if (label()) {
+        <span
+          [ngClass]="{
+            'text-2xl': size() === 'medium',
+            'text-xl': size() === 'small',
+          }"
+        >
           {{ label() }}
         </span>
       }

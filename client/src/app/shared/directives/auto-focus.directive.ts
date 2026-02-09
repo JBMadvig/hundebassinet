@@ -1,24 +1,21 @@
-import { Directive, ElementRef, input, OnChanges, SimpleChanges } from '@angular/core';
+import { booleanAttribute, Directive, effect, ElementRef, inject, input } from '@angular/core';
 
 @Directive({
     selector: '[appAutoFocus]',
     standalone: true,
 })
-export class AutofocusDirective implements OnChanges {
+export class AutofocusDirective {
+    private el = inject(ElementRef);
 
-    public appAutoFocus = input(false);
+    public appAutoFocus = input(false, { transform: booleanAttribute });
 
-    constructor(private elementRef: ElementRef) {}
-
-    ngOnChanges(changes: SimpleChanges): void {
-        const { currentValue, previousValue } = changes['appAutoFocus'];
-
-        if(currentValue) {
-            this.elementRef.nativeElement.focus();
-        }
-
-        if(previousValue) {
-            this.elementRef.nativeElement.blur();
-        }
+    constructor() {
+        effect(() => {
+            if (this.appAutoFocus()) {
+                this.el.nativeElement.focus();
+            } else {
+                this.el.nativeElement.blur();
+            }
+        });
     }
 }

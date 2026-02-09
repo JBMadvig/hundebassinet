@@ -1,8 +1,8 @@
-import { Component, computed } from '@angular/core';
+import { Component, computed, inject, output } from '@angular/core';
+
+import { AuthService } from '@services/auth.service';
 
 import { BadgeComponent } from '../../../../../../shared/components/badge/badge.component';
-import { User } from '../../../../../../shared/types/user.types';
-import { mockUsers } from '../../../../testdata';
 
 @Component({
     selector: 'app-sidebar-user-details',
@@ -13,9 +13,12 @@ import { mockUsers } from '../../../../testdata';
     styleUrl: './sidebar-user-details.component.css',
 })
 export class SidebarUserDetailsComponent {
+    private authService = inject(AuthService);
 
-    // TODO: Delete this hardcoded user and fetch the logged in user from auth service
-    public userDetail: User = mockUsers[0];
+    // Since this page can only be accessed by authenticated users, we can safely assert that currentUser is not null.
+    public userDetail = this.authService.currentUser()!;
+
+    public openSettings = output();
 
     public userNameInitalComputedValue = computed((): string => {
         if (!this.userDetail?.name) {
