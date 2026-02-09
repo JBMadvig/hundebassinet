@@ -8,7 +8,16 @@ export const userRolesEnum = Type.Union([
     Type.Literal('sudo-admin'),
 ]);
 
-export const userSchema = Type.Object({
+// Minimal user schema for login screen (public, no auth required)
+export const userMinimalSchema = Type.Object({
+    _id: MongooseObjectIdType,
+    name: Type.String(),
+    email: Type.String({ format: 'email' }),
+    avatarUrl: Type.String(),
+});
+
+// Public user schema (without password)
+export const userPublicSchema = Type.Object({
     _id: MongooseObjectIdType,
     email: Type.String({ format: 'email' }),
     name: Type.String(),
@@ -18,4 +27,26 @@ export const userSchema = Type.Object({
     avatarUrl: Type.String(),
     createdAt: MongooseDateType,
     updatedAt: MongooseDateType,
+});
+
+// For backward compatibility
+export const userSchema = userPublicSchema;
+
+// Auth request schemas
+export const registerRequestSchema = Type.Object({
+    email: Type.String({ format: 'email' }),
+    name: Type.String({ minLength: 2, maxLength: 100 }),
+    password: Type.String({ minLength: 8 }),
+});
+
+export const loginRequestSchema = Type.Object({
+    email: Type.String({ format: 'email' }),
+    password: Type.String(),
+});
+
+// Auth response schema
+export const authResponseSchema = Type.Object({
+    accessToken: Type.String(),
+    refreshToken: Type.String(),
+    user: userPublicSchema,
 });
