@@ -7,7 +7,7 @@ import { AutoSub, AutoUnsubscribe } from '@decorators/auto-unsub.decorator';
 // Define the type attribute of the button we have implementet. (reset and image is not implemented)
 type ButtonType = 'button' | 'submit';
 // Define the variants of the button we have implementet.
-type ButtonVariant = 'solid' | 'subtle' | 'subtle-dark' | 'danger' | 'text';
+type ButtonVariant = 'solid' | 'subtle' | 'subtle-dark' | 'danger' | 'text' | 'menu-text';
 type TextVariant = 'light' | 'primary';
 
 @Component({

@@ -1,0 +1,24 @@
+@let userData = user;
+
+@if(visible() && userData) {
+    <app-dialog [(visible)]="visible" [dialogTitle]="'Settings'" >
+        <div class="min-w-sm">
+            <ul class="[&_li]:pb-4 [&_li]:last:pb-0">
+                @if(userData.role === 'admin' || userData.role === 'sudo-admin') {
+                    <li>
+                        <app-button (handleClick)="redirect('admin-settings')" label="Admin Settings - Manage users and inventory" />
+                    </li>
+                }
+                <li>
+                    <app-button (handleClick)="redirect('user-settings')" label="User Settings - Change name and see transaction history" />
+                </li>
+                <li>
+                    <app-button (handleClick)="redirect('inventory')" label="Inventory - Add to inventory" />
+                </li>
+                <li>
+                    <app-button variant="subtle" (handleClick)="authService.logout()" label="Logout" />
+                </li>
+            </ul>
+        </div>
+    </app-dialog>
+}

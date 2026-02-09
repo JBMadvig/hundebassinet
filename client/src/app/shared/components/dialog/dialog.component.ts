@@ -52,12 +52,14 @@ export class DialogComponent {
     }
 
     public clickOutside(n: KeyboardEvent | MouseEvent) {
+        console.log('🚀 ~ DialogComponent ~ clickOutside ~ n:', n);
         const dialog = this.dialog();
         if (!dialog || !this.allowCloseOutside) return;
         if (n instanceof KeyboardEvent) return;
 
         // If the click was outside of the dialog, close it.
         if (!dialog.nativeElement.contains(n.target)) {
+            console.log('🚀 ~ DialogComponent ~ clickOutside ~ ', n);
             this.onHandleClose();
         }
     }

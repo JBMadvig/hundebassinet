@@ -1,5 +1,8 @@
 import { Route } from '@angular/router';
 
+import { authGuard } from './shared/guards/auth.guard';
+import { posRedirectGuard } from './shared/guards/pos-redirect.guard';
+
 export interface RouteData {
     id: string;
 }
@@ -20,25 +23,40 @@ export const routes: CustomRoute[] = [
         },
     },
     {
-        path: 'landing',
-        pathMatch: 'full',
-        loadComponent: () => import('./pages/landing/landing.component')
-            .then(m => m.LandingComponent),
-        data: {
-            id: 'landing',
-        },
+        path: 'pos',
+        canActivate: [ authGuard ],
+        children: [
+            {
+                path: '',
+                pathMatch: 'full',
+                canActivate: [ posRedirectGuard ],
+                children: [],
+            },
+            {
+                path: 'inventory',
+                loadComponent: () => import('./pages/inventory/inventory.component')
+                    .then(m => m.InventoryComponent),
+                data: {
+                    id: 'inventory',
+                },
+            },
+            {
+                path: ':userId',
+                loadComponent: () => import('./pages/pos/pos.component')
+                    .then(m => m.PosComponent),
+                data: {
+                    id: 'pos',
+                },
+            },
+        ],
     },
     {
-        path: 'pos',
+        path: '',
+        redirectTo: 'users',
         pathMatch: 'full',
-        loadComponent: () => import('./pages/pos/pos.component')
-            .then(m => m.PosComponent),
-        data: {
-            id: 'pos',
-        },
     },
     {
         path: '**',
-        redirectTo: 'landing',
+        redirectTo: 'users',
     },
 ];

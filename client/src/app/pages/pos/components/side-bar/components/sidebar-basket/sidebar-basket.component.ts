@@ -3,8 +3,8 @@ import { Component, inject, signal } from '@angular/core';
 
 import { ButtonComponent } from '@components/button/button.component';
 import { DialogComponent } from '@components/dialog/dialog.component';
+import { AuthService } from '@services/auth.service';
 import { BasketService } from '@services/basket.service';
-import { UserService } from '@services/user.service';
 
 import { BasketItemComponent } from './basket-item/basket-item.component';
 
@@ -20,7 +20,7 @@ import { BasketItemComponent } from './basket-item/basket-item.component';
     styleUrl: './sidebar-basket.component.css',
 })
 export class SidebarBasketComponent {
-    private userService = inject(UserService);
+    private authService = inject(AuthService);
     public basketService = inject(BasketService);
 
     public showDialog = signal(false);
@@ -28,7 +28,7 @@ export class SidebarBasketComponent {
     public basketItems = this.basketService.basketItems;
     public basketItemsAmount = this.basketService.totalItemsCount;
     public totalPrice = this.basketService.totalItemsPrice;
-    public user = this.userService.userData;
+    public user = this.authService.currentUser;
 
 
 }

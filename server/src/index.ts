@@ -1,4 +1,5 @@
 import cors from '@fastify/cors';
+import fjwt from '@fastify/jwt';
 import { TypeBoxTypeProvider } from '@fastify/type-provider-typebox';
 import fastifyWebsocket from '@fastify/websocket';
 import { initWebsocket } from '@services/websocket.service';
@@ -15,13 +16,18 @@ import routes from './routes';
 
     const fastify = Fastify().withTypeProvider<TypeBoxTypeProvider>();
 
+    // Register JWT plugin
+    await fastify.register(fjwt, {
+        secret: process.env['JWT_SECRET'] || 'your-secret-key-change-in-production',
+    });
+
     await fastify.register(fastifyWebsocket);
     await initWebsocket(fastify);
 
     await fastify.register(cors, {
         origin: '*',
         methods: [ 'GET', 'POST', 'PATCH', 'PUT', 'DELETE', 'OPTIONS' ],
-        allowedHeaders: [ 'Content-Type', 'access-control-allow-headers' ],
+        allowedHeaders: [ 'Content-Type', 'Authorization', 'access-control-allow-headers' ],
     });
 
     fastify.setErrorHandler(httpErrorHandler);

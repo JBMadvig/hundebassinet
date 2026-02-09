@@ -1,12 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, inject, signal } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { Component, computed, HostListener, inject, resource, signal } from '@angular/core';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { ButtonComponent } from '@components/button/button.component';
 import { DialogComponent } from '@components/dialog/dialog.component';
 import { InputFieldComponent } from '@components/input-field/input-field.component';
+import { AuthService } from '@services/auth.service';
+import { UsersApiService } from '@services/users-api.service';
 
-import { mockUsers } from '../pos/testdata';
 import { User } from './../../shared/types/user.types';
 @Component({
     selector: 'app-users',
@@ -23,14 +24,30 @@ import { User } from './../../shared/types/user.types';
 export class UsersComponent {
 
     public formBuilder = inject(FormBuilder);
+    private authService = inject(AuthService);
+    private usersApiService = inject(UsersApiService);
+
+    @HostListener('document:keydown.enter', [ '$event' ])
+    public onKeydownHandler(event: Event) {
+        if (!(event instanceof KeyboardEvent)
+            || event.key !== 'Enter'
+            || !this.enterPasswordDialog()
+            || !this.passwordForm.controls.password.value
+        ) return;
+        this.logIn();
+    }
 
     public passwordForm = this.formBuilder.group({
-        password: '',
+        password: [ '', Validators.required ],
     });
 
-    public users = signal<User[]>(mockUsers);
+    public usersResource = resource({
+        loader: () => this.usersApiService.fetchUsers(),
+    });
     public selectedUser = signal<User | null>(null);
-    public showUserDialog = signal(false);
+    public enterPasswordDialog = signal(false);
+    public loginLoader = signal(false);
+    public loginError = signal<string | null>(null);
 
     public titleModal = computed(() => {
         const selectedUser = this.selectedUser();
@@ -43,11 +60,34 @@ export class UsersComponent {
 
     public userChosen(user: User) {
         this.selectedUser.set(user);
-        this.showUserDialog.set(true);
-
+        this.enterPasswordDialog.set(true);
+        this.loginError.set(null);
+        this.passwordForm.reset();
     }
 
     public logIn() {
-        console.log('Logging in user:', this.selectedUser()?.name, ', with password: ', this.passwordForm.value.password);
+        this.loginLoader.set(true);
+        const user = this.selectedUser();
+        const password = this.passwordForm.value.password;
+
+        if (!user || !password) {
+            this.loginError.set('Please enter a password');
+            return;
+        }
+
+        this.authService.login({
+            email: user.email,
+            password: password,
+        }).subscribe({
+            next: () => {
+                this.enterPasswordDialog.set(false);
+                this.passwordForm.reset();
+                this.loginLoader.set(false);
+            },
+            error: () => {
+                this.loginError.set('Invalid email or password');
+                this.loginLoader.set(false);
+            },
+        });
     }
 }

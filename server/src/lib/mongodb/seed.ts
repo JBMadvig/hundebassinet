@@ -15,6 +15,7 @@ export async function seedDatabase() {
             const sudoAdmin = new UserModel({
                 name: 'SUDO Admin User',
                 email: 'mail@mail.com',
+                password: 'admin123', // Will be hashed by pre-save hook
                 role: UserRoles.SUDO_ADMIN,
                 balance: 0,
                 valuta: 'DKK',
