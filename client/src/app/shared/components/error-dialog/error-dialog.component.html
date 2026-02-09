@@ -1,0 +1,14 @@
+@if (errorService.errorOccurred()) {
+  <app-dialog
+    [title]="'Error Occurred'"
+    [visible]="errorService.errorOccurred()"
+    (closeModal)="errorService.clearError()"
+  >
+    <div class="max-w-[600px]">
+      <p class="font-bold text-nowrap">
+        An error occurred. Please provide the following message to Vocast support.
+      </p>
+      <p class="text-balance">{{ errorService.errorMessage() }}</p>
+    </div>
+  </app-dialog>
+}
