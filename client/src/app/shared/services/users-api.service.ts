@@ -11,12 +11,20 @@ import { mapUser } from '../utils/map-user';
 })
 export class UsersApiService {
     private http = inject(HttpClient);
-    private apiUrl = `${environment.apiUrl}/landing`;
+    private apiUrl = `${environment.apiUrl}/users`;
 
     public fetchUsers(): Promise<User[]> {
         return firstValueFrom(
             this.http.get<User[]>(this.apiUrl).pipe(
                 map((users) => users.map(mapUser)),
+            ),
+        );
+    }
+
+    public fetchUserById(id: string): Promise<User> {
+        return firstValueFrom(
+            this.http.get<User>(`${this.apiUrl}/${id}`).pipe(
+                map(mapUser),
             ),
         );
     }

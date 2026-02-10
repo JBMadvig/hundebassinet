@@ -1,40 +1,36 @@
+import { Type } from '@sinclair/typebox';
 import { FastifyPluginCallback, FastifySchema } from 'fastify';
 
-import { authenticateHook } from '@lib/auth-hooks';
+import { requireRole } from '@lib/auth-hooks';
 import { FastifyReplyTypebox, FastifyRequestTypebox } from '@lib/fastify-types';
-import { NotFoundError } from '@lib/http-errors';
+import { UnauthorizedError } from '@lib/http-errors';
 import { UserModel } from '@lib/mongodb/models/user.model';
 import { userPublicSchema } from '@lib/schemas/user.schema';
 
 export default <FastifyPluginCallback>function (app, opts, done) {
     const schema = {
+        params: Type.Object({
+            id: Type.String(),
+        }),
         response: {
             200: userPublicSchema,
         },
     } satisfies FastifySchema;
 
     app.route({
-        url: '/me',
+        url: '/:id',
         method: 'GET',
         schema,
-        preHandler: [ authenticateHook ], // Protected route
+        preHandler: [ requireRole([ 'admin', 'sudo-admin' ]) ],
         handler: async (
             req: FastifyRequestTypebox<typeof schema>,
             reply: FastifyReplyTypebox<typeof schema>,
         ) => {
-            // User payload is available from authenticateHook
-            const userId = req.user?.userId;
-
-            if (!userId) {
-                throw new NotFoundError('User not found');
-            }
-
-            // Find user
-            const user = await UserModel.findById(userId);
+            // Fetch user data except password - If changed, we send the pasted old ++ two news to compare if they are right.
+            const user = await UserModel.findById(req.params.id).select('_id name email role balance valuta avatarUrl');
             if (!user) {
-                throw new NotFoundError('User not found');
+                throw new UnauthorizedError('User not found');
             }
-
             await reply.send(user.toObject());
         },
     });
