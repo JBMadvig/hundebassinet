@@ -1,5 +1,7 @@
 import { Route } from '@angular/router';
 
+import { adminGuard } from '@guards/admin.guard';
+
 import { authGuard } from './shared/guards/auth.guard';
 import { posRedirectGuard } from './shared/guards/pos-redirect.guard';
 
@@ -46,6 +48,30 @@ export const routes: CustomRoute[] = [
                     .then(m => m.PosComponent),
                 data: {
                     id: 'pos',
+                },
+            },
+        ],
+    },
+    {
+        path: 'users',
+        canActivate: [ authGuard ],
+        children: [
+            {
+                path: '',
+                loadComponent: () => import('./pages/users/users.component')
+                    .then(m => m.UsersComponent),
+                canActivate: [ adminGuard ],
+                data: {
+                    id: 'users',
+                },
+            },
+            {
+                path: ':userId',
+                canActivate: [ adminGuard ],
+                loadComponent: () => import('./pages/users/user/user.component')
+                    .then(m => m.UserComponent),
+                data: {
+                    id: 'user',
                 },
             },
         ],

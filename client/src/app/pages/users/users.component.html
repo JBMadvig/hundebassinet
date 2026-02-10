@@ -1,2 +1,51 @@
 <main class="background flex min-h-screen flex-col items-center p-8">
+  @if (loading()) {
+    <p>Loading...</p>
+  } @else {
+    @if (errorFetching()) {
+      <p class="text-red-500">Error fetching users. Please try again later.</p>
+    } @else {
+      <div class="h-full w-full">
+        <h1 class="mb-4 text-2xl font-bold">Users</h1>
+        <app-table [data]="users()">
+          <ng-template #headerTemplate>
+            <tr>
+              <th class="text-left">ID</th>
+              <th class="text-left">Name</th>
+              <th class="text-left">Email</th>
+              <th class="text-left">Role</th>
+              <th class="text-left">Balance</th>
+              <th class="text-left">Created date</th>
+              <th class="text-left">Updated date</th>
+            </tr>
+          </ng-template>
+          <ng-template #rowTemplate [appTypedTemplate]="typeToken" let-data>
+            <tr class="cursor-pointer" [routerLink]="['/users/', data.id]">
+              <td>
+                  {{ data.id }}
+              </td>
+              <td>
+                  {{ data.name }}
+              </td>
+              <td>
+                  {{ data.email }}
+              </td>
+              <td>
+                  {{ data.role }}
+              </td>
+              <td>
+                  {{ data.balance }} {{ data.currency }}
+              </td>
+              <td>
+                  {{ data.createdDate }}
+              </td>
+              <td>
+                  {{ data.updatedDate }}
+              </td>
+            </tr>
+          </ng-template>
+        </app-table>
+      </div>
+    }
+  }
 </main>
