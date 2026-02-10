@@ -13,6 +13,7 @@ export class UsersApiService {
     private http = inject(HttpClient);
     private apiUrl = `${environment.apiUrl}/users`;
 
+    // Fetch simple user data for login screen (no auth required)
     public fetchUsers(): Promise<User[]> {
         return firstValueFrom(
             this.http.get<User[]>(this.apiUrl).pipe(
@@ -21,10 +22,28 @@ export class UsersApiService {
         );
     }
 
+    // Fetch single user by ID, used to fetch other users' profiles
     public fetchUserById(id: string): Promise<User> {
         return firstValueFrom(
             this.http.get<User>(`${this.apiUrl}/${id}`).pipe(
                 map(mapUser),
+            ),
+        );
+    }
+    // Fetch all users with more details for admin panel (requires admin role) but exclude users with role "sudo-admin"
+    public adminFetchUsers(): Promise<User[]> {
+        return firstValueFrom(
+            this.http.get<User[]>(`${this.apiUrl}/admin-data`).pipe(
+                map((users) => users.map(mapUser)),
+            ),
+        );
+    }
+
+    // Fetch all users with more details for sudo-admin panel (requires sudo-admin role)
+    public sudoAdminFetchUsers(): Promise<User[]> {
+        return firstValueFrom(
+            this.http.get<User[]>(`${this.apiUrl}/sudo-admin-data`).pipe(
+                map((users) => users.map(mapUser)),
             ),
         );
     }
