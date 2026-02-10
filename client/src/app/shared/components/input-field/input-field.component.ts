@@ -150,4 +150,9 @@ export class InputFieldComponent implements OnInit {
     public togglePasswordVisibility() {
         this.toggleShowPassword.update(value => !value);
     }
+
+    public onClearField() {
+        this.valueFormControl?.setValue('');
+        this.valueChange.emit('');
+    }
 }
