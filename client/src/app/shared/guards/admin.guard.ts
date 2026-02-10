@@ -16,6 +16,6 @@ export const adminGuard: CanActivateFn = (_route, _state) => {
     }
 
     // Redirect to users page - user doesn't have admin access
-    router.navigate(['/users']);
+    router.navigate([ '/landing' ]);
     return false;
 };

@@ -88,7 +88,7 @@ export class AuthService {
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
         this.currentUser.set(null);
-        this.router.navigate([ '/users' ]);
+        this.router.navigate([ '/landing' ]);
     }
 
     /**

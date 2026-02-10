@@ -6,7 +6,7 @@ import { AuthService } from '../services/auth.service';
 /**
  * POS Redirect Guard - Handles navigation to /pos without a userId
  * Redirects to /pos/:userId using the authenticated user's ID,
- * or to /users if not authenticated (fallback, authGuard should catch first)
+ * or to /landing if not authenticated (fallback, authGuard should catch first)
  */
 export const posRedirectGuard: CanActivateFn = () => {
     const authService = inject(AuthService);
@@ -18,5 +18,5 @@ export const posRedirectGuard: CanActivateFn = () => {
         return router.createUrlTree([ '/pos', currentUser.id ]);
     }
 
-    return router.createUrlTree([ '/users' ]);
+    return router.createUrlTree([ '/landing' ]);
 };

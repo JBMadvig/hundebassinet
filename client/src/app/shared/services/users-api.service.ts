@@ -11,7 +11,7 @@ import { mapUser } from '../utils/map-user';
 })
 export class UsersApiService {
     private http = inject(HttpClient);
-    private apiUrl = `${environment.apiUrl}/users`;
+    private apiUrl = `${environment.apiUrl}/landing`;
 
     public fetchUsers(): Promise<User[]> {
         return firstValueFrom(
