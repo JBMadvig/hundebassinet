@@ -1,0 +1,30 @@
+<div #wrapper class="flex h-full w-full overflow-auto overscroll-none">
+  <table class="h-full w-full">
+    <thead
+      class="sticky top-0 z-2 w-full text-left outline-2 outline-prime-white [&_th]:sticky [&_th]:top-0 [&_th]:py-1 [&_th]:pr-6 [&_th]:uppercase [&_th]:first:pl-4 [&_th]:last:pr-4"
+    >
+      <ng-container *ngTemplateOutlet="headerTemplate()"></ng-container>
+    </thead>
+    <tbody
+      class="[&_td]:pr-6 [&_td]:first:pl-4 [&_tr]:transition-all [&_tr]:duration-150 [&_tr]:ease-linear"
+      [ngClass]="{
+        '[&_tr]:border-gray-500 [&_tr]:odd:bg-prime-white/10 [&_tr:hover]:bg-prime-white/30 [&_td]:py-3 [&_td]:pr-6 [&_td]:text-xs [&_td]:first:pl-4 [&_td]:last:pr-4 [&_tr]:not-first:border-t [&_tr]:even:bg-transparent':
+          !manualRowStyle(),
+      }"
+    >
+      @for (row of optionsWithTrackBy(); let i = $index; track row.trackByValue) {
+        <ng-container *ngTemplateOutlet="rowTemplate(); context: { $implicit: row, index: i }">
+        </ng-container>
+      } @empty {
+        <!-- If no data, and noDataTemplate is provided, show the noDataTemplate -->
+        @if (noDataTemplate()) {
+          <tr>
+            <td colspan="100%">
+              <ng-container *ngTemplateOutlet="noDataTemplate()"></ng-container>
+            </td>
+          </tr>
+        }
+      }
+    </tbody>
+  </table>
+</div>

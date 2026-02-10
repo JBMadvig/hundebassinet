@@ -1,0 +1,23 @@
+<button
+  class="ml-auto flex items-center gap-1 leading-4 uppercase"
+  [ngClass]="{
+    'ml-auto': textOrientation() === 'right',
+    'mr-auto': textOrientation() === 'left',
+    'mx-auto': textOrientation() === 'center',
+  }"
+  (click)="onClick()"
+>
+  <span class="w-fit text-nowrap">
+    {{ label() }}
+  </span>
+  @if (!active()) {
+    <i class="fa-xs fa-sort fa-solid opacity-60"></i>
+  } @else {
+    <i
+      class="fa-xs fa-sort fa-duotone"
+      [ngClass]="{
+        'fa-flip-vertical': sortDir() === 'DESC',
+      }"
+    ></i>
+  }
+</button>
