@@ -16,8 +16,8 @@ export const routes: CustomRoute[] = [
     {
         path: 'landing',
         pathMatch: 'full',
-        loadComponent: () => import('./pages/users/users.component')
-            .then(m => m.UsersComponent),
+        loadComponent: () => import('./pages/landing/landing.component')
+            .then(m => m.LandingComponent),
         data: {
             id: 'landing',
         },
@@ -52,11 +52,11 @@ export const routes: CustomRoute[] = [
     },
     {
         path: '',
-        redirectTo: 'users',
+        redirectTo: 'landing',
         pathMatch: 'full',
     },
     {
         path: '**',
-        redirectTo: 'users',
+        redirectTo: 'landing',
     },
 ];
