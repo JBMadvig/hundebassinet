@@ -1,11 +1,11 @@
 import { Component, inject, model } from '@angular/core';
 import { Router } from '@angular/router';
+import { RedirectPaths } from 'app/app.routes';
 
 import { ButtonComponent } from '@components/button/button.component';
 import { DialogComponent } from '@components/dialog/dialog.component';
 import { AuthService } from '@services/auth.service';
 
-type RedirectPaths = 'inventory' | 'user-settings' | 'admin-settings';
 @Component({
     selector: 'app-settings',
     imports: [
@@ -26,14 +26,14 @@ export class SettingsComponent {
         console.log('🚀 ~ SettingsComponent ~ redirect ~ path:', path);
         if(!this.user) return;
         switch(path) {
-            case 'inventory':
-                this.route.navigate([ '/inventory' ]);
+            case '/pos/inventory':
+                this.route.navigate([ '/pos/inventory' ]);
                 break;
-            case 'user-settings':
-                this.route.navigate([ '/user-settings', this.user.id ]);
+            case '/users/me':
+                this.route.navigate([ '/users/me' ]);
                 break;
-            case 'admin-settings':
-                this.route.navigate([ '/admin-settings', this.user.id ]);
+            case '/users':
+                this.route.navigate([ '/users' ]);
                 break;
         }
     }

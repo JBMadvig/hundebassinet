@@ -6,14 +6,14 @@
             <ul class="[&_li]:pb-4 [&_li]:last:pb-0">
                 @if(userData.role === 'admin' || userData.role === 'sudo-admin') {
                     <li>
-                        <app-button (handleClick)="redirect('admin-settings')" label="Admin Settings - Manage users and inventory" />
+                        <app-button (handleClick)="redirect('/users')" label="Admin Settings - Manage users and inventory" />
                     </li>
                 }
                 <li>
-                    <app-button (handleClick)="redirect('user-settings')" label="User Settings - Change name and see transaction history" />
+                    <app-button (handleClick)="redirect('/users/me')" label="User Settings - Change name and see transaction history" />
                 </li>
                 <li>
-                    <app-button (handleClick)="redirect('inventory')" label="Inventory - Add to inventory" />
+                    <app-button (handleClick)="redirect('/pos/inventory')" label="Inventory - Add to inventory" />
                 </li>
                 <li>
                     <app-button variant="subtle" (handleClick)="authService.logout()" label="Logout" />
