@@ -1,5 +1,6 @@
-.background {
-    background: linear-gradient(90deg, rgba(40, 46, 107, 1) 0%, rgba(11, 12, 56, 1) 100%);
+/* Not used, but will keep in case it's needed later. */
+.landing-image {
+  -webkit-box-reflect: below 10px linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.5));
 }
 
 /* .loader {

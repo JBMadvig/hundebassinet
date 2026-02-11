@@ -8,6 +8,10 @@
         "main";
 }
 
+.background {
+    background: linear-gradient(90deg, rgba(40, 46, 107, 1) 0%, rgba(11, 12, 56, 1) 100%);
+}
+
 .loader {
   width: 1rem;
   aspect-ratio: 1;
