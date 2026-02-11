@@ -29,6 +29,17 @@ export const userPublicSchema = Type.Object({
     updatedAt: MongooseDateType,
 });
 
+export const userDashboardSchema = Type.Object({
+    _id: MongooseObjectIdType,
+    email: Type.String({ format: 'email' }),
+    name: Type.String(),
+    role: userRolesEnum,
+    balance: Type.Number(),
+    valuta: Type.String({ pattern: '^[A-Z]{3}$' }),
+    createdAt: MongooseDateType,
+    updatedAt: MongooseDateType,
+});
+
 // For backward compatibility
 export const userSchema = userPublicSchema;
 
