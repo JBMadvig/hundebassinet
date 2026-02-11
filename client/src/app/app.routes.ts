@@ -14,6 +14,11 @@ interface CustomRoute extends Route {
     children?: CustomRoute[];
 }
 
+// Update possible routes for this type
+export type RedirectPaths = '/landing'
+| '/pos' | '/pos/inventory'
+| '/users' | '/users/me' ;
+
 export const routes: CustomRoute[] = [
     {
         path: 'landing',
@@ -72,6 +77,15 @@ export const routes: CustomRoute[] = [
                     .then(m => m.UserComponent),
                 data: {
                     id: 'user',
+                },
+            },
+            {
+                path: 'me',
+                canActivate: [ authGuard ],
+                loadComponent: () => import('./pages/users/user/user.component')
+                    .then(m => m.UserComponent),
+                data: {
+                    id: 'me',
                 },
             },
         ],
