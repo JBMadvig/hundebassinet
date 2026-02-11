@@ -1,5 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { Component, inject, resource } from '@angular/core';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
 import { AuthService } from '@services/auth.service';
 import { UsersApiService } from '@services/users-api.service';
@@ -7,6 +8,7 @@ import { UsersApiService } from '@services/users-api.service';
 @Component({
     selector: 'app-user',
     imports: [
+        CommonModule,
         RouterModule,
     ],
     templateUrl: './user.component.html',
@@ -16,6 +18,7 @@ export class UserComponent {
     private authService = inject(AuthService);
     private activatedRoute = inject(ActivatedRoute);
     private userApiService = inject(UsersApiService);
+    private router = inject(Router);
 
     public userResource = resource({
         defaultValue: null,
@@ -33,6 +36,10 @@ export class UserComponent {
     });
 
     public adminUser = this.authService.currentUser;
+
+    public goBack() {
+        this.router.navigate([ '/users' ]);
+    }
 }
 
 

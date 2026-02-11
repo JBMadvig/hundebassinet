@@ -1,5 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { User } from 'app/shared/types/user.types';
 
 import { TableBodyData, TableComponent } from '@components/table/table.component';
@@ -8,6 +9,7 @@ import { UsersApiService } from '@services/users-api.service';
 @Component({
     selector: 'app-users',
     imports: [
+        CommonModule,
         TableComponent,
         RouterModule,
     ],
@@ -17,6 +19,7 @@ import { UsersApiService } from '@services/users-api.service';
 export class UsersComponent implements OnInit {
     private authService = inject(AuthService);
     private usersApiService = inject(UsersApiService);
+    private router = inject(Router);
 
     public readonly typeToken!: TableBodyData<User>;
 
@@ -55,5 +58,9 @@ export class UsersComponent implements OnInit {
                 }
                 break;
         }
+    }
+
+    public goBack() {
+        this.router.navigate([ '/pos' ]);
     }
 }
