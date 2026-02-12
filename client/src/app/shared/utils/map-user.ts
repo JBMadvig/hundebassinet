@@ -1,6 +1,17 @@
+import { environment } from '../../../environments/environment';
 import { User } from '../types/user.types';
 
-export function mapUser(raw: any): User {
+type RawUser = Omit<User, 'id'> & { _id?: string; id?: string };
+
+const serverBaseUrl = environment.apiUrl.replace('/api', '');
+
+export function mapUser(raw: RawUser): User {
     const { _id, ...rest } = raw;
-    return { id: _id ?? raw.id, ...rest };
+
+    let avatarUrl = rest.avatarUrl || '';
+    if (avatarUrl.startsWith('/')) {
+        avatarUrl = `${serverBaseUrl}${avatarUrl}`;
+    }
+
+    return { id: (_id ?? rest.id) as string, ...rest, avatarUrl };
 }
