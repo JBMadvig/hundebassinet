@@ -1,6 +1,7 @@
 import { MultipartFile } from '@fastify/multipart';
 import { Type } from '@sinclair/typebox';
 import { FastifyPluginCallback, FastifySchema } from 'fastify';
+import sharp from 'sharp';
 
 import { authenticateHook } from '@lib/auth-hooks';
 import { FastifyRequestTypebox, ObjectIdStringType } from '@lib/fastify-types';
@@ -57,16 +58,25 @@ export default <FastifyPluginCallback>function (app, _opts, done) {
             }
 
             // Read file into buffer
-            const buffer: Buffer = await file.toBuffer();
-
-            // Check if file was truncated (exceeded size limit)
-            if (file.file.truncated) {
-                throw new BadRequestError('File too large. Maximum size is 2MB');
+            let buffer: Buffer;
+            try {
+                buffer = await file.toBuffer();
+            } catch (err: unknown) {
+                if (err instanceof Error && 'code' in err && err.code === 'FST_REQ_FILE_TOO_LARGE') {
+                    throw new BadRequestError('File too large. Maximum size is 10MB');
+                }
+                throw err;
             }
 
+            // Resize and convert to WebP
+            const processedBuffer = await sharp(buffer)
+                .resize(512, 512, { fit: 'cover' })
+                .webp({ quality: 80 })
+                .toBuffer();
+
             // Update user document
-            targetUser.avatarData = buffer;
-            targetUser.avatarMimeType = file.mimetype;
+            targetUser.avatarData = processedBuffer;
+            targetUser.avatarMimeType = 'image/webp';
             targetUser.avatarUrl = `/api/users/${targetUserId}/avatar`;
             await targetUser.save();
 
