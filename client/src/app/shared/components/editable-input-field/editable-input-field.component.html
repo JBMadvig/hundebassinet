@@ -1,7 +1,7 @@
 @if (label()) {
   <!-- Has label layout -->
   @if (!isEditView() || disabled()) {
-    <div class="mb-1 flex flex-row items-center gap-4 leading-4">
+    <div class="mb-1 flex flex-row items-center gap-2 leading-4">
       <label [for]="controlId">
         {{ label() }}
       </label>

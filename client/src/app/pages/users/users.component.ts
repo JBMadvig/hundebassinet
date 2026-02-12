@@ -4,6 +4,7 @@ import { Router, RouterModule } from '@angular/router';
 import { User } from 'app/shared/types/user.types';
 
 import { TableBodyData, TableComponent } from '@components/table/table.component';
+import { TypedTemplateDirective } from '@directives/typed-template.directive';
 import { AuthService } from '@services/auth.service';
 import { UsersApiService } from '@services/users-api.service';
 @Component({
@@ -12,6 +13,7 @@ import { UsersApiService } from '@services/users-api.service';
         CommonModule,
         TableComponent,
         RouterModule,
+        TypedTemplateDirective,
     ],
     templateUrl: './users.component.html',
     styleUrl: './users.component.css',

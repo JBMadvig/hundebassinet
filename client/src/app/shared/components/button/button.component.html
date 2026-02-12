@@ -117,10 +117,10 @@
 
   @case ('text') {
     <button
-      class="grid grid-flow-col items-center gap-x-1 leading-4 text-primary"
+      class="grid grid-flow-col items-center gap-x-1 leading-4 text-prime-orange2 hover:text-prime-orange"
       [ngClass]="{
-        'p-3 text-sm': size() === 'medium',
-        'p-2 text-xs': size() === 'small',
+        'p-3': size() === 'medium',
+        'p-2': size() === 'small',
         'hover:text-black': textVariant() === 'primary',
         'hover:text-white': textVariant() === 'light',
       }"
@@ -135,7 +135,7 @@
       }
 
       @if (label()) {
-        <span class="text-xs">
+        <span>
           {{ label() }}
         </span>
       }
