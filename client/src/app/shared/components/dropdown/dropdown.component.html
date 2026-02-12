@@ -1,0 +1,55 @@
+@if (valueFormGroup && valueFormControl) {
+  <div class="grid" [formGroup]="valueFormGroup">
+    @if (label()) {
+      <div
+        class="flex items-center"
+        [ngClass]="{
+          'py-1': !isRequired(),
+        }"
+      >
+        <label class="text-text-blue/80" [for]="controlId">
+          {{ label() }}
+        </label>
+        @if (isRequired()) {
+          <span class="hover:cursor-default">&#42;</span>
+        }
+      </div>
+    }
+
+    <select
+      [id]="controlId"
+      class="w-full rounded-full border border-text-blue/80 px-4 py-2 bg-prime-white/50"
+      [ngClass]="{
+        'text-text-blue/80 italic': valueFormControl.value === null,
+        'border-prime-red': isInvalid(),
+        'border-gray-400': !isInvalid(),
+      }"
+      [formControlName]="controlName"
+    >
+      @if (placeholder()) {
+        <option [ngValue]="null" disabled hidden selected>{{ placeholder() }}</option>
+      }
+      @for (optGroup of optGroupsWithId(); track $index) {
+        @if (optGroup.label) {
+          <optgroup [label]="optGroup.label">
+            @for (option of optGroup.options; track option.id) {
+              <option [disabled]="option.disabled" [hidden]="option.hidden" [ngValue]="option.value">
+                {{ option.text }}
+              </option>
+            }
+          </optgroup>
+        } @else {
+          @for (option of optGroup.options; track option.id) {
+            <option [disabled]="option.disabled" [hidden]="option.hidden" [ngValue]="option.value">
+              {{ option.text }}
+            </option>
+          }
+        }
+      }
+
+      @if (resetOption()) {
+        <option [hidden]="valueFormControl.value === null" ngValue="dropdownreset">Reset</option>
+      }
+    </select>
+  </div>
+}
