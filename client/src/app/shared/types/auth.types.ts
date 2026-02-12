@@ -25,3 +25,27 @@ export interface TokenPayload {
     iat?: number;
     exp?: number;
 }
+
+interface RoleList {
+    id: number,
+    text: string,
+    value: string,
+}
+
+export const rolesList: RoleList[] = [
+    {
+        id: 0,
+        text: 'User',
+        value: 'user',
+    },
+    {
+        id: 1,
+        text: 'Admin user',
+        value: 'admin',
+    },
+    {
+        id: 2,
+        text: 'Sudo admin user',
+        value: 'sudo-admin',
+    },
+];

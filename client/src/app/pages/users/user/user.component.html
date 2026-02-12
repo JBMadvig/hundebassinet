@@ -1,3 +1,4 @@
+@let userResourceValue = userResource.value();
 <div class="grid-rows-auto grid w-full gap-6 p-8">
   <button
     class="flex flex-row gap-4 text-prime-white hover:cursor-pointer hover:text-prime-white/80"
@@ -13,6 +14,9 @@
     <span>Go back to users dashboard</span>
   </button>
   <div>
+    @if(userResourceValue) {
+      <app-user-details-form [user]="userResourceValue" />
+    }
       <!-- Add visual for loading (userResource.loading)-->
       <!-- Add visual for error (userResource.loading)-->
       <!-- Add visual for value returns null (userResource.value === null)-->

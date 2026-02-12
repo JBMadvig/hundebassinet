@@ -2,13 +2,17 @@ export type UserRoles = 'admin' | 'user' | 'sudo-admin';
 
 export interface User {
     id: string;
-    email: string;
-    balance: number;
-    createdAt: Date;
     name: string;
+    email: string;
     role: UserRoles;
-    updatedAt: Date;
-    // Valuta is ISO 4217 format, e.g., 'USD', 'EUR', 'DKK'
+    balance: number;
     valuta: string;
+    // Valuta is ISO 4217 format, e.g., 'USD', 'EUR', 'DKK'
     avatarUrl: string;
+    createdAt: Date;
+    updatedAt: Date;
 }
+
+export type UserWithPassword = User & {
+    password: string;
+};

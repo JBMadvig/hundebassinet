@@ -1,0 +1,110 @@
+<div class="grid w-full grid-cols-2 gap-4 rounded-2xl border border-prime-white/90 bg-prime-white/80 p-4">
+  <div>
+    <p class="text-xl">User Details</p>
+    <form
+      class="grid-rows-auto grid grid-cols-2 gap-4"
+      [formGroup]="userDetailsForm"
+      (submit)="saveUserDetails()"
+    >
+      <app-editable-input-field formControlName="name" label="Name" ngDefaultControl />
+      <app-editable-input-field formControlName="email" label="Email" ngDefaultControl />
+      @if (currentUser()?.role === 'admin' || currentUser()?.role === 'sudo-admin') {
+        <app-dropdown
+          [options]="roleList"
+          formControlName="role"
+          label="Role"
+          ngDefaultControl
+          placeholder="Select a role"
+        />
+        <app-editable-input-field formControlName="balance" label="Balance" ngDefaultControl />
+      }
+      @if (changesHasBeenMade()) {
+        <app-button class="col-span-2" label="save changes" type="submit" />
+      }
+    </form>
+  </div>
+  <div>
+    <p class="text-xl">Profile Image</p>
+    <div class="group relative w-fit">
+      @if (!user().avatarUrl) {
+        <div class="flex aspect-4/3 h-full w-72 items-center justify-center bg-amber-950/10">
+          <span class="font-extrabold">[NO IMAGE PROVIDED]</span>
+        </div>
+      } @else {
+        <img
+          class="col-start-1 row-start-1 h-full w-full max-w-72"
+          [src]="user().avatarUrl"
+          alt="User profile image"
+        />
+      }
+      <button
+        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-fit w-fit cursor-pointer rounded-full border border-gray-500/50 bg-prime-white/80 p-2 text-text-blue opacity-0 transition-all duration-200 ease-in-out group-hover:opacity-100 hover:pointer-events-auto"
+        (click)="uploadProfileImage()"
+      >
+        <svg
+          fill="currentColor"
+          height="24"
+          viewBox="0 0 24 24"
+          width="24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+          <path d="M4 4h16v2H4zm8 4-5 6h4v7h2v-7h4z"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+  @if (currentUser()?.id === user().id || currentUser()?.role === 'sudo-admin') {
+    <div class="col-span-2">
+      @if (!changePasswordSignal()) {
+        <app-button (handleClick)="changePasswordSignal.set(true)" label="Change Password" variant="text" />
+      } @else {
+        <div class="flex flex-col gap-2 rounded-2xl border border-text-blue p-4">
+          <p class="text-xl text-text-blue">Change Password</p>
+          <form class="flex flex-col gap-4" [formGroup]="passwordForm" (submit)="changePassword()">
+            @if (changePasswordSignalError() === 'incorrectCurrent') {
+              <p class="text-red-500">Incorrect current password.</p>
+            }
+            @if (changePasswordSignalError() === 'errorFromServer') {
+              <p class="text-red-500">Error from server, please try again</p>
+            }
+            <app-input-field
+              formControlName="currentPassword"
+              label="Current Password"
+              ngDefaultControl
+              tabindex="1"
+              type="password"
+            />
+            @if (changePasswordSignalError() === 'noMatch') {
+              <p class="text-red-500">New passwords do not match.</p>
+            }
+            <app-input-field
+              class="transition-all duration-200 ease-in-out"
+              [ngClass]="{
+                hidden: passwordForm.controls.currentPassword.value === '',
+              }"
+              formControlName="newPassword"
+              label="New Password"
+              ngDefaultControl
+              tabindex="2"
+              type="password"
+            />
+            <app-input-field
+              class="transition-all duration-200 ease-in-out"
+              [ngClass]="{
+                hidden: passwordForm.controls.newPassword.value === '',
+              }"
+              formControlName="confirmNewPassword"
+              label="Confirm New Password"
+              ngDefaultControl
+              tabindex="3"
+              type="password"
+            />
+            <app-button label="Update Password" type="submit" />
+            <app-button (handleClick)="changePasswordSignal.set(false)" label="Cancel" variant="subtle" />
+          </form>
+        </div>
+      }
+    </div>
+  }
+</div>

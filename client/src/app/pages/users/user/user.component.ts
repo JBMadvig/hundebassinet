@@ -5,11 +5,14 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { AuthService } from '@services/auth.service';
 import { UsersApiService } from '@services/users-api.service';
 
+import { UserDetailsFormComponent } from '../components/user-details-form/user-details-form.component';
+
 @Component({
     selector: 'app-user',
     imports: [
         CommonModule,
         RouterModule,
+        UserDetailsFormComponent,
     ],
     templateUrl: './user.component.html',
     styleUrl: './user.component.css',
