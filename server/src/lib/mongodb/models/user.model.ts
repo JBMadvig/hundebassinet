@@ -42,6 +42,12 @@ export class User extends TimeStamps {
     @prop({ type: () => String, required: false, default: '' })
     public avatarUrl: string;
 
+    @prop({ type: () => Buffer, select: false })
+    public avatarData?: Buffer;
+
+    @prop({ type: () => String, select: false })
+    public avatarMimeType?: string;
+
     // Method to compare password
     public async comparePassword(candidatePassword: string): Promise<boolean> {
         return await bcrypt.compare(candidatePassword, this.password);

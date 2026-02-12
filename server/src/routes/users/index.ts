@@ -7,6 +7,8 @@ export default <FastifyPluginCallback>async function (app) {
         app.register(import('./user-by-id')),
         app.register(import('./get-users-admin')),
         app.register(import('./get-users-sudo-admin')),
+        app.register(import('./upload-avatar')),
+        app.register(import('./serve-avatar')),
     ];
 
     await Promise.all(routes);

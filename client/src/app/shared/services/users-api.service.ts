@@ -47,4 +47,14 @@ export class UsersApiService {
             ),
         );
     }
+
+    // Upload avatar image for a user
+    public uploadAvatar(userId: string, file: File): Promise<{ avatarUrl: string }> {
+        const formData = new FormData();
+        formData.append('file', file);
+
+        return firstValueFrom(
+            this.http.post<{ avatarUrl: string }>(`${this.apiUrl}/${userId}/avatar`, formData),
+        );
+    }
 }

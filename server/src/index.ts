@@ -1,5 +1,6 @@
 import cors from '@fastify/cors';
 import fjwt from '@fastify/jwt';
+import fastifyMultipart from '@fastify/multipart';
 import { TypeBoxTypeProvider } from '@fastify/type-provider-typebox';
 import fastifyWebsocket from '@fastify/websocket';
 import { initWebsocket } from '@services/websocket.service';
@@ -28,6 +29,13 @@ import routes from './routes';
         origin: '*',
         methods: [ 'GET', 'POST', 'PATCH', 'PUT', 'DELETE', 'OPTIONS' ],
         allowedHeaders: [ 'Content-Type', 'Authorization', 'access-control-allow-headers' ],
+    });
+
+    await fastify.register(fastifyMultipart, {
+        limits: {
+            fileSize: 10 * 1024 * 1024, // 10MB max
+            files: 1,
+        },
     });
 
     fastify.setErrorHandler(httpErrorHandler);

@@ -1,6 +1,7 @@
 <article class=" grid grid-cols-[auto_1fr_auto_auto] grid-rows-1 items-center gap-2 px-2 py-4 text-prime-white">
-  <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-green-700">
-    <p class="text-xl">{{ userNameInitalComputedValue() }}</p>
+  <div class="flex h-11 w-11 items-center justify-center border border-prime-white rounded-full">
+    <!-- <p class="text-xl">{{ userNameInitalComputedValue() }}</p> -->
+     <img [src]="userDetail.avatarUrl" alt="User avatar" class="w-full h-full rounded-full">
   </div>
   <div>
     <p>{{ userDetail.name }}</p>

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, effect, inject, input, OnInit, signal } from '@angular/core';
+import { Component, computed, effect, inject, input, OnInit, output, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { rolesList } from 'app/shared/types/auth.types';
@@ -10,6 +10,8 @@ import { DropdownComponent } from '@components/dropdown/dropdown.component';
 import { EditableInputFieldComponent } from '@components/editable-input-field/editable-input-field.component';
 import { InputFieldComponent } from '@components/input-field/input-field.component';
 import { AuthService } from '@services/auth.service';
+import { ErrorService } from '@services/error.service';
+import { UsersApiService } from '@services/users-api.service';
 
 @Component({
     selector: 'app-user-details-form',
@@ -26,7 +28,9 @@ import { AuthService } from '@services/auth.service';
 })
 export class UserDetailsFormComponent implements OnInit {
     private authService = inject(AuthService);
+    private errorService = inject(ErrorService);
     private formBuilder = inject(FormBuilder);
+    private usersApiService = inject(UsersApiService);
 
     public roleList = rolesList;
 
@@ -44,6 +48,7 @@ export class UserDetailsFormComponent implements OnInit {
 
     public user = input.required<User>();
     public currentUser = this.authService.currentUser;
+    public avatarUploaded = output<void>();
 
     public nameFormSignal = toSignal(this.userDetailsForm.controls.name.valueChanges);
     public emailFormSignal = toSignal(this.userDetailsForm.controls.email.valueChanges);
@@ -133,7 +138,15 @@ export class UserDetailsFormComponent implements OnInit {
         }
     }
 
-    public uploadProfileImage() {
-        
+    public async onFileSelected(event: Event) {
+        const file = (event.target as HTMLInputElement).files?.[0];
+        if (!file) return;
+
+        try {
+            await this.usersApiService.uploadAvatar(this.user().id, file);
+            this.avatarUploaded.emit();
+        } catch (error) {
+            this.errorService.handleError(error, 'Avatar upload');
+        }
     }
 }

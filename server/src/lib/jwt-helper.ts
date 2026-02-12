@@ -41,10 +41,10 @@ export async function generateTokens(reply: FastifyReply, user: UserDocument) {
         role: user.role,
     };
 
-    // Generate access token (15 minutes)
+    // Generate access token (60 minutes)
     const accessToken = await reply.jwtSign(
         { ...basePayload, type: 'access' as const },
-        { expiresIn: '15m' },
+        { expiresIn: '60m' },
     );
 
     // Generate refresh token (7 days)
