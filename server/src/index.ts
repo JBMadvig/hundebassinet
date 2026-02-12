@@ -33,7 +33,7 @@ import routes from './routes';
 
     await fastify.register(fastifyMultipart, {
         limits: {
-            fileSize: 2 * 1024 * 1024, // 2MB max
+            fileSize: 10 * 1024 * 1024, // 10MB max
             files: 1,
         },
     });

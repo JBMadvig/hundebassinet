@@ -10,6 +10,7 @@ import { DropdownComponent } from '@components/dropdown/dropdown.component';
 import { EditableInputFieldComponent } from '@components/editable-input-field/editable-input-field.component';
 import { InputFieldComponent } from '@components/input-field/input-field.component';
 import { AuthService } from '@services/auth.service';
+import { ErrorService } from '@services/error.service';
 import { UsersApiService } from '@services/users-api.service';
 
 @Component({
@@ -27,6 +28,7 @@ import { UsersApiService } from '@services/users-api.service';
 })
 export class UserDetailsFormComponent implements OnInit {
     private authService = inject(AuthService);
+    private errorService = inject(ErrorService);
     private formBuilder = inject(FormBuilder);
     private usersApiService = inject(UsersApiService);
 
@@ -144,7 +146,7 @@ export class UserDetailsFormComponent implements OnInit {
             await this.usersApiService.uploadAvatar(this.user().id, file);
             this.avatarUploaded.emit();
         } catch (error) {
-            console.error('Failed to upload avatar:', error);
+            this.errorService.handleError(error, 'Avatar upload');
         }
     }
 }

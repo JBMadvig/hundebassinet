@@ -40,6 +40,15 @@ export const httpErrorHandler = async (error: FastifyError, request: FastifyRequ
         return;
     }
 
+    if (error.code === 'FST_REQ_FILE_TOO_LARGE') {
+        await reply.code(413).send({
+            statusCode: 413,
+            error: 'Payload Too Large',
+            message: 'File too large',
+        });
+        return;
+    }
+
     if (error.code === 'FST_ERR_VALIDATION') {
         await reply.code(400).send({
             statusCode: 400,
