@@ -136,23 +136,15 @@ export class UserDetailsFormComponent implements OnInit {
         }
     }
 
-    public uploadProfileImage() {
-        const input = document.createElement('input');
-        input.type = 'file';
-        input.accept = 'image/jpeg,image/png';
+    public async onFileSelected(event: Event) {
+        const file = (event.target as HTMLInputElement).files?.[0];
+        if (!file) return;
 
-        input.onchange = async () => {
-            const file = input.files?.[0];
-            if (!file) return;
-
-            try {
-                await this.usersApiService.uploadAvatar(this.user().id, file);
-                this.avatarUploaded.emit();
-            } catch (error) {
-                console.error('Failed to upload avatar:', error);
-            }
-        };
-
-        input.click();
+        try {
+            await this.usersApiService.uploadAvatar(this.user().id, file);
+            this.avatarUploaded.emit();
+        } catch (error) {
+            console.error('Failed to upload avatar:', error);
+        }
     }
 }
