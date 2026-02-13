@@ -23,7 +23,6 @@ export class SettingsComponent {
     public user = this.authService.currentUser();
 
     public redirect(path: RedirectPaths) {
-        console.log('🚀 ~ SettingsComponent ~ redirect ~ path:', path);
         if(!this.user) return;
         switch(path) {
             case '/pos/inventory':

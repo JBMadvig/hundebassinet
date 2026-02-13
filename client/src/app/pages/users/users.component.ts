@@ -6,6 +6,7 @@ import { User } from 'app/shared/types/user.types';
 import { TableBodyData, TableComponent } from '@components/table/table.component';
 import { TypedTemplateDirective } from '@directives/typed-template.directive';
 import { AuthService } from '@services/auth.service';
+import { ErrorService } from '@services/error.service';
 import { UsersApiService } from '@services/users-api.service';
 @Component({
     selector: 'app-users',
@@ -20,14 +21,17 @@ import { UsersApiService } from '@services/users-api.service';
 })
 export class UsersComponent implements OnInit {
     private authService = inject(AuthService);
-    private usersApiService = inject(UsersApiService);
+    private errorService = inject(ErrorService);
     private router = inject(Router);
+    private usersApiService = inject(UsersApiService);
 
     public readonly typeToken!: TableBodyData<User>;
 
-    public loading = signal(true);
     public errorFetching = signal(false);
+    public loading = signal(true);
     public users = signal<User[]>([]);
+
+    public currentUser = this.authService.currentUser;
 
     public async ngOnInit(): Promise<void> {
         const currentUser = this.authService.currentUser();
@@ -42,6 +46,7 @@ export class UsersComponent implements OnInit {
                     const adminUsers = await this.usersApiService.adminFetchUsers();
                     this.users.set(adminUsers);
                 } catch (error) {
+                    this.errorService.handleError(error, 'Error fetching users for admin');
                     console.error('Error fetching users for admin:', error);
                     this.errorFetching.set(true);
                 } finally {
@@ -53,6 +58,7 @@ export class UsersComponent implements OnInit {
                     const sudoAdminUsers = await this.usersApiService.sudoAdminFetchUsers();
                     this.users.set(sudoAdminUsers);
                 } catch (error) {
+                    this.errorService.handleError(error, 'Error fetching users for sudo-admin');
                     console.error('Error fetching users for sudo-admin:', error);
                     this.errorFetching.set(true);
                 } finally {

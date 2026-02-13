@@ -62,7 +62,7 @@
             </tr>
           </ng-template>
           <ng-template #rowTemplate [appTypedTemplate]="typeToken" let-data>
-            <tr class="cursor-pointer" [routerLink]="['/users/', data.id]">
+            <tr class="cursor-pointer" [routerLink]="data.id === currentUser()?.id ? ['/users/me'] : ['/users', data.id]">
               <td>
                 {{ data.id }}
               </td>

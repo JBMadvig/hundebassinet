@@ -1,100 +1,103 @@
-<div
-  class="grid-rows-auto grid w-full grid-cols-[1fr_auto] gap-4 rounded-2xl border border-prime-white/90 bg-prime-white/80 p-4"
->
-  <div>
-    <p class="text-xl">User Details</p>
-    <form
-      class="grid-rows-auto grid grid-cols-2 gap-4"
-      [formGroup]="userDetailsForm"
-      (submit)="saveUserDetails()"
-    >
-      <app-editable-input-field
-        formControlName="name"
-        label="Name"
-        ngDefaultControl
-        placeholder="Enter name"
-      />
-      <app-editable-input-field
-        formControlName="email"
-        label="Email"
-        ngDefaultControl
-        placeholder="Enter email"
-      />
-      @if (currentUser()?.role === 'admin' || currentUser()?.role === 'sudo-admin') {
-        <app-dropdown
-          [options]="roleListComputedValue()"
-          formControlName="role"
-          label="Role"
+<div class="flex w-full flex-col gap-4 rounded-2xl border border-prime-white/90 bg-prime-white/80 p-4">
+  <div class="grid grid-cols-[1fr_auto] gap-x-4">
+    <div>
+      <p class="text-xl">User Details</p>
+      <form
+        class="grid-rows-auto grid gap-4"
+        [ngClass]="{
+          'col-span-2': currentUser()?.role === 'admin' || currentUser()?.role === 'sudo-admin',
+        }"
+        [formGroup]="userDetailsForm"
+        (submit)="saveUserDetails()"
+      >
+        <app-editable-input-field
+          formControlName="name"
+          label="Name"
           ngDefaultControl
-          placeholder="Select a role"
+          placeholder="Enter name"
         />
         <app-editable-input-field
-          formControlName="balance"
-          label="Balance"
+          formControlName="email"
+          label="Email"
           ngDefaultControl
-          placeholder="Change balance for user"
+          placeholder="Enter email"
         />
-      }
-      @if (changesHasBeenMade()) {
-        <app-button class="col-span-2" label="save changes" type="submit" />
-      }
-      @if (showUpdateSuccess()) {
-        <p class="col-span-2 flex items-center gap-1 text-prime-green">
-          <span>User was updated successfully</span>
-          <span>
-            <svg
-              fill="currentColor"
-              height="24"
-              viewBox="0 0 24 24"
-              width="24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M9 15.59 4.71 11.3 3.3 12.71l5 5c.2.2.45.29.71.29s.51-.1.71-.29l11-11-1.41-1.41L9.02 15.59Z"
-              ></path>
-            </svg>
-          </span>
-        </p>
-      }
-    </form>
-  </div>
-  <div class="row-span-2">
-    <p class="text-xl">Profile Image</p>
-    <div class="group relative w-fit rounded-2xl border-2 border-prime-white/90">
-      @if (!user().avatarUrl) {
-        <div class="flex aspect-4/3 h-full w-72 items-center justify-center bg-amber-950/10">
-          <span class="font-extrabold">[NO IMAGE PROVIDED]</span>
-        </div>
-      } @else {
-        <img
-          class="col-start-1 row-start-1 h-full w-full max-w-72 rounded-2xl object-cover"
-          [src]="user().avatarUrl"
-          alt="User profile image"
+        @if (currentUser()?.role === 'admin' || currentUser()?.role === 'sudo-admin') {
+          <app-dropdown
+            [options]="roleListComputedValue()"
+            formControlName="role"
+            label="Role"
+            ngDefaultControl
+            placeholder="Select a role"
+          />
+          <app-editable-input-field
+            formControlName="balance"
+            label="Balance"
+            ngDefaultControl
+            placeholder="Change balance for user"
+          />
+        }
+        @if (changesHasBeenMade()) {
+          <app-button class="col-span-2" label="save changes" type="submit" />
+        }
+        @if (showUpdateSuccess()) {
+          <p class="col-span-2 flex items-center gap-1 text-prime-green">
+            <span>User was updated successfully</span>
+            <span>
+              <svg
+                fill="currentColor"
+                height="24"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M9 15.59 4.71 11.3 3.3 12.71l5 5c.2.2.45.29.71.29s.51-.1.71-.29l11-11-1.41-1.41L9.02 15.59Z"
+                ></path>
+              </svg>
+            </span>
+          </p>
+        }
+      </form>
+    </div>
+    <div>
+      <p class="text-xl">Profile Image</p>
+      <div class="group relative w-fit rounded-2xl border-2 border-prime-white/90">
+        @if (!user().avatarUrl) {
+          <div class="flex aspect-4/3 h-full w-72 items-center justify-center bg-amber-950/10">
+            <span class="font-extrabold">[NO IMAGE PROVIDED]</span>
+          </div>
+        } @else {
+          <img
+            class="col-start-1 row-start-1 h-full w-full max-w-72 rounded-2xl object-cover"
+            [src]="user().avatarUrl"
+            alt="User profile image"
+          />
+        }
+        <input
+          #fileInput
+          class="hidden"
+          (change)="onFileSelected($event)"
+          accept="image/jpeg,image/png"
+          type="file"
         />
-      }
-      <input
-        #fileInput
-        class="hidden"
-        (change)="onFileSelected($event)"
-        accept="image/jpeg,image/png"
-        type="file"
-      />
-      <button
-        class="absolute bottom-2 left-1/2 flex h-fit w-fit -translate-x-1/2 -translate-y-1/2 cursor-pointer flex-row items-center rounded-full border border-gray-500/50 bg-prime-white/80 p-2 text-text-blue opacity-0 transition-all duration-200 ease-in-out group-hover:opacity-100 hover:pointer-events-auto"
-        (click)="fileInput.click()"
-      >
-        <svg
-          fill="currentColor"
-          height="24"
-          viewBox="0 0 24 24"
-          width="24"
-          xmlns="http://www.w3.org/2000/svg"
+        <button
+          class="absolute bottom-2 left-1/2 flex h-fit w-fit -translate-x-1/2 -translate-y-1/2 cursor-pointer flex-row items-center rounded-full border border-gray-500/50 bg-prime-white/80 p-2 text-text-blue opacity-0 transition-all duration-200 ease-in-out group-hover:opacity-100 hover:pointer-events-auto"
+          (click)="fileInput.click()"
         >
-          <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
-          <path d="M4 4h16v2H4zm8 4-5 6h4v7h2v-7h4z"></path>
-        </svg>
-        <span class="ml-2 whitespace-nowrap">Change image</span>
-      </button>
+          <svg
+            fill="currentColor"
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+            <path d="M4 4h16v2H4zm8 4-5 6h4v7h2v-7h4z"></path>
+          </svg>
+          <span class="ml-2 whitespace-nowrap">Change image</span>
+        </button>
+      </div>
     </div>
   </div>
   @if (currentUser()?.id === user().id || currentUser()?.role === 'sudo-admin') {

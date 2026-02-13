@@ -71,21 +71,21 @@ export const routes: CustomRoute[] = [
                 },
             },
             {
+                path: 'me',
+                canActivate: [ authGuard ],
+                loadComponent: () => import('./pages/users/me/me.component')
+                    .then(m => m.MeComponent),
+                data: {
+                    id: 'me',
+                },
+            },
+            {
                 path: ':userId',
                 canActivate: [ adminGuard ],
                 loadComponent: () => import('./pages/users/user/user.component')
                     .then(m => m.UserComponent),
                 data: {
                     id: 'user',
-                },
-            },
-            {
-                path: 'me',
-                canActivate: [ authGuard ],
-                loadComponent: () => import('./pages/users/user/user.component')
-                    .then(m => m.UserComponent),
-                data: {
-                    id: 'me',
                 },
             },
         ],
