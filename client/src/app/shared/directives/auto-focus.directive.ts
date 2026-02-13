@@ -1,4 +1,4 @@
-import { booleanAttribute, Directive, effect, ElementRef, inject, input } from '@angular/core';
+import { afterNextRender, booleanAttribute, Directive, ElementRef, inject, input } from '@angular/core';
 
 @Directive({
     selector: '[appAutoFocus]',
@@ -10,11 +10,9 @@ export class AutofocusDirective {
     public appAutoFocus = input(false, { transform: booleanAttribute });
 
     constructor() {
-        effect(() => {
+        afterNextRender(() => {
             if (this.appAutoFocus()) {
                 this.el.nativeElement.focus();
-            } else {
-                this.el.nativeElement.blur();
             }
         });
     }
