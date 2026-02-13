@@ -52,7 +52,7 @@
           }
         </div>
 
-        <app-input-field [formControlName]="controlName" ngDefaultControl placeholder="controlName" />
+        <app-input-field [formControlName]="controlName" [placeholder]="placeholder()" ngDefaultControl />
       </div>
     }
   }
@@ -102,7 +102,12 @@
   } @else {
     @if (valueFormGroup) {
       <div class="flex w-full items-center" [formGroup]="valueFormGroup">
-        <app-input-field class="w-full" [formControlName]="controlName" ngDefaultControl />
+        <app-input-field
+          class="w-full"
+          [formControlName]="controlName"
+          [placeholder]="placeholder()"
+          ngDefaultControl
+        />
         @if (!disabled()) {
           @if (invalidFormInput()) {
             <span class="ml-2 text-prime-red">

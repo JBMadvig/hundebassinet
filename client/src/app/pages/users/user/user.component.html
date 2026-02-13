@@ -15,7 +15,7 @@
   </button>
   <div>
     @if(userResourceValue) {
-      <app-user-details-form [user]="userResourceValue" (avatarUploaded)="userResource.reload()" />
+      <app-user-details-form [user]="userResourceValue" (avatarUploaded)="userResource.reload()" (userUpdated)="userResource.reload()" />
     }
       <!-- Add visual for loading (userResource.loading)-->
       <!-- Add visual for error (userResource.loading)-->

@@ -26,8 +26,8 @@ export class UserComponent {
     public userResource = resource({
         defaultValue: null,
         loader: async () => {
-
-            const userId = this.activatedRoute.snapshot.paramMap.get('userId');
+            const userId = this.activatedRoute.snapshot.paramMap.get('userId')
+                ?? this.authService.currentUser()?.id;
 
             if (!userId) {
                 return null;

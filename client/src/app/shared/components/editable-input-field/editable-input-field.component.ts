@@ -32,6 +32,8 @@ export class EditableInputFieldComponent implements OnInit {
      */
     public disabled = input(false);
 
+    public placeholder = input<string>('');
+
     public valueChange = output<string>();
 
     public valueFormGroup?: FormGroup;

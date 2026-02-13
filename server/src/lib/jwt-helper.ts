@@ -7,6 +7,7 @@ export interface JWTPayload {
     userId: string;
     email: string;
     role: string;
+    tokenVersion: number;
     type: 'access' | 'refresh'; // Token type to differentiate
 }
 
@@ -39,6 +40,7 @@ export async function generateTokens(reply: FastifyReply, user: UserDocument) {
         userId: user._id.toString(),
         email: user.email,
         role: user.role,
+        tokenVersion: Number(user.tokenVersion ?? 0),
     };
 
     // Generate access token (60 minutes)

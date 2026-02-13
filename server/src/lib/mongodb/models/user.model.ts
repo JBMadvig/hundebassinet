@@ -39,6 +39,9 @@ export class User extends TimeStamps {
     @prop({ type: () => String, required: true, default: 'DKK' })
     public valuta: string;
 
+    @prop({ type: () => Number, required: true, default: 0 })
+    public tokenVersion: number;
+
     @prop({ type: () => String, required: false, default: '' })
     public avatarUrl: string;
 

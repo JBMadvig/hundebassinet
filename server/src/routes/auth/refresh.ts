@@ -30,6 +30,11 @@ export default <FastifyPluginCallback>function (app, _opts, done) {
                 throw new UnauthorizedError('User not found');
             }
 
+            // Validate tokenVersion to ensure session hasn't been invalidated
+            if (user.tokenVersion !== payload.tokenVersion) {
+                throw new UnauthorizedError('Session invalidated. Please log in again.');
+            }
+
             // Generate new tokens
             const { accessToken, refreshToken } = await generateTokens(reply, user);
 

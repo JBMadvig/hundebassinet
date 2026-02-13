@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { firstValueFrom, map } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
-import { User } from '../types/user.types';
+import { UpdateUserDetailsRequest, UpdateUserDetailsResponse, User } from '../types/user.types';
 import { mapUser } from '../utils/map-user';
 
 @Injectable({
@@ -44,6 +44,15 @@ export class UsersApiService {
         return firstValueFrom(
             this.http.get<User[]>(`${this.apiUrl}/sudo-admin-data`).pipe(
                 map((users) => users.map(mapUser)),
+            ),
+        );
+    }
+
+    // Update user details (name, email, role, balance)
+    public updateUserDetails(userId: string, data: UpdateUserDetailsRequest): Promise<UpdateUserDetailsResponse> {
+        return firstValueFrom(
+            this.http.post<UpdateUserDetailsResponse>(`${this.apiUrl}/${userId}`, data).pipe(
+                map((res) => ({ ...res, user: mapUser(res.user) })),
             ),
         );
     }

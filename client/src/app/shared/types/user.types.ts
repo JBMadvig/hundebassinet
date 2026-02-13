@@ -16,3 +16,16 @@ export interface User {
 export type UserWithPassword = User & {
     password: string;
 };
+
+export interface UpdateUserDetailsRequest {
+    name?: string;
+    email?: string;
+    role?: string;
+    balance?: number;
+}
+
+export interface UpdateUserDetailsResponse {
+    user: User;
+    accessToken?: string;
+    refreshToken?: string;
+}
