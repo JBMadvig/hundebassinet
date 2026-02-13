@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, input, OnInit, output, signal } from '@angular/core';
+import { Component, ElementRef, HostListener, inject, input, OnInit, output, signal } from '@angular/core';
 import { FormControl, FormControlName, FormGroup, FormGroupDirective, ReactiveFormsModule } from '@angular/forms';
 import { distinctUntilChanged } from 'rxjs';
 
@@ -19,6 +19,7 @@ import { generateId } from '@lib/utils';
 })
 @AutoUnsubscribe()
 export class EditableInputFieldComponent implements OnInit {
+    private elementRef = inject(ElementRef);
     private formGroupDirective = inject(FormGroupDirective);
     private formControlNameDirective = inject(FormControlName);
 
@@ -74,5 +75,16 @@ export class EditableInputFieldComponent implements OnInit {
         this.isEditView.set(false);
     }
 
+    @HostListener('document:click', [ '$event' ])
+    public onDocumentClick(event: MouseEvent) {
+        if (this.disabled()) return;
 
+        const isInside = this.elementRef.nativeElement.contains(event.target as Node);
+
+        if (isInside && !this.isEditView()) {
+            this.isEditView.set(true);
+        } else if (!isInside && this.isEditView()) {
+            this.isEditView.set(false);
+        }
+    }
 }

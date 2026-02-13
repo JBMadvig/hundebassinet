@@ -1,7 +1,7 @@
 @if (label()) {
   <!-- Has label layout -->
   @if (!isEditView() || disabled()) {
-    <div class="mb-1 flex flex-row items-center gap-2 leading-4">
+    <div class="mb-1 flex cursor-pointer flex-row items-center gap-2 leading-4">
       <label [for]="controlId">
         {{ label() }}
       </label>
@@ -25,7 +25,7 @@
       }
     </div>
 
-    <p class="rounded-full border border-text-blue/80 px-4 py-2 leading-6">{{ value }}</p>
+    <p class="cursor-pointer rounded-full border border-text-blue/80 px-4 py-2 leading-6">{{ value }}</p>
   } @else {
     @if (valueFormGroup) {
       <div class="flex flex-col gap-1" [formGroup]="valueFormGroup">
@@ -35,7 +35,7 @@
           </label>
 
           @if (!disabled()) {
-            <button class="leading-4 hover:text-text-blue/80" (click)="submit()" type="submit">
+            <button class="leading-4 hover:text-text-blue/80" (click)="submit(); $event.stopPropagation()" type="submit">
               <svg
                 fill="currentColor"
                 height="24"
@@ -52,14 +52,14 @@
           }
         </div>
 
-        <app-input-field [formControlName]="controlName" [placeholder]="placeholder()" ngDefaultControl />
+        <app-input-field [formControlName]="controlName" [placeholder]="placeholder()" autofocus ngDefaultControl />
       </div>
     }
   }
 } @else {
   <!-- No label layout -->
   @if (!isEditView() || disabled()) {
-    <div class="flex gap-2">
+    <div class="flex cursor-pointer gap-2">
       <p class="flex w-full items-center rounded-full border border-text-blue/80 px-4 py-2">
         {{ value }}
       </p>
@@ -106,6 +106,7 @@
           class="w-full"
           [formControlName]="controlName"
           [placeholder]="placeholder()"
+          autofocus
           ngDefaultControl
         />
         @if (!disabled()) {
@@ -126,7 +127,7 @@
               </svg>
             </span>
           } @else {
-            <button class="ml-2 cursor-pointer hover:text-text-blue/80" (click)="submit()" type="submit">
+            <button class="ml-2 cursor-pointer hover:text-text-blue/80" (click)="submit(); $event.stopPropagation()" type="submit">
               <svg
                 fill="currentColor"
                 height="24"
