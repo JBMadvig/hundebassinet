@@ -1,5 +1,5 @@
 <div
-  class="grid w-full grid-cols-[1fr_auto] gap-4 rounded-2xl border border-prime-white/90 bg-prime-white/80 p-4"
+  class="grid-rows-auto grid w-full grid-cols-[1fr_auto] gap-4 rounded-2xl border border-prime-white/90 bg-prime-white/80 p-4"
 >
   <div>
     <p class="text-xl">User Details</p>
@@ -58,16 +58,16 @@
       }
     </form>
   </div>
-  <div>
+  <div class="row-span-2">
     <p class="text-xl">Profile Image</p>
-    <div class="group relative w-fit">
+    <div class="group relative w-fit rounded-2xl border-2 border-prime-white/90">
       @if (!user().avatarUrl) {
         <div class="flex aspect-4/3 h-full w-72 items-center justify-center bg-amber-950/10">
           <span class="font-extrabold">[NO IMAGE PROVIDED]</span>
         </div>
       } @else {
         <img
-          class="col-start-1 row-start-1 h-full w-full max-w-72"
+          class="col-start-1 row-start-1 h-full w-full max-w-72 rounded-2xl object-cover"
           [src]="user().avatarUrl"
           alt="User profile image"
         />
@@ -80,7 +80,7 @@
         type="file"
       />
       <button
-        class="absolute top-1/2 left-1/2 h-fit w-fit -translate-x-1/2 -translate-y-1/2 cursor-pointer rounded-full border border-gray-500/50 bg-prime-white/80 p-2 text-text-blue opacity-0 transition-all duration-200 ease-in-out group-hover:opacity-100 hover:pointer-events-auto"
+        class="absolute bottom-2 left-1/2 flex h-fit w-fit -translate-x-1/2 -translate-y-1/2 cursor-pointer flex-row items-center rounded-full border border-gray-500/50 bg-prime-white/80 p-2 text-text-blue opacity-0 transition-all duration-200 ease-in-out group-hover:opacity-100 hover:pointer-events-auto"
         (click)="fileInput.click()"
       >
         <svg
@@ -93,11 +93,12 @@
           <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
           <path d="M4 4h16v2H4zm8 4-5 6h4v7h2v-7h4z"></path>
         </svg>
+        <span class="ml-2 whitespace-nowrap">Change image</span>
       </button>
     </div>
   </div>
   @if (currentUser()?.id === user().id || currentUser()?.role === 'sudo-admin') {
-    <div class="col-span-2">
+    <div>
       @if (!changePasswordSignal()) {
         <app-button (handleClick)="changePasswordSignal.set(true)" label="Change Password" variant="text" />
       } @else {
@@ -118,13 +119,24 @@
               tabindex="1"
               type="password"
             />
+            @if (currentUser()?.role === 'sudo-admin') {
+              <app-checkbox
+                checkboxAlign="center"
+                formControlName="overwriteCurrentPassword"
+                label="Overwrite current password check?"
+                labelPosition="right"
+                ngDefaultControl
+              />
+            }
             @if (changePasswordSignalError() === 'noMatch') {
               <p class="text-red-500">New passwords do not match.</p>
             }
             <app-input-field
               class="transition-all duration-200 ease-in-out"
               [ngClass]="{
-                hidden: passwordForm.controls.currentPassword.value === '',
+                hidden:
+                  passwordForm.controls.currentPassword.value === '' &&
+                  !passwordForm.controls.overwriteCurrentPassword.value,
               }"
               formControlName="newPassword"
               label="New Password"
@@ -145,7 +157,25 @@
               tabindex="3"
               type="password"
             />
-            <app-button label="Update Password" type="submit" />
+            <app-button [loading]="changePasswordLoading()" label="Update Password" type="submit" />
+            @if (changePasswordSuccess()) {
+              <p class="flex items-center gap-1 text-prime-green">
+                <span>Password was updated successfully</span>
+                <span>
+                  <svg
+                    fill="currentColor"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    width="24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M9 15.59 4.71 11.3 3.3 12.71l5 5c.2.2.45.29.71.29s.51-.1.71-.29l11-11-1.41-1.41L9.02 15.59Z"
+                    ></path>
+                  </svg>
+                </span>
+              </p>
+            }
             <app-button (handleClick)="changePasswordSignal.set(false)" label="Cancel" variant="subtle" />
           </form>
         </div>

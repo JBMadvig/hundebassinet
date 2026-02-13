@@ -29,3 +29,15 @@ export interface UpdateUserDetailsResponse {
     accessToken?: string;
     refreshToken?: string;
 }
+
+export interface ChangePasswordRequest {
+    newPassword: string;
+    currentPassword?: string;
+    bypassCurrentPassword?: boolean;
+}
+
+export interface ChangePasswordResponse {
+    success: boolean;
+    accessToken?: string;
+    refreshToken?: string;
+}

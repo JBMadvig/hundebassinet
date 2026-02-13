@@ -43,7 +43,7 @@ export class CheckboxComponent implements OnInit {
      * - `'medium'` - Medium text size (text-sm),
      * - `'regular'` - Large text size (text-base).
      */
-    public textSize = input<'small' | 'medium' | 'regular'>('small');
+    public textSize = input<'small' | 'medium' | 'regular'>('regular');
 
     /**
      * The horizontal alignment of the checkbox relative to the label.

@@ -1,11 +1,13 @@
 import { CommonModule } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, computed, DestroyRef, effect, inject, input, OnInit, output, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { rolesList } from 'app/shared/types/auth.types';
-import { UpdateUserDetailsRequest, User } from 'app/shared/types/user.types';
+import { ChangePasswordRequest, UpdateUserDetailsRequest, User } from 'app/shared/types/user.types';
 
 import { ButtonComponent } from '@components/button/button.component';
+import { CheckboxComponent } from '@components/checkbox/checkbox.component';
 import { DropdownComponent } from '@components/dropdown/dropdown.component';
 import { EditableInputFieldComponent } from '@components/editable-input-field/editable-input-field.component';
 import { InputFieldComponent } from '@components/input-field/input-field.component';
@@ -18,11 +20,12 @@ import { UsersApiService } from '@services/users-api.service';
     selector: 'app-user-details-form',
     imports: [
         ButtonComponent,
+        CheckboxComponent,
         CommonModule,
         DropdownComponent,
         EditableInputFieldComponent,
-        ReactiveFormsModule,
         InputFieldComponent,
+        ReactiveFormsModule,
     ],
     templateUrl: './user-details-form.component.html',
     styleUrl: './user-details-form.component.css',
@@ -43,10 +46,10 @@ export class UserDetailsFormComponent implements OnInit {
         balance: 0,
     });
     public passwordForm = this.formBuilder.group({
-        currentPassword: [ '' ],
+        currentPassword: [ '', [ Validators.required ] ],
         overwriteCurrentPassword: [ false ],
-        newPassword: [ '' ],
-        confirmNewPassword: [ '' ],
+        newPassword: [ '', [ Validators.required, Validators.minLength(8) ] ],
+        confirmNewPassword: [ '', [ Validators.required, Validators.minLength(8) ] ],
     });
 
     public user = input.required<User>();
@@ -74,6 +77,8 @@ export class UserDetailsFormComponent implements OnInit {
 
     public showUpdateSuccess = signal(false);
     public changePasswordSignal = signal(false);
+    public changePasswordLoading = signal(false);
+    public changePasswordSuccess = signal(false);
     public changePasswordSignalError = signal<'noMatch' | 'incorrectCurrent' | 'errorFromServer' | null>(null);
 
     public changesHasBeenMade = computed(() => {
@@ -111,9 +116,9 @@ export class UserDetailsFormComponent implements OnInit {
 
     constructor() {
         effect(() => {
-            const currentPassword = this.currentPasswordSignal();
-            const newPassword = this.newPasswordSignal();
-            const confirmNewPassword = this.confirmNewPasswordSignal();
+            const _currentPassword = this.currentPasswordSignal();
+            const _newPassword = this.newPasswordSignal();
+            const _confirmNewPassword = this.confirmNewPasswordSignal();
 
             this.changePasswordSignalError.set(null);
         });
@@ -173,19 +178,55 @@ export class UserDetailsFormComponent implements OnInit {
         }
     }
 
-    public changePassword() {
-        if (this.passwordForm.valid) {
-            const form = this.passwordForm.controls;
+    public async changePassword() {
+        const form = this.passwordForm.controls;
 
-            const currentPassword = form.currentPassword.value;
-            const overwriteCurrentPassword = form.overwriteCurrentPassword.value;
-            const newPassword = form.newPassword.value;
-            const confirmNewPassword = form.confirmNewPassword.value;
+        const bypassCurrentPassword = form.overwriteCurrentPassword.value ?? false;
+        const newPassword = form.newPassword.value;
+        const confirmNewPassword = form.confirmNewPassword.value;
 
-            if (newPassword !== confirmNewPassword) {
-                this.changePasswordSignalError.set('noMatch');
-                return;
+        if (newPassword !== confirmNewPassword) {
+            this.changePasswordSignalError.set('noMatch');
+            return;
+        }
+
+        const payload: ChangePasswordRequest = {
+            newPassword: newPassword ?? '',
+            bypassCurrentPassword,
+        };
+
+        if (!bypassCurrentPassword) {
+            payload.currentPassword = form.currentPassword.value ?? '';
+        }
+
+        this.changePasswordLoading.set(true);
+
+        try {
+            const response = await this.usersApiService.changePassword(this.user().id, payload);
+
+            // If self-edit, update tokens so the user stays logged in
+            if (response.accessToken && response.refreshToken) {
+                localStorage.setItem('accessToken', response.accessToken);
+                localStorage.setItem('refreshToken', response.refreshToken);
             }
+
+            this.passwordForm.reset();
+            this.changePasswordSuccess.set(true);
+            const timeoutId = setTimeout(() => {
+                this.changePasswordSuccess.set(false);
+                this.changePasswordSignal.set(false);
+            }, 4000);
+            this.destroyRef.onDestroy(() => clearTimeout(timeoutId));
+        } catch (error: unknown) {
+            if (error instanceof HttpErrorResponse && error.status === 401) {
+                this.errorService.handleError(error, 'Incorrect current password');
+                this.changePasswordSignalError.set('incorrectCurrent');
+            } else {
+                this.errorService.handleError(error, 'Password change server error');
+                this.changePasswordSignalError.set('errorFromServer');
+            }
+        } finally {
+            this.changePasswordLoading.set(false);
         }
     }
 
