@@ -41,8 +41,7 @@ export default <FastifyPluginCallback>function (app, _opts, done) {
             const { accessToken, refreshToken } = await generateTokens(reply, user);
 
             // Return user without password
-            const userResponse = user.toObject();
-            delete (userResponse as any).password;
+            const { password: _, ...userResponse } = user.toObject();
 
             await reply.send({
                 accessToken,

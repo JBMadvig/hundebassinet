@@ -3,6 +3,7 @@ import { AfterViewInit, Component, inject, Injector, input, linkedSignal, output
 import { FormGroupDirective, ReactiveFormsModule } from '@angular/forms';
 
 import { AutoSub, AutoUnsubscribe } from '@decorators/auto-unsub.decorator';
+import { ErrorService } from '@services/error.service';
 
 // Define the type attribute of the button we have implementet. (reset and image is not implemented)
 type ButtonType = 'button' | 'submit';
@@ -18,6 +19,7 @@ type TextVariant = 'light' | 'primary';
 })
 @AutoUnsubscribe()
 export class ButtonComponent implements AfterViewInit {
+    private errorService = inject(ErrorService);
     private injector = inject(Injector);
 
     /**
@@ -98,7 +100,10 @@ export class ButtonComponent implements AfterViewInit {
                     this.isDisabled.set(form.invalid);
                 });
             } catch (error) {
-                console.error('Error getting FormGroupDirective even we have a submit type on a button - ', error);
+                // @JBMadvig, remove this men going to prod. Make console.error and not handleError, because this is a error that should be fixed in development and not handled in production. We want to know if we have implementet the button wrong and not just handle the error and make the button not work without us knowing why.
+                console.error('Error getting FormGroupDirective even if we have a submit type on a button. This likely means that the button is implementet wrong and should be fixed. Please check the implementation of the button component and make sure it is correct.', error);
+                // this
+                this.errorService.handleError(error, 'Error getting FormGroupDirective even if we have a submit type on a button');
             }
         }
     }

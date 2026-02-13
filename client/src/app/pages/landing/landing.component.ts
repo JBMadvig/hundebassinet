@@ -83,7 +83,7 @@ export class LandingComponent {
                 this.passwordForm.reset();
                 this.loginLoader.set(false);
             },
-            error: () => {
+            error: (_error) => {
                 this.loginError.set('Invalid email or password');
                 this.loginLoader.set(false);
             },
