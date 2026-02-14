@@ -1,12 +1,10 @@
-<div class="flex w-full flex-col gap-4 rounded-2xl border border-prime-white/90 bg-prime-white/80 p-4">
+<div class="flex w-full flex-col gap-4 rounded-2xl border border-gray-200 bg-white/90 p-4 text-text-on-light">
   <div class="grid grid-cols-[1fr_auto] gap-x-4">
     <div>
-      <p class="text-xl">User Details</p>
+      <p class="text-xl font-heading">User Details</p>
+      <hr class="bg-text-on-light border border-border mt-2 mb-4">
       <form
-        class="grid-rows-auto grid gap-4"
-        [ngClass]="{
-          'col-span-2': currentUser()?.role === 'admin' || currentUser()?.role === 'sudo-admin',
-        }"
+        class="grid-rows-auto grid grid-cols-1 gap-4"
         [formGroup]="userDetailsForm"
         (submit)="saveUserDetails()"
       >
@@ -38,10 +36,10 @@
           />
         }
         @if (changesHasBeenMade()) {
-          <app-button class="col-span-2" label="save changes" type="submit" />
+          <app-button label="save changes" type="submit" />
         }
         @if (showUpdateSuccess()) {
-          <p class="col-span-2 flex items-center gap-1 text-prime-green">
+          <p class="flex items-center gap-1 text-success">
             <span>User was updated successfully</span>
             <span>
               <svg
@@ -62,7 +60,8 @@
     </div>
     <div>
       <p class="text-xl">Profile Image</p>
-      <div class="group relative w-fit rounded-2xl border-2 border-prime-white/90">
+      <hr class="bg-text-on-light border border-border mt-2 mb-4">
+      <div class="group relative w-fit rounded-2xl border-2 border-gray-200">
         @if (!user().avatarUrl) {
           <div class="flex aspect-4/3 h-full w-72 items-center justify-center bg-amber-950/10">
             <span class="font-extrabold">[NO IMAGE PROVIDED]</span>
@@ -82,7 +81,7 @@
           type="file"
         />
         <button
-          class="absolute bottom-2 left-1/2 flex h-fit w-fit -translate-x-1/2 -translate-y-1/2 cursor-pointer flex-row items-center rounded-full border border-gray-500/50 bg-prime-white/80 p-2 text-text-blue opacity-0 transition-all duration-200 ease-in-out group-hover:opacity-100 hover:pointer-events-auto"
+          class="absolute bottom-2 left-1/2 flex h-fit w-fit -translate-x-1/2 -translate-y-1/2 cursor-pointer flex-row items-center rounded-full border border-gray-300 bg-white/90 p-2 text-text-on-light opacity-0 transition-all duration-200 ease-in-out group-hover:opacity-100 hover:pointer-events-auto"
           (click)="fileInput.click()"
         >
           <svg
@@ -105,14 +104,15 @@
       @if (!changePasswordSignal()) {
         <app-button (handleClick)="changePasswordSignal.set(true)" label="Change Password" variant="text" />
       } @else {
-        <div class="flex flex-col gap-2 rounded-2xl border border-text-blue p-4">
-          <p class="text-xl text-text-blue">Change Password</p>
+        <div class="flex flex-col gap-2 rounded-2xl border border-gray-300 p-4">
+          <p class="text-xl text-text-on-light">Change Password</p>
+          <hr class="bg-text-on-light border border-border mt-2 mb-4">
           <form class="flex flex-col gap-4" [formGroup]="passwordForm" (submit)="changePassword()">
             @if (changePasswordSignalError() === 'incorrectCurrent') {
-              <p class="text-red-500">Incorrect current password.</p>
+              <p class="text-error">Incorrect current password.</p>
             }
             @if (changePasswordSignalError() === 'errorFromServer') {
-              <p class="text-red-500">Error from server, please try again</p>
+              <p class="text-error">Error from server, please try again</p>
             }
             <app-input-field
               formControlName="currentPassword"
@@ -132,7 +132,7 @@
               />
             }
             @if (changePasswordSignalError() === 'noMatch') {
-              <p class="text-red-500">New passwords do not match.</p>
+              <p class="text-error">New passwords do not match.</p>
             }
             <app-input-field
               class="transition-all duration-200 ease-in-out"
@@ -162,7 +162,7 @@
             />
             <app-button [loading]="changePasswordLoading()" label="Update Password" type="submit" />
             @if (changePasswordSuccess()) {
-              <p class="flex items-center gap-1 text-prime-green">
+              <p class="flex items-center gap-1 text-success">
                 <span>Password was updated successfully</span>
                 <span>
                   <svg

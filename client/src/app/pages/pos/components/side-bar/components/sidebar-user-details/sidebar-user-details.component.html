@@ -1,18 +1,23 @@
-<article class=" grid grid-cols-[auto_1fr_auto_auto] grid-rows-1 items-center gap-2 px-2 py-4 text-prime-white">
-  <div class="flex h-11 w-11 items-center justify-center border border-prime-white rounded-full">
+<article
+  class="grid grid-cols-[auto_1fr_auto_auto] grid-rows-1 items-center gap-2 px-2 py-4 text-text-primary"
+>
+  <div
+    class="flex h-14 w-14 cursor-default items-center justify-center rounded-full border border-border-strong"
+  >
     <!-- <p class="text-xl">{{ userNameInitalComputedValue() }}</p> -->
-     <img [src]="userDetail.avatarUrl" alt="User avatar" class="w-full h-full rounded-full">
+    <img class="h-full w-full rounded-full" [src]="userDetail.avatarUrl" alt="User avatar" />
   </div>
-  <div>
-    <p>{{ userDetail.name }}</p>
+  <div class="flex h-full cursor-default flex-col justify-evenly">
+    <p class="font-heading">{{ userDetail.name }}</p>
     <div class="flex flex-row items-center gap-x-1">
       <p class="flex flex-row gap-1 text-xs italic">
-      <app-badge [badgeText]="userDetail.role" [badgeType]="'role'" />
+        <app-badge [badgeText]="userDetail.role" [badgeType]="'role'" />
+      </p>
     </div>
   </div>
-  <div>
+  <div class="flex h-full cursor-default flex-col justify-evenly">
     <p class="text-right text-xs">Balance:</p>
-    <p class="text-lg font-semibold text-amber-600">{{ userDetail.balance }} DKK</p>
+    <p class="text-lg font-semibold text-highlight">{{ userDetail.balance }} {{ userDetail.valuta }}</p>
   </div>
   <button class="h-full" (click)="openSettings.emit()">
     <span class="flex h-full w-10 items-center justify-center hover:animate-spin"

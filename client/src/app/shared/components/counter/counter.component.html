@@ -1,6 +1,6 @@
 <div class="flex w-full flex-row items-stretch">
   <button
-    class="flex items-center justify-center rounded-tl-md rounded-bl-md bg-gray-500 p-1 text-gray-100"
+    class="flex items-center justify-center rounded-tl-md rounded-bl-md bg-surface-overlay p-1 text-text-primary"
     [ngClass]="{
       'pointer-events-none cursor-default opacity-20': currentCount() < 2,
     }"
@@ -12,11 +12,11 @@
       <path d="M3 11h18v2H3z"></path>
     </svg>
   </button>
-  <span class="text-md flex w-full items-center justify-center bg-gray-300 px-4 font-semibold text-text-blue">
+  <span class="text-md flex w-full items-center justify-center bg-surface-raised px-4 font-semibold text-text-primary">
     {{ currentCount() }}
   </span>
   <button
-    class="flex items-center justify-center rounded-tr-md rounded-br-md bg-gray-500 p-1 text-gray-100"
+    class="flex items-center justify-center rounded-tr-md rounded-br-md bg-surface-overlay p-1 text-text-primary"
     [ngClass]="{
       'pointer-events-none cursor-default opacity-20': currentCount() === limit() && limit() !== null,
     }"

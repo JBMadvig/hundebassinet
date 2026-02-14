@@ -1,66 +1,75 @@
-<article class="relative grid grid-cols-[1fr_125px] grid-rows-1 items-center gap-2 p-2">
-  <div class="grid-rows-auto grid grid-cols-2 gap-1">
-    <p class="col-span-2 text-lg font-semibold">{{ item().name }}</p>
-    <p class="col-span-2 text-xs text-text-blue">
-      <span class="capitalize">{{ item().primaryItemCategory }}</span> -
-      <span class="capitalize">{{ item().secondaryItemCategory }}</span>
-    </p>
-    <p class="flex flex-row gap-x-1 text-xs text-text-blue">
-      <span class="whitespace-nowrap">{{ item().averagePrice }},- DKK</span>
-      <span>|</span>
-
-      <span class="whitespace-nowrap"
-        >{{ item().currentStock }}
-        pcs in stock
-      </span>
-    </p>
-  </div>
-
-  <div class="grid h-full grid-cols-3 grid-rows-2">
-    <p class="col-span-2 flex flex-row justify-end gap-x-1 text-lg text-amber-600">
-      <span>{{ collectivePrice() }}</span>
-      <span>DKK</span>
-    </p>
-
-    <button class="flex items-start justify-self-end text-warning" (click)="deleteItemDialogOpen.set(true)">
-      <svg fill="currentColor" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-        <!--Boxicons v3.0.6 https://boxicons.com | License  https://docs.boxicons.com/free-->
-        <path
-          d="M17 6V4c0-1.1-.9-2-2-2H9c-1.1 0-2 .9-2 2v2H2v2h2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8h2V6zM9 4h6v2H9zM6 20V8h12v12z"
-        ></path>
-        <path d="M9 10h2v8H9zM13 10h2v8h-2z"></path>
-      </svg>
-    </button>
-
-    <app-counter
-      class="col-span-3 self-end"
-      [currentCount]="item().quantity"
-      [limit]="item().currentStock"
-      (countDown)="basketService.removeSingleItemFromBasket(item())"
-      (countUp)="basketService.addItemToBasket(item())"
-    />
-  </div>
-
+<article class="relative grid grid-cols-[1fr_125px] grid-rows-1 items-center gap-2">
   @if (deleteItemDialogOpen()) {
     <div
       #deleteItemDialog
-      class="absolute top-0 left-0 grid h-full w-full grid-cols-[1fr_auto] items-center justify-items-center gap-x-4 bg-gray-800/95 px-4 py-2 text-white"
+      class="col-span-2 grid h-full w-full grid-cols-[1fr_auto] items-center justify-items-center gap-x-4 text-text-on-light"
     >
-      <p class="text-sm">Are you sure you want to delete this item from the basket?</p>
+      <p>
+        Are you sure you want to remove: <b>{{ item().quantity }} {{ item().name }}</b
+        >, from the basket?
+      </p>
       <div>
         <button
-          class="mr-2 rounded-md bg-red-600 px-4 py-2 text-white hover:bg-red-700"
+          class="mr-2 rounded-md bg-error px-4 py-2 text-text-on-light hover:bg-error-hover"
           (click)="basketService.removeItemCompletelyFromBasket(item()); deleteItemDialogOpen.set(false)"
         >
           Yes
         </button>
         <button
-          class="rounded-md bg-gray-300 px-4 py-2 text-black hover:bg-gray-400"
+          class="rounded-md bg-surface-raised px-4 py-2 text-text-primary hover:bg-surface"
           (click)="deleteItemDialogOpen.set(false)"
         >
           No
         </button>
       </div>
+    </div>
+  } @else {
+    <div class="grid-rows-auto grid grid-cols-2 gap-1 text-text-on-light">
+      <p class="col-span-2 font-heading text-lg font-semibold">{{ item().name }}</p>
+      <p class="col-span-2 text-xs">
+        <span class="capitalize">{{ item().primaryItemCategory }}</span> -
+        <span class="capitalize">{{ item().secondaryItemCategory }}</span>
+      </p>
+      <p class="flex flex-row gap-x-1 text-xs">
+        <span class="whitespace-nowrap">{{ item().averagePrice }},- DKK</span>
+        <span>|</span>
+
+        <span class="whitespace-nowrap"
+          >{{ item().currentStock }}
+          pcs in stock
+        </span>
+      </p>
+    </div>
+
+    <div class="grid h-full grid-cols-3 grid-rows-2">
+      <p class="col-span-2 flex flex-row justify-end gap-x-1 text-lg text-accent-muted">
+        <span>{{ collectivePrice() }}</span>
+        <span>DKK</span>
+      </p>
+
+      <button class="flex items-start justify-self-end text-error" (click)="deleteItemDialogOpen.set(true)">
+        <svg
+          fill="currentColor"
+          height="24"
+          viewBox="0 0 24 24"
+          width="24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <!--Boxicons v3.0.6 https://boxicons.com | License  https://docs.boxicons.com/free-->
+          <path
+            d="M17 6V4c0-1.1-.9-2-2-2H9c-1.1 0-2 .9-2 2v2H2v2h2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8h2V6zM9 4h6v2H9zM6 20V8h12v12z"
+          ></path>
+          <path d="M9 10h2v8H9zM13 10h2v8h-2z"></path>
+        </svg>
+      </button>
+
+      <app-counter
+        class="col-span-3 self-end"
+        [currentCount]="item().quantity"
+        [limit]="item().currentStock"
+        (countDown)="basketService.removeSingleItemFromBasket(item())"
+        (countUp)="basketService.addItemToBasket(item())"
+      />
     </div>
   }
 </article>

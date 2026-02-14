@@ -28,15 +28,15 @@ export class BadgeComponent {
             case 'secondaryItemCategory':
                 return this.secondaryItemCategoryColor(this.badgeText() as SecondaryItemCategoriesType);
             case 'success':
-                return 'bg-green-100 text-green-800 border-green-200';
+                return 'bg-success/15 text-success border-success/25';
             case 'danger':
-                return 'bg-red-100 text-red-800 border-red-200';
+                return 'bg-error/15 text-error border-error/25';
             case 'warning':
-                return 'bg-yellow-100 text-yellow-800 border-yellow-200';
+                return 'bg-warning/15 text-warning border-warning/25';
             case 'info':
-                return 'bg-blue-100 text-blue-800 border-blue-200';
+                return 'bg-info/15 text-info border-info/25';
             case 'neutral':
-                return 'bg-gray-100 text-text-blue border-gray-200';
+                return 'bg-surface text-text-secondary border-border';
         }
 
     });

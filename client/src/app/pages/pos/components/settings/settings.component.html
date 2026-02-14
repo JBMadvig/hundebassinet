@@ -8,10 +8,11 @@
                     <li>
                         <app-button (handleClick)="redirect('/users')" label="Admin Settings - Manage users and inventory" />
                     </li>
+                } @else {
+                    <li>
+                        <app-button (handleClick)="redirect('/users/me')" label="User Settings - Change name and see transaction history" />
+                    </li>
                 }
-                <li>
-                    <app-button (handleClick)="redirect('/users/me')" label="User Settings - Change name and see transaction history" />
-                </li>
                 <li>
                     <app-button (handleClick)="redirect('/pos/inventory')" label="Inventory - Add to inventory" />
                 </li>

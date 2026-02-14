@@ -3,9 +3,9 @@
     <p>Loading...</p>
   } @else {
     @if (errorFetching()) {
-      <div class="grid w-full grid-rows-auto gap-6">
+      <div class="grid-rows-auto grid w-full gap-6">
         <button
-          class="flex flex-row gap-4 text-prime-white hover:cursor-pointer hover:text-prime-white/80"
+          class="flex flex-row gap-4 text-text-primary hover:cursor-pointer hover:text-text-secondary"
           (click)="goBack()"
         >
           <svg
@@ -23,13 +23,13 @@
           </svg>
           <span>Go back</span>
         </button>
-        <p class="text-2xl text-red-500">Error fetching users. Please try again later.</p>
+        <p class="text-2xl text-error">Error fetching users. Please try again later.</p>
       </div>
     } @else {
       <div class="h-full w-full">
-        <div class="grid w-full grid-rows-auto gap-6 items-center">
+        <div class="grid-rows-auto grid w-full items-center gap-6">
           <button
-            class="flex flex-row gap-4 text-prime-white hover:cursor-pointer hover:text-prime-white/80"
+            class="flex flex-row gap-4 text-text-primary hover:cursor-pointer hover:text-text-secondary"
             (click)="goBack()"
           >
             <svg
@@ -47,9 +47,9 @@
             </svg>
             <span>Go back</span>
           </button>
-          <h1 class="text-2xl font-bold text-prime-white">Current users</h1>
+          <p class="text-2xl font-semibold font-heading text-text-primary">Current users</p>
         </div>
-        <app-table class="text-prime-white" [data]="users()">
+        <app-table class="text-text-primary mt-4" [data]="users()">
           <ng-template #headerTemplate>
             <tr>
               <th class="text-left">ID</th>
@@ -62,12 +62,21 @@
             </tr>
           </ng-template>
           <ng-template #rowTemplate [appTypedTemplate]="typeToken" let-data>
-            <tr class="cursor-pointer" [routerLink]="data.id === currentUser()?.id ? ['/users/me'] : ['/users', data.id]">
+            <tr
+              class="cursor-pointer"
+              [queryParams]="data.id === currentUser()?.id ? { returnTo: '/users' } : null"
+              [routerLink]="data.id === currentUser()?.id ? ['/users/me'] : ['/users', data.id]"
+            >
               <td>
                 {{ data.id }}
               </td>
               <td>
-                {{ data.name }}
+                <p class="flex flex-row gap-x-2">
+                  {{ data.name }}
+                  @if (data.id === currentUser()?.id) {
+                    <app-badge badgeText="You" badgeType="info" />
+                  }
+                </p>
               </td>
               <td>
                 {{ data.email }}

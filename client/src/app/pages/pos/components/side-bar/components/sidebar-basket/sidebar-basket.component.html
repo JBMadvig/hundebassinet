@@ -1,10 +1,10 @@
 @let userData = user();
 
-<article class="basketContainer grid h-full grid-cols-1 grid-rows-[auto_1fr_auto] bg-gray-50 pb-4">
+<article class="basketContainer grid h-full grid-cols-1 grid-rows-[auto_1fr_auto] bg-white/15 pb-4 text-text-primary">
   <div class="flex w-full items-center justify-between p-2 text-xl font-bold">
-    <span>Basket</span>
+    <p class="font-heading">Basket</p>
     <button
-      class="transition-al flex cursor-pointer items-center justify-center rounded-full border border-gray-600 p-2 text-gray-600 duration-200 ease-in-out hover:border-warning hover:text-warning"
+      class="flex cursor-pointer items-center justify-center rounded-full border border-border-strong p-2 text-text-secondary transition-all duration-200 ease-in-out hover:border-error hover:text-error"
       (click)="showDialog.set(true)"
     >
       <svg fill="currentColor" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
@@ -19,7 +19,7 @@
   <div class="h-full overflow-y-auto transition-all duration-250 ease-in-out">
     <ul class="grid grid-flow-row gap-y-1 px-1 py-2">
       @for (item of basketItems(); track item.id) {
-        <li class="custom-css-content-line-left overflow-hidden rounded-md border border-gray-600 p-2">
+        <li class="custom-css-content-line-left overflow-hidden rounded-md border border-border-strong bg-white/80 px-3 py-2">
           <app-basket-item [item]="item" />
         </li>
       }
@@ -27,7 +27,7 @@
   </div>
   @if (basketItems().length > 0) {
     <div
-      class="grid-rows-auto grid grid-cols-1 gap-2 border-t border-text-blue/25 p-2 transition-all duration-250 ease-in-out"
+      class="grid-rows-auto grid grid-cols-1 gap-2 border-t border-border-strong p-2 transition-all duration-250 ease-in-out"
     >
       @if (userData !== null) {
         <p class="flex flex-row justify-between">
@@ -35,14 +35,14 @@
           <span
             class="italic"
             [ngClass]="{
-              'text-prime-red': userData.balance - totalPrice() < 0,
-              'text-prime-green': userData.balance - totalPrice() >= 0,
+              'text-error': userData.balance - totalPrice() < 0,
+              'text-success': userData.balance - totalPrice() >= 0,
             }"
             >{{ userData.balance - totalPrice() }}&nbsp;,-</span
           >
         </p>
       }
-      <p class="flex flex-row justify-between text-xl font-bold text-prime-orange">
+      <p class="flex flex-row justify-between text-xl font-bold text-highlight">
         <span>Subtotal</span><span>{{ totalPrice() }}&nbsp;,-</span>
       </p>
     </div>

@@ -1,3 +1,35 @@
+@font-face {
+  font-family: 'Inter';
+  src: url('/assets/Inter/Inter-VariableFont_opsz,wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/assets/Inter/Inter-Italic-VariableFont_opsz,wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  src: url('/assets/Plus_Jakarta_Sans/PlusJakartaSans-VariableFont_wght.ttf') format('truetype');
+  font-weight: 200 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  src: url('/assets/Plus_Jakarta_Sans/PlusJakartaSans-Italic-VariableFont_wght.ttf') format('truetype');
+  font-weight: 200 800;
+  font-style: italic;
+  font-display: swap;
+}
+
 /* Custom orange glow shadow for user card hover */
 .shadow-prime-orange-glow {
   box-shadow: 0 8px 32px 0 var(--color-prime-orange, #f18f01aa), 0 1.5px 8px 0 var(--color-prime-orange, #f18f0130);
@@ -7,23 +39,66 @@
 @source './**/*.{html,ts,css}';
 
 @theme {
-  /* --font-*: initial; */
-  /* --font-sans: Arial, Verdana, sans-serif; */
+  --font-heading: 'Plus Jakarta Sans', sans-serif;
+  --font-body: 'Inter', sans-serif;
 
+  /* New color palette */
+  /* Primary accent */
+  --color-accent: #6366F1; /* Default state (buttons, active filter) */
+  --color-accent-hover: #818CF8; /* Hover/press state */
+  --color-accent-muted: #4F46E5; /* Pressed/active state */
+  --color-accent-disabled: #3730A3; /* Disabled state */
+
+  /* Secondary accent */
+  --color-highlight: #D4A06A; /* Prices, subtotals, balance, menu icons */
+  --color-highlight-hover: #E0B57E; /* Hover state */
+  --color-highlight-muted: #B8885A; /* Pressed state */
+  --color-highlight-disabled: #6B5D45; /* Disabled state */
+
+  /* Surface colors - cards, sidebade and containers on the bg */
+  --color-surface: #1E2254;	/* Card backgrounds, sidebar bg */
+  --color-surface-raised: #272B66;	/* Hover on surface, elevated cards */
+  --color-surface-overlay: #323878;	/* Modals/dialogs overlay panel bg */
+  --color-border: rgba(255,255,255,0.12); /* Default borders on dark surfaces */
+  --color-border-strong: rgba(255,255,255,0.25); /* Emphasized borders */
+
+  /* Text colors */
+  --color-text-primary: #F0F0F5; /* Primary text on dark surfaces */
+  --color-text-secondary: #A0A3C4; /* Secondary/muted text on dark surfaces */
+  --color-text-on-light: #1A1D3E; /* Text on light surfaces (item cards) */
+  --color-text-disabled-accent: rgba(124,110,246,0.5); /* Disabled state for accent text */
+
+  /* State colors */ 
+  --color-success: #34D399; /**/
+  --color-success-hover: #5EEAD4; /**/
+  --color-succes-text: rgba(52,211,153,0.15); /**/
+  --color-error: #F87171; /**/
+  --color-error-hover: #FCA5A5; /**/
+  --color-error-bg: rgba(248,113,113,0.15); /**/
+  --color-warning: #FBBF24; /**/
+  --color-warning-hover: #FCD34D; /**/
+  --color-warning-bg: rgba(251,191,36,0.15); /**/
+  --color-info: #60A5FA; /**/
+  --color-info-hover: #93C5FD; /**/
+  --color-info-bg: rgba(96,165,250,0.15); /**/
+
+
+
+ /* New color patlette end
   --color-primary: #f18f01;
   --color-warning: #fb2c36;
-  --color-text-blue: #264653ff; /* charcoal-blue */
-  --color-prime-white: #f8f9faff; /* bright-snow */
+  --color-text-blue: #264653ff; charcoal-blue
+  --color-prime-white: #f8f9faff; /* bright-snow
 
-  --color-prime-green: #2a9d8fff; /* verdigris*/
-  --color-prime-green2: #90be6dff; /* willow-green*/
-  --color-prime-yellow: #e9c46aff; /* tuscan-sun */
-  --color-prime-orange2: #f3722cff; /* atomic-tangerine */
-  --color-prime-orange: #f4a261ff; /* sandy-brown*/
-  --color-prime-red: #f94144ff; /* strawberry-red */
+  --color-prime-green: #2a9d8fff; /* verdigris
+  --color-prime-green2: #90be6dff; /* willow-green
+  --color-prime-yellow: #e9c46aff; /* tuscan-sun 
+  --color-prime-orange2: #f3722cff; /* atomic-tangerine 
+  --color-prime-orange: #f4a261ff; /* sandy-brown
+  --color-prime-red: #f94144ff; /* strawberry-red 
+  */
 
   --spacing-sidebar: 380px;
-
 }
 
 /*
@@ -48,25 +123,25 @@
   }
 
   h1 {
-    @apply text-5xl;
+    @apply font-heading text-5xl;
   }
 
   h2 {
-    @apply text-4xl;
+    @apply font-heading text-4xl;
   }
 
   h3 {
-    @apply text-3xl;
+    @apply font-heading text-3xl;
   }
 
   h4 {
-    @apply text-2xl;
+    @apply font-heading text-2xl;
   }
 }
 
 /* You can add global styles to this file, and also import other style files */
 html,
 body {
-  @apply h-full;
+  @apply h-full font-body;
 }
 

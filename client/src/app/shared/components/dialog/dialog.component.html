@@ -17,10 +17,10 @@
     <div class="max-w-3/4 overflow-hidden">
       <div
         #dialog
-        class="modal-grid h-auto w-full rounded-xl py-6 px-8 shadow-lg"
+        class="modal-grid h-auto w-full rounded-xl py-6 px-6 shadow-lg"
         [ngClass]="{
-          'bg-white': theme() === 'light',
-          'text-font-tertiary bg-gray-800': theme() === 'dark',
+          'bg-white text-text-on-light': theme() === 'light',
+          'bg-surface-overlay text-text-primary': theme() === 'dark',
         }"
       >
         <header>
@@ -31,7 +31,7 @@
                   <ng-content select="[dialogIcon]"></ng-content>
                 </i>
               }
-              <h5 class="font-bold">{{ dialogTitle() }}</h5>
+              <p class="text-2xl font-semibold font-heading">{{ dialogTitle() }}</p>
             </div>
             <div class="w-full self-center">
               <ng-content select="[headerAction]"></ng-content>

@@ -7,7 +7,7 @@
           'py-1': !isRequired(),
         }"
       >
-        <label class="text-text-blue/80" [for]="controlId">
+        <label class="text-text-on-light/80" [for]="controlId">
           {{ label() }}
         </label>
         @if (isRequired()) {
@@ -18,11 +18,11 @@
 
     <select
       [id]="controlId"
-      class="w-full rounded-full border border-text-blue/80 px-4 py-2 bg-prime-white/50"
+      class="w-full rounded-full border border-gray-300 bg-white/80 px-4 py-2"
       [ngClass]="{
-        'text-text-blue/80 italic': valueFormControl.value === null,
-        'border-prime-red': isInvalid(),
-        'border-gray-400': !isInvalid(),
+        'text-text-on-light/60 italic': valueFormControl.value === null,
+        'border-error': isInvalid(),
+        'border-gray-300': !isInvalid(),
       }"
       [formControlName]="controlName"
     >

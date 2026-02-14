@@ -10,29 +10,29 @@
     </div>
 
     <!-- Title -->
-    <h1 class="text-3xl font-bold text-prime-white">Choose user</h1>
+    <h1 class="text-3xl font-bold text-text-primary">Choose user</h1>
 
     <!-- User cards -->
     @if (usersResource.isLoading()) {
-      <p class="text-prime-white">Loading users...</p>
+      <p class="text-text-primary">Loading users...</p>
     } @else if (usersResource.error()) {
-      <p class="text-red-500">Failed to load users. Please try again.</p>
+      <p class="text-error">Failed to load users. Please try again.</p>
     } @else {
       <ul class="flex flex-wrap justify-center gap-6">
         @for (user of usersResource.value(); track user.name) {
           <li>
             <button
-              class="group relative h-60 w-44 cursor-pointer overflow-hidden rounded-xl border bg-cover bg-center shadow-lg transition-transform duration-200 hover:scale-110 hover:shadow-[0_8px_32px_0_var(--color-prime-orange),0_1.5px_8px_0_var(--color-prime-orange)] odd:hover:-rotate-2 even:hover:rotate-2 focus:scale-110 focus:shadow-[0_8px_32px_0_var(--color-prime-orange),0_1.5px_8px_0_var(--color-prime-orange)] odd:focus:-rotate-2 even:focus:rotate-2"
+              class="group relative h-60 w-44 cursor-pointer overflow-hidden rounded-xl border border-border bg-cover bg-center shadow-lg transition-transform duration-200 hover:scale-110 hover:shadow-[0_8px_32px_0_var(--color-highlight),0_1.5px_8px_0_var(--color-highlight)] odd:hover:-rotate-2 even:hover:rotate-2 focus:scale-110 focus:shadow-[0_8px_32px_0_var(--color-highlight),0_1.5px_8px_0_var(--color-highlight)] odd:focus:-rotate-2 even:focus:rotate-2"
               [style.background-image]="'url(' + user.avatarUrl + ')'"
               (click)="userChosen(user)"
               type="button"
             >
               <span
-                class="absolute right-3 bottom-3 left-3 flex items-center justify-between rounded-lg bg-white/90 px-3 py-2 backdrop-blur-sm transition-colors duration-200 group-hover:bg-prime-orange group-hover:text-text-blue group-focus:bg-prime-orange group-focus:text-text-blue"
+                class="absolute right-3 bottom-3 left-3 flex items-center justify-between rounded-lg bg-white/90 px-3 py-2 backdrop-blur-sm transition-colors duration-200 group-hover:bg-accent group-hover:text-white group-focus:bg-accent group-focus:text-white"
               >
                 <p class="text-sm font-medium transition-colors duration-200">{{ user.name }}</p>
                 <span
-                  class="flex h-8 w-8 items-center justify-center rounded-md bg-black text-white transition-colors duration-200 group-hover:text-text-blue group-focus:text-text-blue"
+                  class="flex h-8 w-8 items-center justify-center rounded-md bg-text-on-light text-white transition-colors duration-200 group-hover:bg-white/20 group-focus:bg-white/20"
                 >
                   <svg
                     fill="currentColor"
@@ -50,7 +50,7 @@
             </button>
           </li>
         } @empty {
-          <li class="text-center text-gray-500">No users found</li>
+          <li class="text-center text-text-secondary">No users found</li>
         }
       </ul>
     }
@@ -61,7 +61,7 @@
   <app-dialog [dialogTitle]="titleModal()" [(visible)]="enterPasswordDialog">
     <div class="flex w-full flex-col items-start justify-center gap-y-4">
       @if (loginLoader()) {
-        <p class="text-text-blue"><span>Logging in...</span><span class="loader"></span></p>
+        <p class="text-text-on-light"><span>Logging in...</span><span class="loader"></span></p>
       } @else {
         <form class="min-w-[35vw]" [formGroup]="passwordForm">
           <app-input-field
@@ -74,7 +74,7 @@
           />
         </form>
         @if (loginError()) {
-          <p class="text-red-500">{{ loginError() }}</p>
+          <p class="text-error">{{ loginError() }}</p>
         }
         <div class="grid w-full grid-cols-2 gap-x-2">
           <app-button

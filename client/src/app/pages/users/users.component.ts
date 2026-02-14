@@ -3,6 +3,7 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { User } from 'app/shared/types/user.types';
 
+import { BadgeComponent } from '@components/badge/badge.component';
 import { TableBodyData, TableComponent } from '@components/table/table.component';
 import { TypedTemplateDirective } from '@directives/typed-template.directive';
 import { AuthService } from '@services/auth.service';
@@ -12,8 +13,9 @@ import { UsersApiService } from '@services/users-api.service';
     selector: 'app-users',
     imports: [
         CommonModule,
-        TableComponent,
+        BadgeComponent,
         RouterModule,
+        TableComponent,
         TypedTemplateDirective,
     ],
     templateUrl: './users.component.html',

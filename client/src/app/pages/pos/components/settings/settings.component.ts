@@ -29,7 +29,7 @@ export class SettingsComponent {
                 this.route.navigate([ '/pos/inventory' ]);
                 break;
             case '/users/me':
-                this.route.navigate([ '/users/me' ]);
+                this.route.navigate([ '/users/me' ], { queryParams: { returnTo: '/pos' } });
                 break;
             case '/users':
                 this.route.navigate([ '/users' ]);

@@ -7,7 +7,7 @@
       </label>
 
       @if (!disabled()) {
-        <button class="cursor-pointer leading-4 hover:text-text-blue/80" (click)="toggleEditing()">
+        <button class="cursor-pointer leading-4 hover:text-accent" (click)="toggleEditing()">
           <svg
             fill="currentColor"
             height="24"
@@ -25,7 +25,7 @@
       }
     </div>
 
-    <p class="cursor-pointer rounded-full border border-text-blue/80 px-4 py-2 leading-6">{{ value }}</p>
+    <p class="cursor-pointer rounded-full border border-gray-300 px-4 py-2 leading-6">{{ value }}</p>
   } @else {
     @if (valueFormGroup) {
       <div class="flex flex-col gap-1" [formGroup]="valueFormGroup">
@@ -35,7 +35,7 @@
           </label>
 
           @if (!disabled()) {
-            <button class="leading-4 hover:text-text-blue/80" (click)="submit(); $event.stopPropagation()" type="submit">
+            <button class="leading-4 hover:text-accent" (click)="submit(); $event.stopPropagation()" type="submit">
               <svg
                 fill="currentColor"
                 height="24"
@@ -60,12 +60,12 @@
   <!-- No label layout -->
   @if (!isEditView() || disabled()) {
     <div class="flex cursor-pointer gap-2">
-      <p class="flex w-full items-center rounded-full border border-text-blue/80 px-4 py-2">
+      <p class="flex w-full items-center rounded-full border border-gray-300 px-4 py-2">
         {{ value }}
       </p>
       @if (!disabled()) {
         @if (invalidFormInput()) {
-          <span class="ml-2 text-prime-red">
+          <span class="ml-2 text-error">
             <svg
               fill="currentColor"
               height="24"
@@ -81,7 +81,7 @@
             </svg>
           </span>
         } @else {
-          <button class="cursor-pointer hover:text-text-blue/80" (click)="toggleEditing()">
+          <button class="cursor-pointer hover:text-accent" (click)="toggleEditing()">
             <svg
               fill="currentColor"
               height="24"
@@ -111,7 +111,7 @@
         />
         @if (!disabled()) {
           @if (invalidFormInput()) {
-            <span class="ml-2 text-prime-red">
+            <span class="ml-2 text-error">
               <svg
                 fill="currentColor"
                 height="24"
@@ -127,7 +127,7 @@
               </svg>
             </span>
           } @else {
-            <button class="ml-2 cursor-pointer hover:text-text-blue/80" (click)="submit(); $event.stopPropagation()" type="submit">
+            <button class="ml-2 cursor-pointer hover:text-accent" (click)="submit(); $event.stopPropagation()" type="submit">
               <svg
                 fill="currentColor"
                 height="24"

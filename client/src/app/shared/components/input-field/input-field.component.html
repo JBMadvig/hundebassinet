@@ -9,12 +9,12 @@
   }
   @if (enabled) {
     <div
-      class="box-border flex items-center rounded-full border bg-prime-white p-2 align-middle"
+      class="box-border flex items-center rounded-full border bg-white p-2 align-middle"
       [ngClass]="{
         'border-l-0': noLeftBorder(),
         'border-error': isInvalid(),
-        'border-gray-400': !isInvalid() && theme() === 'light',
-        'border-gray-600': !isInvalid() && theme() === 'dark',
+        'border-gray-300': !isInvalid() && theme() === 'light',
+        'border-gray-400': !isInvalid() && theme() === 'dark',
       }"
       [formGroup]="valueFormGroup"
     >
@@ -22,17 +22,17 @@
         <i
           class="fa-xs px-2 {{ icon() }}"
           [ngClass]="{
-            'text-text-blue': theme() === 'light',
-            'text-gray-400': theme() === 'dark',
+            'text-text-on-light': theme() === 'light',
+            'text-text-secondary': theme() === 'dark',
           }"
         ></i>
       }
       <input
-        class="box-border w-full border-gray-400 text-xl font-bold placeholder-gray-400 placeholder:italic focus:outline-hidden"
+        class="box-border w-full text-xl font-bold text-text-on-light placeholder-gray-400 placeholder:italic focus:outline-hidden"
         [ngClass]="{
           'ml-2': !icon(),
-          'pointer-events-none cursor-not-allowed bg-gray-600': disabled(),
-          'bg-prime-white': !disabled(),
+          'pointer-events-none cursor-not-allowed bg-gray-200': disabled(),
+          'bg-white': !disabled(),
         }"
         [appAutoFocus]="autofocus()"
         [formControlName]="controlName"
@@ -53,7 +53,7 @@
       />
       @if (controlValue) {
         <button
-          class="ml-2 flex items-center justify-center text-gray-600 transition-colors hover:text-gray-800 focus:outline-none"
+          class="ml-2 flex items-center justify-center text-text-secondary transition-colors hover:text-text-on-light focus:outline-none"
           (click)="onClearField()"
           type="button"
         >
@@ -76,7 +76,7 @@
       }
       @if (type() === 'password') {
         <button
-          class="ml-2 flex items-center justify-center text-gray-600 transition-colors hover:text-gray-800 focus:outline-none"
+          class="ml-2 flex items-center justify-center text-text-secondary transition-colors hover:text-text-on-light focus:outline-none"
           (click)="togglePasswordVisibility()"
           type="button"
         >
@@ -111,14 +111,14 @@
     </div>
   } @else {
     <div
-      class="pointer-events-none box-border flex cursor-not-allowed items-center rounded-full border border-gray-400 bg-gray-400 p-2 px-4 align-middle text-gray-500"
+      class="pointer-events-none box-border flex cursor-not-allowed items-center rounded-full border border-gray-300 bg-gray-100 p-2 px-4 align-middle text-gray-400"
       [ngClass]="{ 'border-l-0': noLeftBorder() }"
     >
       @if (icon()) {
-        <i class="fa-xs px-2 text-text-blue" [ngClass]="icon()"></i>
+        <i class="fa-xs px-2 text-text-on-light" [ngClass]="icon()"></i>
       }
       <span
-        class="box-border w-full border-gray-400 bg-transparent text-xl font-bold text-gray-500 focus:outline-hidden"
+        class="box-border w-full bg-transparent text-xl font-bold text-gray-400 focus:outline-hidden"
         [ngClass]="{ italic: placeholder }"
       >
         {{ formattedValue }}
