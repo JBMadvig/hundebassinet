@@ -18,9 +18,9 @@
 
     <select
       [id]="controlId"
-      class="w-full rounded-full border border-gray-300 bg-white/80 px-4 py-2"
+      class="w-full rounded-full border bg-white px-4 py-2 text-xl font-bold text-text-on-light"
       [ngClass]="{
-        'text-text-on-light/60 italic': valueFormControl.value === null,
+        ' text-text-secondary italic': valueFormControl.value === null,
         'border-error': isInvalid(),
         'border-gray-300': !isInvalid(),
       }"

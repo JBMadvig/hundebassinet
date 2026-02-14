@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { firstValueFrom, map } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
-import { ChangePasswordRequest, ChangePasswordResponse, UpdateUserDetailsRequest, UpdateUserDetailsResponse, User } from '../types/user.types';
+import { ChangePasswordRequest, ChangePasswordResponse, CreateUserRequest, CreateUserResponse, UpdateUserDetailsRequest, UpdateUserDetailsResponse, User } from '../types/user.types';
 import { mapUser } from '../utils/map-user';
 
 @Injectable({
@@ -44,6 +44,15 @@ export class UsersApiService {
         return firstValueFrom(
             this.http.get<User[]>(`${this.apiUrl}/sudo-admin-data`).pipe(
                 map((users) => users.map(mapUser)),
+            ),
+        );
+    }
+
+    // Create a new user (admin/sudo-admin only)
+    public createUser(data: CreateUserRequest): Promise<CreateUserResponse> {
+        return firstValueFrom(
+            this.http.post<CreateUserResponse>(`${this.apiUrl}/create`, data).pipe(
+                map((res) => ({ ...res, user: mapUser(res.user) })),
             ),
         );
     }

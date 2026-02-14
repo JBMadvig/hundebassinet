@@ -14,10 +14,13 @@
       'text-gray-light': theme() === 'dark',
     }"
     -->
-    <div class="max-w-3/4 overflow-hidden">
+    <div
+      class="max-h-[80dvh] max-w-3/4 overflow-hidden"
+      [ngClass]="{ 'w-3/4': useFullWidth() }"
+    >
       <div
         #dialog
-        class="modal-grid h-auto w-full rounded-xl py-6 px-6 shadow-lg"
+        class="modal-grid max-h-[inherit] w-full rounded-xl py-6 px-6 shadow-lg"
         [ngClass]="{
           'bg-white text-text-on-light': theme() === 'light',
           'bg-surface-overlay text-text-primary': theme() === 'dark',
@@ -54,7 +57,7 @@
             </button>
           </div>
         </header>
-        <main class="pt-4">
+        <main class="overflow-y-auto pt-4">
           <ng-content></ng-content>
         </main>
       </div>

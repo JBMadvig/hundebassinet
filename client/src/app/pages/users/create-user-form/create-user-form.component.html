@@ -1,0 +1,54 @@
+<app-dialog [(visible)]="visible" dialogTitle="Create new user" useFullWidth>
+  <div class="flex w-full flex-col gap-4 overflow-scroll text-text-on-light">
+    <div class="grid w-full grid-cols-[1fr_auto] gap-x-4">
+      @if (createUserError() === 'emailExists') {
+        <p class="text-error">A user with this email already exists</p>
+      } @else if (createUserError() === 'forbidden') {
+        <p class="text-error">You do not have permission to assign this role</p>
+      } @else if (createUserError() === 'serverError') {
+        <p class="text-error">Something went wrong. Please try again</p>
+      }
+      <form
+        class="grid-rows-auto grid w-full grid-cols-1 gap-4"
+        [formGroup]="createUserForm"
+        (submit)="createUser()"
+      >
+        <app-input-field formControlName="name" label="Name" ngDefaultControl placeholder="Enter name" />
+        <app-input-field formControlName="email" label="Email" ngDefaultControl placeholder="Enter email" />
+        <app-dropdown
+          [options]="roleListComputedValue()"
+          formControlName="role"
+          label="Role"
+          ngDefaultControl
+          placeholder="Select a role"
+        />
+        <app-input-field
+          formControlName="balance"
+          label="Balance"
+          ngDefaultControl
+          placeholder="Change balance for user"
+        />
+        @if (passwordNotMatching()) {
+          <p class="text-error">Passwords do not match</p>
+        }
+        <app-input-field
+          formControlName="newPassword"
+          label="New Password"
+          ngDefaultControl
+          placeholder="Enter new password"
+          tabindex="2"
+          type="password"
+        />
+        <app-input-field
+          formControlName="confirmNewPassword"
+          label="Confirm New Password"
+          ngDefaultControl
+          placeholder="Confirm new password"
+          tabindex="3"
+          type="password"
+        />
+        <app-button class="mt-4" label="save changes" type="submit" />
+      </form>
+    </div>
+  </div>
+</app-dialog>

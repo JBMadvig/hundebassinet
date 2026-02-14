@@ -48,12 +48,6 @@ export const userDashboardSchema = Type.Object({
 export const userSchema = userPublicSchema;
 
 // Auth request schemas
-export const registerRequestSchema = Type.Object({
-    email: Type.String({ format: 'email' }),
-    name: Type.String({ minLength: 2, maxLength: 100 }),
-    password: Type.String({ minLength: 8 }),
-});
-
 export const loginRequestSchema = Type.Object({
     email: Type.String({ format: 'email' }),
     password: Type.String(),

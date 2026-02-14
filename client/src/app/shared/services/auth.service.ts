@@ -2,7 +2,7 @@ import { computed, inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, of, tap } from 'rxjs';
 
-import { LoginRequest, RegisterRequest } from '../types/auth.types';
+import { LoginRequest } from '../types/auth.types';
 import { User } from '../types/user.types';
 import { AuthApiService } from './auth-api.service';
 
@@ -63,22 +63,6 @@ export class AuthService {
                 this.router.navigate([ '/pos', response.user.id ]);
             }),
         );
-    }
-
-    /**
-     * Register a new user
-     */
-    public register(data: RegisterRequest): void {
-        this.authApi.register(data).subscribe({
-            next: (response) => {
-                this.handleAuthSuccess(response.accessToken, response.refreshToken, response.user);
-                this.router.navigate([ '/pos', response.user.id ]);
-            },
-            error: (error) => {
-                console.error('Registration failed:', error);
-                throw error;
-            },
-        });
     }
 
     /**

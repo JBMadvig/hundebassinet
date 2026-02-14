@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, computed, DestroyRef, effect, inject, input, OnInit, output, signal } from '@angular/core';
+import { booleanAttribute, Component, computed, DestroyRef, effect, inject, input, OnInit, output, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { rolesList } from 'app/shared/types/auth.types';
@@ -37,7 +37,9 @@ export class UserDetailsFormComponent implements OnInit {
     private formBuilder = inject(FormBuilder);
     private usersApiService = inject(UsersApiService);
 
-    public roleList = rolesList;
+    public readonly roleList = rolesList;
+
+    public currentUser = this.authService.currentUser;
 
     public userDetailsForm = this.formBuilder.group({
         name: [ '', [ Validators.required, Validators.minLength(2) ] ],
@@ -53,9 +55,16 @@ export class UserDetailsFormComponent implements OnInit {
     });
 
     public user = input.required<User>();
-    public currentUser = this.authService.currentUser;
+    public createNewUser = input(false, { transform: booleanAttribute });
+
     public avatarUploaded = output<void>();
     public userUpdated = output<void>();
+
+    public showUpdateSuccess = signal(false);
+    public changePasswordSignal = signal(false);
+    public changePasswordLoading = signal(false);
+    public changePasswordSuccess = signal(false);
+    public changePasswordSignalError = signal<'noMatch' | 'incorrectCurrent' | 'errorFromServer' | null>(null);
 
     public nameFormSignal = toSignal(this.userDetailsForm.controls.name.valueChanges);
     public emailFormSignal = toSignal(this.userDetailsForm.controls.email.valueChanges);
@@ -74,12 +83,6 @@ export class UserDetailsFormComponent implements OnInit {
     public overwriteCurrentPasswordSignal = toSignal(
         this.passwordForm.controls.overwriteCurrentPassword.valueChanges,
     );
-
-    public showUpdateSuccess = signal(false);
-    public changePasswordSignal = signal(false);
-    public changePasswordLoading = signal(false);
-    public changePasswordSuccess = signal(false);
-    public changePasswordSignalError = signal<'noMatch' | 'incorrectCurrent' | 'errorFromServer' | null>(null);
 
     public changesHasBeenMade = computed(() => {
         const user = this.user();

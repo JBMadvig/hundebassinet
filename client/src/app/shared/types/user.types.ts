@@ -30,6 +30,18 @@ export interface UpdateUserDetailsResponse {
     refreshToken?: string;
 }
 
+export interface CreateUserRequest {
+    name: string;
+    email: string;
+    password: string;
+    role: string;
+    balance: number;
+}
+
+export interface CreateUserResponse {
+    user: User;
+}
+
 export interface ChangePasswordRequest {
     newPassword: string;
     currentPassword?: string;

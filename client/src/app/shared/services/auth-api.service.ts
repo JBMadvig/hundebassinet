@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
-import { AuthResponse, LoginRequest, RegisterRequest } from '../types/auth.types';
+import { AuthResponse, LoginRequest } from '../types/auth.types';
 import { User } from '../types/user.types';
 import { mapUser } from '../utils/map-user';
 
@@ -16,12 +16,6 @@ export class AuthApiService {
 
     login(credentials: LoginRequest): Observable<AuthResponse> {
         return this.http.post<AuthResponse>(`${this.apiUrl}/login`, credentials).pipe(
-            map((res) => ({ ...res, user: mapUser(res.user) })),
-        );
-    }
-
-    register(data: RegisterRequest): Observable<AuthResponse> {
-        return this.http.post<AuthResponse>(`${this.apiUrl}/register`, data).pipe(
             map((res) => ({ ...res, user: mapUser(res.user) })),
         );
     }

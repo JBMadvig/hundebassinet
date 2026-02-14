@@ -1,32 +1,9 @@
 <main class="flex min-h-screen flex-col items-center p-8">
-  @if (loading()) {
+  @if (usersResource.isLoading()) {
     <p>Loading...</p>
   } @else {
-    @if (errorFetching()) {
-      <div class="grid-rows-auto grid w-full gap-6">
-        <button
-          class="flex flex-row gap-4 text-text-primary hover:cursor-pointer hover:text-text-secondary"
-          (click)="goBack()"
-        >
-          <svg
-            fill="currentColor"
-            height="24"
-            viewBox="0 0 24 24"
-            width="24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
-            <path
-              d="M12 2C6.49 2 2 6.49 2 12s4.49 10 10 10 10-4.49 10-10S17.51 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8"
-            ></path>
-            <path d="m12.71 8.71-1.42-1.42L6.59 12l4.7 4.71 1.42-1.42-2.3-2.29H17v-2h-6.59z"></path>
-          </svg>
-          <span>Go back</span>
-        </button>
-        <p class="text-2xl text-error">Error fetching users. Please try again later.</p>
-      </div>
-    } @else {
-      <div class="h-full w-full">
+    <div class="h-full w-full">
+      <div class="flex flex-row justify-between">
         <div class="grid-rows-auto grid w-full items-center gap-6">
           <button
             class="flex flex-row gap-4 text-text-primary hover:cursor-pointer hover:text-text-secondary"
@@ -47,9 +24,19 @@
             </svg>
             <span>Go back</span>
           </button>
-          <p class="text-2xl font-semibold font-heading text-text-primary">Current users</p>
+          <p class="font-heading text-2xl font-semibold text-text-primary">Current users</p>
         </div>
-        <app-table class="text-text-primary mt-4" [data]="users()">
+        <app-button
+          class="shrink-0"
+          (handleClick)="showCreateUserModal.set(true)"
+          label="Create user"
+          textNoWrap
+        />
+      </div>
+      @if (usersResource.error()) {
+        <p class="text-2xl text-error">Error fetching users. Please try again later.</p>
+      } @else {
+        <app-table class="mt-4 text-text-primary" [data]="usersResource.value()">
           <ng-template #headerTemplate>
             <tr>
               <th class="text-left">ID</th>
@@ -94,7 +81,9 @@
             </tr>
           </ng-template>
         </app-table>
-      </div>
-    }
+      }
+    </div>
   }
 </main>
+
+<app-create-user-form [(visible)]="showCreateUserModal" (userCreated)="usersResource.reload()"></app-create-user-form>

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, inject, Injector, input, linkedSignal, output } from '@angular/core';
+import { AfterViewInit, booleanAttribute, Component, inject, Injector, input, linkedSignal, output } from '@angular/core';
 import { FormGroupDirective, ReactiveFormsModule } from '@angular/forms';
 
 import { AutoSub, AutoUnsubscribe } from '@decorators/auto-unsub.decorator';
@@ -80,6 +80,11 @@ export class ButtonComponent implements AfterViewInit {
      * - `'primary'` - (default) - Primary text for lighter bg
      */
     public textVariant = input<TextVariant>('primary');
+
+    /**
+     * Whether the text should not wrap and instead be on a single line.
+     */
+    public textNoWrap = input(false, { transform: booleanAttribute });
 
     /**
      * This event is emitted when the button is clicked.

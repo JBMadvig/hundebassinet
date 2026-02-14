@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, HostListener, input, model, output, viewChild } from '@angular/core';
+import { booleanAttribute, Component, ElementRef, HostListener, input, model, output, viewChild } from '@angular/core';
 
 @Component({
     selector: 'app-dialog',
@@ -27,6 +27,11 @@ export class DialogComponent {
      * Whether the dialog is visible or not.
      */
     public visible = model.required<boolean>();
+
+    /**
+     * Whether the dialog should expand to its maximum allowed width.
+     */
+    public useFullWidth = input(false, { transform: booleanAttribute });
 
     /**
      *  Allow the dialog to be closed by clicking outside of it.
