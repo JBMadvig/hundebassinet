@@ -1,37 +1,42 @@
-<button (click)="basketService.addItemToBasket(item())"
-    class="grid h-full w-full cursor-pointer grid-cols-1 grid-rows-[auto_1fr] overflow-y-hidden rounded-xl border border-gray-200 bg-white"
-  >
-    <app-item-type-header [itemTypeId]="item().primaryItemCategory" />
-    <div class="grid grid-cols-1 grid-rows-[auto_1fr] gap-1 px-4 py-2">
-      <div class="relative">
-        <p class="inline-flex h-30 w-full items-center justify-center bg-blue-400"></p>
-        <div class="absolute top-2 left-2 flex flex-row flex-wrap gap-1">
-          @if (item().primaryItemCategory) {
-            <app-badge [badgeText]="item().primaryItemCategory" [badgeType]="'primaryItemCategory'" />
-          }
-          @if (item().secondaryItemCategory) {
-            <app-badge [badgeText]="item().secondaryItemCategory" [badgeType]="'secondaryItemCategory'" />
-          }
-        </div>
-        <!-- TODO: Add image of item in database that can be fetched
-        <img class="mx-auto h-10 w-10" alt="Item image" [src]="item().imageUrl" /> -->
+<button
+  class="grid h-full w-full cursor-pointer grid-cols-1 grid-rows-[auto_1fr] overflow-y-hidden rounded-xl border border-gray-200 bg-white"
+  (click)="basketService.addItemToBasket(item())"
+>
+  <app-item-type-header [itemTypeId]="item().primaryItemCategory" />
+  <div class="grid grid-cols-1 grid-rows-[auto_1fr] gap-1 px-4 py-2">
+    <div class="relative">
+      <p class="inline-flex h-30 w-full items-center justify-center bg-blue-400"></p>
+      <div class="absolute top-2 left-2 flex flex-row flex-wrap gap-1">
+        @if (item().primaryItemCategory) {
+          <app-badge [badgeText]="item().primaryItemCategory" [badgeType]="'primaryItemCategory'" />
+        }
+        @if (item().secondaryItemCategory) {
+          <app-badge [badgeText]="item().secondaryItemCategory" [badgeType]="'secondaryItemCategory'" />
+        }
       </div>
-      <div class="flex flex-col justify-between">
-        <h3 class="text-xl font-semibold text-left ine-clamp-2 overflow-hidden text-ellipsis whitespace-pre-wrap">{{ item().name }}</h3>
-        <div class="grid grid-flow-row grid-cols-1 text-sm text-text-on-light/70">
-          <p class="flex flex-row gap-x-1 font-semibold text-text-on-light">
-            <span>{{ item().averagePrice }},-</span>
-            <span>DKK</span>
-          </p>
-          <p class="flex flex-row gap-x-1">
-            <span>{{ item().currentStock }}</span>
-            <span>in stock</span>
-          </p>
-          <p class="flex flex-row gap-x-1">
-            <span class="font-semibold">Updated:</span>
-            <span>{{ item().lastUpated | date: 'short' }}</span>
-          </p>
-        </div>
+      <!-- TODO: Add image of item in database that can be fetched
+        <img class="mx-auto h-10 w-10" alt="Item image" [src]="item().imageUrl" /> -->
+    </div>
+    <div class="flex flex-col justify-between">
+      <h3
+        class="ine-clamp-2 overflow-hidden text-left text-xl font-semibold text-ellipsis whitespace-pre-wrap"
+      >
+        {{ item().name }}
+      </h3>
+      <div class="grid grid-flow-row grid-cols-1 text-sm text-text-on-light/70">
+        <p class="flex flex-row gap-x-1 font-semibold text-text-on-light">
+          <span>{{ item().averagePrice }},-</span>
+          <span>DKK</span>
+        </p>
+        <p class="flex flex-row gap-x-1">
+          <span>{{ item().currentStock }}</span>
+          <span>in stock</span>
+        </p>
+        <p class="flex flex-row gap-x-1">
+          <span class="font-semibold">Updated:</span>
+          <span>{{ item().lastUpated | date: 'short' }}</span>
+        </p>
       </div>
     </div>
+  </div>
 </button>
