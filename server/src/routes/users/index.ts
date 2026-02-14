@@ -12,6 +12,7 @@ export default <FastifyPluginCallback>async function (app) {
         app.register(import('./serve-avatar')),
         app.register(import('./update-user-details')),
         app.register(import('./change-password')),
+        app.register(import('./delete-user')),
     ];
 
     await Promise.all(routes);

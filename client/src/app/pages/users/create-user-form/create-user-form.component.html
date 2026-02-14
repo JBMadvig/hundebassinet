@@ -1,11 +1,11 @@
 <app-dialog [(visible)]="visible" dialogTitle="Create new user" useFullWidth>
   <div class="flex w-full flex-col gap-4 overflow-scroll text-text-on-light">
     <div class="grid w-full grid-cols-[1fr_auto] gap-x-4">
-      @if (createUserError() === 'emailExists') {
+      @if (createUserError() === createUserErrorOptions.EMAIL_EXISTS) {
         <p class="text-error">A user with this email already exists</p>
-      } @else if (createUserError() === 'forbidden') {
+      } @else if (createUserError() === createUserErrorOptions.FORBIDDEN_ROLE) {
         <p class="text-error">You do not have permission to assign this role</p>
-      } @else if (createUserError() === 'serverError') {
+      } @else if (createUserError() === createUserErrorOptions.SERVER_ERROR) {
         <p class="text-error">Something went wrong. Please try again</p>
       }
       <form

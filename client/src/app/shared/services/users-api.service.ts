@@ -73,6 +73,13 @@ export class UsersApiService {
         );
     }
 
+    public deleteUser(userId: string):
+    Promise<void> {
+        return firstValueFrom(
+            this.http.delete<void>(`${this.apiUrl}/${userId}/delete`),
+        );
+    }
+
     // Upload avatar image for a user
     public uploadAvatar(userId: string, file: File): Promise<{ avatarUrl: string }> {
         const formData = new FormData();

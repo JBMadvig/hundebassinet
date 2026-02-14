@@ -1,26 +1,65 @@
 @let userResourceValue = userResource.value();
 <div class="grid-rows-auto grid w-full gap-6 p-8">
-  <button
-    class="flex flex-row gap-4 text-text-primary hover:cursor-pointer hover:text-prime-white/80"
-    (click)="goBack()"
-  >
-    <svg fill="currentColor" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-      <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
-      <path
-        d="M12 2C6.49 2 2 6.49 2 12s4.49 10 10 10 10-4.49 10-10S17.51 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8"
-      ></path>
-      <path d="m12.71 8.71-1.42-1.42L6.59 12l4.7 4.71 1.42-1.42-2.3-2.29H17v-2h-6.59z"></path>
-    </svg>
-    <span>Go back to users dashboard</span>
-  </button>
+  <div class="flex flex-row justify-between">
+    <button
+      class="hover:text-prime-white/80 flex flex-row gap-4 text-text-primary hover:cursor-pointer"
+      (click)="goBack()"
+    >
+      <svg fill="currentColor" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+        <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+        <path
+          d="M12 2C6.49 2 2 6.49 2 12s4.49 10 10 10 10-4.49 10-10S17.51 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8"
+        ></path>
+        <path d="m12.71 8.71-1.42-1.42L6.59 12l4.7 4.71 1.42-1.42-2.3-2.29H17v-2h-6.59z"></path>
+      </svg>
+      <span>Go back to users dashboard</span>
+    </button>
+    <app-button
+      class="shrink-0"
+      (handleClick)="showDeleteUserDialog.set(true)"
+      label="Delete user"
+      textNoWrap
+      variant="danger"
+    />
+  </div>
   <div>
-    @if(userResourceValue) {
-      <app-user-details-form [user]="userResourceValue" (avatarUploaded)="userResource.reload()" (userUpdated)="userResource.reload()" />
+    @if (userResourceValue) {
+      <app-user-details-form
+        [user]="userResourceValue"
+        (avatarUploaded)="userResource.reload()"
+        (userUpdated)="userResource.reload()"
+      />
     }
-      <!-- Add visual for loading (userResource.loading)-->
-      <!-- Add visual for error (userResource.loading)-->
-      <!-- Add visual for value returns null (userResource.value === null)-->
-      <!-- Add visual for user data (userResource.value !== null) - Here we're gonna
-      add a `editable-input-field-component`-->
-    </div>
+  </div>
 </div>
+
+@if (showDeleteUserDialog() && userResourceValue) {
+  <app-dialog
+    (handleClose)="showDeleteUserDialog.set(false)"
+    [(visible)]="showDeleteUserDialog"
+    dialogTitle="Delete user"
+  >
+    <div class="flex flex-col gap-6">
+      @if (deleteUserError() === deleteUserErrorOptions.NO_ID_MATCH) {
+        <p class="text-error">User not found</p>
+      } @else if (deleteUserError() === deleteUserErrorOptions.FORBIDDEN_ROLE) {
+        <p class="text-error">You do not have permission to delete this user</p>
+      } @else if (deleteUserError() === deleteUserErrorOptions.FORBIDDEN_ROLE) {
+        <p class="text-error">Something went wrong, please try again</p>
+      }
+      <div>
+        <p class="font-bold">Are you sure you want to delete user '{{ userResourceValue.name }}'?</p>
+        <p>This is a permanent action and the user can not be restores.</p>
+      </div>
+      <div class="flex w-full flex-row gap-x-4">
+        <app-button
+          class="w-full"
+          (handleClick)="showDeleteUserDialog.set(false)"
+          label="Cancel"
+          variant="subtle"
+        />
+        <app-button class="w-full" (handleClick)="deleteUser()" label="Yes, delete user" variant="danger" />
+      </div>
+    </div>
+  </app-dialog>
+}

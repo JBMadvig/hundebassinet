@@ -14,6 +14,11 @@ import { emailValidator } from '@lib/input-validators/email.validator';
 import { AuthService } from '@services/auth.service';
 import { UsersApiService } from '@services/users-api.service';
 
+enum CreateUserError {
+    EMAIL_EXISTS= 'emailExists',
+    SERVER_ERROR = 'serverError',
+    FORBIDDEN_ROLE = 'forbiddenRole',
+}
 @Component({
     selector: 'app-create-user-form',
     imports: [
@@ -32,6 +37,8 @@ export class CreateUserFormComponent {
     private formBuilder = inject(FormBuilder);
     private router = inject(Router);
     private usersApiService = inject(UsersApiService);
+
+    public readonly createUserErrorOptions = CreateUserError;
 
     public readonly roleList = rolesList;
     public currentUser = this.authService.currentUser;
@@ -56,7 +63,7 @@ export class CreateUserFormComponent {
         return this.createUserForm.value.newPassword !== this.createUserForm.value.confirmNewPassword;
     });
 
-    public createUserError = signal<'emailExists' | 'forbidden' | 'serverError' | null>(null);
+    public createUserError = signal<CreateUserError | null>(null);
 
     public roleListComputedValue = computed(() => {
         const currentUserRole = this.currentUser();
@@ -90,14 +97,12 @@ export class CreateUserFormComponent {
         } catch (error: unknown) {
             if (error instanceof HttpErrorResponse) {
                 if (error.status === 409) {
-                    this.createUserError.set('emailExists');
+                    this.createUserError.set(this.createUserErrorOptions.EMAIL_EXISTS);
                 } else if (error.status === 403) {
-                    this.createUserError.set('forbidden');
-                } else {
-                    this.createUserError.set('serverError');
+                    this.createUserError.set(this.createUserErrorOptions.FORBIDDEN_ROLE);
                 }
             } else {
-                this.createUserError.set('serverError');
+                this.createUserError.set(this.createUserErrorOptions.SERVER_ERROR);
             }
         }
     }

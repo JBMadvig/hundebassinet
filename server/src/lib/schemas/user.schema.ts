@@ -59,3 +59,8 @@ export const authResponseSchema = Type.Object({
     refreshToken: Type.String(),
     user: userPublicSchema,
 });
+
+// Id request for deleting specific user
+export const idRequestSchema = Type.Object({
+    _id: MongooseObjectIdType,
+});
