@@ -1,0 +1,10 @@
+<app-dialog
+  (closeDialog)="this.visible.set(false)"
+  [(visible)]="visible"
+  dialogTitle="Add items to Inventory"
+>
+  <!-- Add combobox as the sole input field to begin with. Then when user add name of item and we get the info from the db that match a searchQuery.
+   - If pick item that is already in the DB we add input fields with those data and they can add price and quantity 
+   - If a new item we add all empty fields they have to fill out, and then we create a new item
+   -->
+</app-dialog>
