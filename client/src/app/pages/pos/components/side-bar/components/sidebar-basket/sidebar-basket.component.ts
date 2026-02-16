@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, signal } from '@angular/core';
+import { afterRenderEffect, Component, ElementRef, inject, signal, viewChild } from '@angular/core';
 
 import { ButtonComponent } from '@components/button/button.component';
 import { DialogComponent } from '@components/dialog/dialog.component';
@@ -30,5 +30,15 @@ export class SidebarBasketComponent {
     public totalPrice = this.basketService.totalItemsPrice;
     public user = this.authService.currentUser;
 
+    private scrollContainer = viewChild<ElementRef<HTMLElement>>('scrollContainer');
 
+    constructor() {
+        afterRenderEffect(() => {
+            this.basketItems();
+            const container = this.scrollContainer()?.nativeElement;
+            if (container) {
+                container.scrollTo({ top: container.scrollHeight, behavior: 'smooth' });
+            }
+        });
+    }
 }
