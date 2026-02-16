@@ -8,6 +8,7 @@ import { AutoSub, AutoUnsubscribe } from '@decorators/auto-unsub.decorator';
 import { BasketService } from '@services/basket.service';
 import { CollectionService } from '@services/collection.service';
 
+import { AddItemComponent } from '../inventory/add-item/add-item.component';
 import { CollectionComponent } from './components/collection/collection.component';
 import { FilterBarComponent } from './components/filter-bar/filter-bar.component';
 import { SettingsComponent } from './components/settings/settings.component';
@@ -25,6 +26,7 @@ import { SideBarComponent } from './components/side-bar/sidebar.component';
         SettingsComponent,
         SideBarComponent,
         SidebarUserDetailsComponent,
+        AddItemComponent,
     ],
     templateUrl: './pos.component.html',
     styleUrl: './pos.component.css',
@@ -38,6 +40,7 @@ export class PosComponent implements OnInit {
 
     public userId = signal<string | null>(null);
     public openSettings = signal(false);
+    public showItemsAddDialog = signal(false);
 
     public searchForm = this.formBuilder.group({
         search: '',
@@ -52,7 +55,6 @@ export class PosComponent implements OnInit {
     ngOnInit() {
         const userIdParam = this.route.snapshot.paramMap.get('userId');
         this.userId.set(userIdParam);
-        console.log('POS Component loaded for user ID:', userIdParam);
     }
 
     public isItemsInBasket = computed(() => {

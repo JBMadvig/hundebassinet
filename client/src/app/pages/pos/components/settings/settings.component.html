@@ -1,25 +1,31 @@
 @let userData = user;
 
-@if(visible() && userData) {
-    <app-dialog [(visible)]="visible" [dialogTitle]="'Settings'" >
-        <div class="min-w-sm">
-            <ul class="[&_li]:pb-4 [&_li]:last:pb-0">
-                @if(userData.role === 'admin' || userData.role === 'sudo-admin') {
-                    <li>
-                        <app-button (handleClick)="redirect('/users')" label="Admin Settings - Manage users and inventory" />
-                    </li>
-                } @else {
-                    <li>
-                        <app-button (handleClick)="redirect('/users/me')" label="User Settings - Change name and see transaction history" />
-                    </li>
-                }
-                <li>
-                    <app-button (handleClick)="redirect('/pos/inventory')" label="Inventory - Add to inventory" />
-                </li>
-                <li>
-                    <app-button variant="subtle" (handleClick)="authService.logout()" label="Logout" />
-                </li>
-            </ul>
-        </div>
-    </app-dialog>
+@if (visible() && userData) {
+  <app-dialog [dialogTitle]="'Settings'" [(visible)]="visible">
+    <div class="min-w-sm">
+      <ul class="[&_li]:pb-4 [&_li]:last:pb-0">
+        @if (userData.role === 'admin' || userData.role === 'sudo-admin') {
+          <li>
+            <app-button (handleClick)="redirect('/users')" label="User management" />
+          </li>
+          <li>
+            <app-button (handleClick)="redirect('/pos/inventory')" label="Inventory management" />
+          </li>
+        } @else {
+          <li>
+            <app-button
+              (handleClick)="redirect('/users/me')"
+              label="User Settings - Change name and see transaction history"
+            />
+          </li>
+        }
+        <li>
+          <app-button (handleClick)="openAddItemsDialog()" label="Add items to inventory" />
+        </li>
+        <li>
+          <app-button (handleClick)="authService.logout()" label="Logout" variant="subtle" />
+        </li>
+      </ul>
+    </div>
+  </app-dialog>
 }

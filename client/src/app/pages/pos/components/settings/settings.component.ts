@@ -1,4 +1,4 @@
-import { Component, inject, model } from '@angular/core';
+import { Component, inject, model, output } from '@angular/core';
 import { Router } from '@angular/router';
 import { RedirectPaths } from 'app/app.routes';
 
@@ -19,6 +19,8 @@ export class SettingsComponent {
     public authService = inject(AuthService);
     public route = inject(Router);
 
+    public showAddItemsDialog = output();
+
     public visible = model.required<boolean>();
     public user = this.authService.currentUser();
 
@@ -35,6 +37,11 @@ export class SettingsComponent {
                 this.route.navigate([ '/users' ]);
                 break;
         }
+    }
+
+    public openAddItemsDialog() {
+        this.showAddItemsDialog.emit();
+        this.visible.set(false);
     }
 
 }

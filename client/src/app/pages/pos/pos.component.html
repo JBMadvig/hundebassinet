@@ -9,10 +9,15 @@
     >
       <app-filter-bar (currentFilterOutput)="collectionService.currentFilter.set($event)" />
       @if (collectionService.currentFilter() === 'search') {
-        <form class="transition-all ease-in-out duration-200py-2 px-4" [ngClass]="{
-          'h-full': collectionService.currentFilter() === 'search',
-          'h-0': collectionService.currentFilter() !== 'search',
-        }" [formGroup]="searchForm" headerAction>
+        <form
+          class="duration-200py-2 px-4 transition-all ease-in-out"
+          [ngClass]="{
+            'h-full': collectionService.currentFilter() === 'search',
+            'h-0': collectionService.currentFilter() !== 'search',
+          }"
+          [formGroup]="searchForm"
+          headerAction
+        >
           <app-input-field
             #search
             autofocus
@@ -42,4 +47,5 @@
   </div>
 </div>
 
-<app-settings [(visible)]="openSettings"></app-settings>
+<app-settings (showAddItemsDialog)="showItemsAddDialog.set(true)" [(visible)]="openSettings"></app-settings>
+<app-add-item [(visible)]="showItemsAddDialog" />
