@@ -8,8 +8,8 @@ import { rolesList } from 'app/shared/types/auth.types';
 
 import { ButtonComponent } from '@components/button/button.component';
 import { DialogComponent } from '@components/dialog/dialog.component';
-import { DropdownComponent } from '@components/dropdown/dropdown.component';
-import { InputFieldComponent } from '@components/input-field/input-field.component';
+import { DropdownComponent } from '@components/input/dropdown/dropdown.component';
+import { InputFieldComponent } from '@components/input/input-field/input-field.component';
 import { emailValidator } from '@lib/input-validators/email.validator';
 import { AuthService } from '@services/auth.service';
 import { UsersApiService } from '@services/users-api.service';

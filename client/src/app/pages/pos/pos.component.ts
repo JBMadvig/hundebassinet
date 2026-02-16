@@ -3,7 +3,7 @@ import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
-import { InputFieldComponent } from '@components/input-field/input-field.component';
+import { InputFieldComponent } from '@components/input/input-field/input-field.component';
 import { AutoSub, AutoUnsubscribe } from '@decorators/auto-unsub.decorator';
 import { BasketService } from '@services/basket.service';
 import { CollectionService } from '@services/collection.service';

@@ -3,7 +3,7 @@ import { Component, ElementRef, HostListener, inject, input, OnInit, output, sig
 import { FormControl, FormControlName, FormGroup, FormGroupDirective, ReactiveFormsModule } from '@angular/forms';
 import { distinctUntilChanged } from 'rxjs';
 
-import { InputFieldComponent } from '@components/input-field/input-field.component';
+import { InputFieldComponent } from '@components/input/input-field/input-field.component';
 import { AutoSub, AutoUnsubscribe } from '@decorators/auto-unsub.decorator';
 import { generateId } from '@lib/utils';
 

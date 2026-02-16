@@ -7,10 +7,10 @@ import { rolesList } from 'app/shared/types/auth.types';
 import { ChangePasswordRequest, UpdateUserDetailsRequest, User } from 'app/shared/types/user.types';
 
 import { ButtonComponent } from '@components/button/button.component';
-import { CheckboxComponent } from '@components/checkbox/checkbox.component';
-import { DropdownComponent } from '@components/dropdown/dropdown.component';
-import { EditableInputFieldComponent } from '@components/editable-input-field/editable-input-field.component';
-import { InputFieldComponent } from '@components/input-field/input-field.component';
+import { CheckboxComponent } from '@components/input/checkbox/checkbox.component';
+import { DropdownComponent } from '@components/input/dropdown/dropdown.component';
+import { EditableInputFieldComponent } from '@components/input/editable-input-field/editable-input-field.component';
+import { InputFieldComponent } from '@components/input/input-field/input-field.component';
 import { emailValidator } from '@lib/input-validators/email.validator';
 import { AuthService } from '@services/auth.service';
 import { ErrorService } from '@services/error.service';

@@ -5,7 +5,7 @@ import { User } from 'app/shared/types/user.types';
 
 import { ButtonComponent } from '@components/button/button.component';
 import { DialogComponent } from '@components/dialog/dialog.component';
-import { InputFieldComponent } from '@components/input-field/input-field.component';
+import { InputFieldComponent } from '@components/input/input-field/input-field.component';
 import { AuthService } from '@services/auth.service';
 import { UsersApiService } from '@services/users-api.service';
 
