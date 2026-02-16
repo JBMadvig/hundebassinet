@@ -34,9 +34,9 @@ export class BadgeComponent {
             case 'warning':
                 return 'bg-warning/15 text-warning border-warning/25';
             case 'info':
-                return 'bg-info/15 text-info border-info/25';
+                return 'bg-info-bg text-white border border-info-bg';
             case 'neutral':
-                return 'bg-surface text-text-secondary border-border';
+                return 'bg-highlight text-text-on-light border-highlight border';
         }
 
     });
