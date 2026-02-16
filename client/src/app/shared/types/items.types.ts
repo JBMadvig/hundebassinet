@@ -1,12 +1,39 @@
 // Base properties shared by all items
 interface BaseItem {
-    id: number;
+    id: string;
     name: string;
     averagePrice: number;
     currentStock: number;
     totalStockValue: number;
-    lastUpated: Date;
+    abv: number,
+    createdAt: Date;
+    updatedAt: Date;
     imageUrl?: string;
+}
+
+export type ItemSortValues = 'id' | 'name' | 'averagePrice' | 'curentStock' | 'totalStockValue' | 'createdAt' | 'updatedAt' | 'abv';
+
+export type sortDirection = 'ascending' | 'descending';
+
+export interface InventoryRequest {
+    searchQuery?: string,
+    sortBy: ItemSortValues,
+    sortDirection: sortDirection,
+    page: number,
+    entriesPrPage: number,
+}
+export interface InventoryResponse {
+    items: Item[],
+    itemsInSearch: number,
+    totalItems: number,
+    searchParams: {
+        searchQuery: string,
+        sortBy: ItemSortValues,
+        sortDirection: sortDirection,
+        page: number,
+        entriesPrPage: number,
+        totalPagesWithCurrentLimit: number,
+    }
 }
 
 // Types for primary and secondary categories

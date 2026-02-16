@@ -41,6 +41,7 @@ export const routes: CustomRoute[] = [
             },
             {
                 path: 'inventory',
+                canActivate: [ adminGuard ],
                 loadComponent: () => import('./pages/inventory/inventory.component')
                     .then(m => m.InventoryComponent),
                 data: {

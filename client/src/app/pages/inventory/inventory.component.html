@@ -1,4 +1,87 @@
-<div class="inventory-container">
-    <h1>Inventory Management</h1>
-    <p>This page will allow users to add new stock to inventory.</p>
-</div>
+<main class="grid min-h-screen grid-cols-1 grid-rows-[auto_1fr] items-center p-8">
+  <div class="h-full w-full">
+    <div class="flex flex-row justify-between">
+      <div class="grid-rows-auto grid w-full items-center gap-6">
+        <button
+          class="flex flex-row gap-4 text-text-primary hover:cursor-pointer hover:text-text-secondary"
+          (click)="goBackToPos()"
+        >
+          <svg
+            fill="currentColor"
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+            <path
+              d="M12 2C6.49 2 2 6.49 2 12s4.49 10 10 10 10-4.49 10-10S17.51 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8"
+            ></path>
+            <path d="m12.71 8.71-1.42-1.42L6.59 12l4.7 4.71 1.42-1.42-2.3-2.29H17v-2h-6.59z"></path>
+          </svg>
+          <span>Go back to POS</span>
+        </button>
+        <p class="font-heading text-2xl font-semibold text-text-primary">Inventory management</p>
+      </div>
+      <app-button
+        class="shrink-0"
+        (handleClick)="addItemsToInvetory.set(true)"
+        label="Add items to inventory"
+        textNoWrap
+      />
+    </div>
+  </div>
+  @if (inventoryResource.isLoading()) {
+    <p>Loading...</p>
+  } @else if (inventoryResource.error()) {
+    <p class="text-2xl text-error">Error fetching users. Please try again later.</p>
+  } @else if (inventoryResource.value().length === 0) {
+    <div class="flex h-full justify-center pt-4">
+      <p class="w-full text-lg text-text-primary">
+        No items currently in the inventory. Add some to see and manage them here.
+      </p>
+    </div>
+  } @else {
+    <app-table class="mt-4 text-text-primary" [data]="inventoryResource.value()">
+      <ng-template #headerTemplate>
+        <tr>
+          <th class="text-left">ID</th>
+          <th class="text-left">Name</th>
+          <th class="text-left">Price</th>
+          <th class="text-left">Stock</th>
+          <th class="text-left">Total value</th>
+          <th class="text-left">Created date</th>
+          <th class="text-left">Updated date</th>
+        </tr>
+      </ng-template>
+      <ng-template #rowTemplate [appTypedTemplate]="typeToken" let-data>
+        <tr>
+          <td>
+            {{ data.id }}
+          </td>
+          <td>
+            {{ data.name }}
+          </td>
+          <td>
+            @if (data.abv) {
+              {{ data.abv }}%
+            } @else {
+              <p class="text-center">--</p>
+            }
+          </td>
+          <td>{{ data.averagePrice }} DKK</td>
+          <td>
+            {{ data.currentStock }}
+          </td>
+          <td>{{ data.totalStockValue }} DKK</td>
+          <td>
+            {{ data.createdAt | date: 'dd. MMM - yyyy' }}
+          </td>
+          <td>
+            {{ data.updatedAt | date: 'dd. MMM - yyyy' }}
+          </td>
+        </tr>
+      </ng-template>
+    </app-table>
+  }
+</main>
