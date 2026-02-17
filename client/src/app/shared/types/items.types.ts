@@ -13,12 +13,12 @@ interface BaseItem {
 
 export type ItemSortValues = 'id' | 'name' | 'averagePrice' | 'curentStock' | 'totalStockValue' | 'createdAt' | 'updatedAt' | 'abv';
 
-export type sortDirection = 'ascending' | 'descending';
+export type SortDirection = 'ascending' | 'descending';
 
 export interface InventoryRequest {
     searchQuery?: string,
     sortBy: ItemSortValues,
-    sortDirection: sortDirection,
+    sortDirection: SortDirection,
     page: number,
     entriesPrPage: number,
 }
@@ -29,7 +29,7 @@ export interface InventoryResponse {
     searchParams: {
         searchQuery: string,
         sortBy: ItemSortValues,
-        sortDirection: sortDirection,
+        sortDirection: SortDirection,
         page: number,
         entriesPrPage: number,
         totalPagesWithCurrentLimit: number,

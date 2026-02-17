@@ -1,9 +1,11 @@
+import { convertFromDKK } from '@services/currency.service';
 import { Type } from '@sinclair/typebox';
 import { FastifyPluginCallback, FastifySchema } from 'fastify';
 
 import { requireRole } from '@lib/auth-hooks';
 import { FastifyReplyTypebox, FastifyRequestTypebox } from '@lib/fastify-types';
 import { ItemModel } from '@lib/mongodb/models/item.model';
+import { UserModel } from '@lib/mongodb/models/user.model';
 import { FullItemUnionSchema, ItemSchemaWithSearchAndSortAndPagination, SortingUnionDirections } from '@lib/schemas/item.schema';
 
 export default <FastifyPluginCallback>function (app, opts, done) {
@@ -56,8 +58,20 @@ export default <FastifyPluginCallback>function (app, opts, done) {
 
             const totalPages = Math.ceil(itemsInSearch / req.body.entriesPrPage);
 
+            // Get users currency setting for convertion of prices and values
+            const user = await UserModel.findById(req.user.userId).select('currency');
+            const currency = user?.currency || 'DKK';
+
             await reply.send({
-                items: items.map(item => item.toObject()),
+                items: items.map(item => {
+                    const obj = item.toObject();
+                    return {
+                        ...obj,
+                        averagePrice: convertFromDKK(obj.averagePrice, currency),
+                        totalStockValue: convertFromDKK(obj.totalStockValue, currency),
+                        currency,
+                    };
+                }),
                 itemsInSearch,
                 totalItems,
                 searchParams:{

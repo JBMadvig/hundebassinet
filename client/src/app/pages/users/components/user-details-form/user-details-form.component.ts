@@ -8,11 +8,12 @@ import { ChangePasswordRequest, UpdateUserDetailsRequest, User } from 'app/share
 
 import { ButtonComponent } from '@components/button/button.component';
 import { CheckboxComponent } from '@components/input/checkbox/checkbox.component';
-import { DropdownComponent } from '@components/input/dropdown/dropdown.component';
+import { DropdownComponent, DropdownOption } from '@components/input/dropdown/dropdown.component';
 import { EditableInputFieldComponent } from '@components/input/editable-input-field/editable-input-field.component';
 import { InputFieldComponent } from '@components/input/input-field/input-field.component';
 import { emailValidator } from '@lib/input-validators/email.validator';
 import { AuthService } from '@services/auth.service';
+import { CurrencyService } from '@services/currency.service';
 import { ErrorService } from '@services/error.service';
 import { UsersApiService } from '@services/users-api.service';
 
@@ -32,6 +33,7 @@ import { UsersApiService } from '@services/users-api.service';
 })
 export class UserDetailsFormComponent implements OnInit {
     private authService = inject(AuthService);
+    private currencyService = inject(CurrencyService);
     private destroyRef = inject(DestroyRef);
     private errorService = inject(ErrorService);
     private formBuilder = inject(FormBuilder);
@@ -41,11 +43,15 @@ export class UserDetailsFormComponent implements OnInit {
 
     public currentUser = this.authService.currentUser;
 
+    public readonly currencyOptions = signal<DropdownOption[]>([]);
+
+
     public userDetailsForm = this.formBuilder.group({
         name: [ '', [ Validators.required, Validators.minLength(2) ] ],
         email: [ '', [ Validators.required, emailValidator() ] ],
         role: [ '' ],
         balance: 0,
+        currency: 'DKK',
     });
     public passwordForm = this.formBuilder.group({
         currentPassword: [ '', [ Validators.required ] ],
@@ -68,6 +74,7 @@ export class UserDetailsFormComponent implements OnInit {
 
     public nameFormSignal = toSignal(this.userDetailsForm.controls.name.valueChanges);
     public emailFormSignal = toSignal(this.userDetailsForm.controls.email.valueChanges);
+    public currencyFormSignal = toSignal(this.userDetailsForm.controls.currency.valueChanges);
     public roleFormSignal = toSignal(this.userDetailsForm.controls.role.valueChanges);
     public balanceFormSignal = toSignal(this.userDetailsForm.controls.balance.valueChanges);
 
@@ -108,12 +115,17 @@ export class UserDetailsFormComponent implements OnInit {
     public async ngOnInit(): Promise<void> {
         const form = this.userDetailsForm;
 
+        // Get the currency possibilites
+        const currencies = await this.currencyService.getCurrencyOptions();
+        this.currencyOptions.set(currencies.map(c => ({ text: c, value: c })));
+
         // set the form values based on the input user
         form.setValue({
             name: this.user().name,
             email: this.user().email,
             role: this.user().role,
             balance: this.user().balance,
+            currency: this.user().currency,
         });
     }
 
@@ -152,6 +164,9 @@ export class UserDetailsFormComponent implements OnInit {
         }
         if (form.email.value !== user.email) {
             payload.email = form.email.value ?? user.email;
+        }
+        if (form.currency.value !== user.currency) {
+            payload.currency = form.currency.value ?? user.currency;
         }
         if (form.role.value !== user.role) {
             payload.role = form.role.value ?? user.role;

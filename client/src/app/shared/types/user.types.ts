@@ -6,8 +6,8 @@ export interface User {
     email: string;
     role: UserRoles;
     balance: number;
-    valuta: string;
     // Valuta is ISO 4217 format, e.g., 'USD', 'EUR', 'DKK'
+    currency: string;
     avatarUrl: string;
     createdAt: Date;
     updatedAt: Date;
@@ -22,6 +22,7 @@ export interface UpdateUserDetailsRequest {
     email?: string;
     role?: string;
     balance?: number;
+    currency?: string,
 }
 
 export interface UpdateUserDetailsResponse {

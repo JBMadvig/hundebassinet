@@ -17,6 +17,7 @@ export default <FastifyPluginCallback>function (app, _opts, done) {
         body: Type.Object({
             name: Type.Optional(Type.String({ minLength: 2, maxLength: 100 })),
             email: Type.Optional(Type.String({ format: 'email' })),
+            currency: Type.Optional(Type.String()),
             role: Type.Optional(userRolesEnum),
             balance: Type.Optional(Type.Number()),
         }),
@@ -59,7 +60,7 @@ export default <FastifyPluginCallback>function (app, _opts, done) {
             }
 
             // Ensure at least one field is being updated
-            if (req.body.name === undefined && req.body.email === undefined && req.body.role === undefined && req.body.balance === undefined) {
+            if (req.body.name === undefined && req.body.email === undefined && req.body.currency === undefined && req.body.role === undefined && req.body.balance === undefined) {
                 throw new BadRequestError('No fields to update');
             }
 
@@ -84,6 +85,13 @@ export default <FastifyPluginCallback>function (app, _opts, done) {
                     emailChanged = true;
                 }
                 targetUser.email = req.body.email;
+            }
+            // EMAIL: admin/sudo-admin OR self
+            if (req.body.currency !== undefined) {
+                if (!isAdminOrAbove && !isSelf) {
+                    throw new ForbiddenError('You do not have permission to update this user\'s currency');
+                }
+                targetUser.currency = req.body.currency;
             }
 
             // BALANCE: admin/sudo-admin only

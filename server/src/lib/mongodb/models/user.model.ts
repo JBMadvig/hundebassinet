@@ -37,7 +37,7 @@ export class User extends TimeStamps {
     public balance: number;
 
     @prop({ type: () => String, required: true, default: 'DKK' })
-    public valuta: string;
+    public currency: string;
 
     @prop({ type: () => Number, required: true, default: 0 })
     public tokenVersion: number;

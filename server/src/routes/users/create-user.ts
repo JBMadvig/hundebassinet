@@ -14,6 +14,7 @@ export default <FastifyPluginCallback>function (app, _opts, done) {
             name: Type.String({ minLength: 2, maxLength: 100 }),
             email: Type.String({ format: 'email' }),
             password: Type.String({ minLength: 8 }),
+            currency: Type.String(),
             role: userRolesEnum,
             balance: Type.Number(),
         }),
@@ -33,7 +34,7 @@ export default <FastifyPluginCallback>function (app, _opts, done) {
             req: FastifyRequestTypebox<typeof schema>,
             reply,
         ) => {
-            const { name, email, password, role, balance } = req.body;
+            const { name, email, password, currency, role, balance } = req.body;
             const requestorRole = req.user.role as UserRoles;
 
             // Admins can only assign 'user' or 'admin' roles
@@ -53,7 +54,7 @@ export default <FastifyPluginCallback>function (app, _opts, done) {
                 password,
                 role,
                 balance,
-                valuta: 'DKK',
+                currency: 'DKK',
                 avatarUrl: '',
             });
 

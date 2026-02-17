@@ -23,7 +23,7 @@ export const userPublicSchema = Type.Object({
     name: Type.String(),
     role: userRolesEnum,
     balance: Type.Number(),
-    valuta: Type.String({ pattern: '^[A-Z]{3}$' }),
+    currency: Type.String({ pattern: '^[A-Z]{3}$' }),
     // TODO: Make required (Type.Number()) once all existing users have been updated with tokenVersion
     tokenVersion: Type.Optional(Type.Number({ default: 0 })),
     avatarUrl: Type.String(),
@@ -37,7 +37,7 @@ export const userDashboardSchema = Type.Object({
     name: Type.String(),
     role: userRolesEnum,
     balance: Type.Number(),
-    valuta: Type.String({ pattern: '^[A-Z]{3}$' }),
+    currency: Type.String({ pattern: '^[A-Z]{3}$' }),
     // TODO: Make required (Type.Number()) once all existing users have been updated with tokenVersion
     tokenVersion: Type.Optional(Type.Number({ default: 0 })),
     createdAt: MongooseDateType,

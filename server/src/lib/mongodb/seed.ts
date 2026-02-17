@@ -18,7 +18,7 @@ export async function seedDatabase() {
                 password: 'admin123', // Will be hashed by pre-save hook
                 role: UserRoles.SUDO_ADMIN,
                 balance: 0,
-                valuta: 'DKK',
+                currency: 'DKK',
                 avatarUrl: 'https://i.pravatar.cc/500?img=1',
             });
 

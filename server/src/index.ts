@@ -3,6 +3,7 @@ import fjwt from '@fastify/jwt';
 import fastifyMultipart from '@fastify/multipart';
 import { TypeBoxTypeProvider } from '@fastify/type-provider-typebox';
 import fastifyWebsocket from '@fastify/websocket';
+import { initCurrencyService } from '@services/currency.service';
 import { initWebsocket } from '@services/websocket.service';
 import Fastify from 'fastify';
 
@@ -14,6 +15,7 @@ import routes from './routes';
     console.log('⏱️  Starting server...');
 
     await connectToMongoDB();
+    await initCurrencyService();
 
     const fastify = Fastify().withTypeProvider<TypeBoxTypeProvider>();
 

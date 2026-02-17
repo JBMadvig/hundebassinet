@@ -24,14 +24,13 @@
     </div>
     <div class="flex flex-col justify-between">
       <p
-        class="text-heading line-clamp-2 overflow-hidden text-left text-xl font-semibold text-ellipsis whitespace-pre-wrap -ml-1.5"
+        class="text-heading -ml-1.5 line-clamp-2 overflow-hidden text-left text-xl font-semibold text-ellipsis whitespace-pre-wrap"
       >
         {{ item().name }}
       </p>
       <div class="grid grid-flow-row grid-cols-1 text-sm text-text-on-light/70">
-        <p class="flex flex-row gap-x-1 font-semibold text-text-on-light">
-          <span>{{ item().averagePrice }},-</span>
-          <span>DKK</span>
+        <p class="font-semibold text-text-on-light">
+          {{ item().averagePrice | localeCurrency: currencyInfo() }}
         </p>
         <p class="flex flex-row gap-x-1">
           <span>{{ item().currentStock }}</span>

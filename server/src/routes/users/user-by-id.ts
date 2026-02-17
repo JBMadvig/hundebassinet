@@ -27,7 +27,7 @@ export default <FastifyPluginCallback>function (app, opts, done) {
             reply: FastifyReplyTypebox<typeof schema>,
         ) => {
             // Fetch user data except password - If changed, we send the pasted old ++ two news to compare if they are right.
-            const user = await UserModel.findById(req.params.id).select('_id name email role balance valuta avatarUrl');
+            const user = await UserModel.findById(req.params.id).select('_id name email role balance currency avatarUrl');
             if (!user) {
                 throw new UnauthorizedError('User not found');
             }

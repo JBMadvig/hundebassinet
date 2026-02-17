@@ -1,9 +1,11 @@
+import { convertFromDKK } from '@services/currency.service';
 import { Type } from '@sinclair/typebox';
 import { FastifyPluginCallback, FastifySchema } from 'fastify';
 
 import { authenticateHook } from '@lib/auth-hooks';
 import { FastifyReplyTypebox, FastifyRequestTypebox } from '@lib/fastify-types';
 import { ItemModel } from '@lib/mongodb/models/item.model';
+import { UserModel } from '@lib/mongodb/models/user.model';
 import { CollectionItemSchema } from '@lib/schemas/item.schema';
 
 export default <FastifyPluginCallback>function (app, opts, done) {
@@ -22,10 +24,21 @@ export default <FastifyPluginCallback>function (app, opts, done) {
             req: FastifyRequestTypebox<typeof schema>,
             reply: FastifyReplyTypebox<typeof schema>,
         ) => {
-            // Fetch items from the database and send the properties matching CollectionItemSchema
+
             const items = await ItemModel.find({}).select('_id name primaryCategory secondaryCategory averagePrice currentStock abv');
 
-            await reply.send(items.map(item => item.toObject()));
+            // Get users currency setting for convertion of prices and values
+            const user = await UserModel.findById(req.user.userId).select('currency');
+            const currency = user?.currency || 'DKK';
+
+            await reply.send(items.map(item => {
+                const obj = item.toObject();
+                return {
+                    ...obj,
+                    averagePrice: convertFromDKK(obj.averagePrice, currency),
+                    currency,
+                };
+            }));
         },
     });
 

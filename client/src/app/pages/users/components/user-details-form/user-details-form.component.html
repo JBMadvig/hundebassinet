@@ -20,6 +20,14 @@
           ngDefaultControl
           placeholder="Enter email"
         />
+        <app-dropdown
+          [options]="currencyOptions()"
+          formControlName="currency"
+          label="Prefered currency"
+          ngDefaultControl
+          placeholder="Select a prefered currency"
+        />
+        
         @if (currentUser()?.role === 'admin' || currentUser()?.role === 'sudo-admin') {
           <app-dropdown
             [options]="roleListComputedValue()"
