@@ -1,0 +1,80 @@
+<div class="relative">
+  @if (label()) {
+    <label [for]="controlId">
+      {{ label() }}
+    </label>
+    @if (isRequired()) {
+      <span class="hover:cursor-default">&ast;</span>
+    }
+  }
+  <div
+    #searchContainer
+    class="box-border flex items-center gap-x-1 rounded-sm border px-3 py-1 align-middle"
+    [ngClass]="{
+      'border-error': invalid(),
+      'border-border': !invalid(),
+      'rounded-b-none': initialized() && isFocused() && valueFormControl?.value !== '',
+    }"
+  >
+    @if (icon()) {
+      <i class="fa-xs text-text-primary" [ngClass]="icon()"></i>
+    }
+    <input
+      class="box-border w-full bg-text-primary text-lg placeholder-text-secondary placeholder:italic focus:outline-hidden"
+      [placeholder]="placeholder()"
+      (blur)="onBlur()"
+      (click)="onInputFieldClick()"
+      (focus)="onFocus()"
+      [(ngModel)]="inputValue"
+      type="text"
+    />
+  </div>
+  @if (isFocused() && valueFormControl?.value !== '') {
+    <ul
+      class="fixed z-9 mb-4 max-h-72 w-full overflow-auto rounded-b-sm border border-t-0 border-border [&_li]:odd:bg-white [&_li]:even:bg-gray-100 [&_li]:hover:bg-gray-300"
+      [ngStyle]="{
+        width: dropdownWidth(),
+      }"
+    >
+      @if (internalLoading()) {
+        <li class="flex justify-center p-3">
+          <div class="loader"></div>
+        </li>
+      } @else {
+        @for (row of data(); let i = $index; track row.id) {
+          <li>
+            <button
+              class="w-full cursor-pointer p-3 text-left"
+              (mousedown)="onSelectRow(row, $event)"
+              type="button"
+            >
+              <ng-container
+                *ngTemplateOutlet="optionsTemplate(); context: { $implicit: row, index: i.toString() }"
+              >
+              </ng-container>
+            </button>
+          </li>
+        } @empty {
+          <li>
+            <p class="p-3 text-left text-lg font-bold text-text-on-light" i18n>
+              No results found. Please adjust your search
+            </p>
+          </li>
+        }
+        @let dataVar = data();
+        @if (dataVar && dataVar.length > 0) {
+          <li>
+            <button
+              class="w-full p-3 text-left text-lg font-bold"
+              (mousedown)="onReset($event)"
+              type="button"
+              i18n
+            >
+              Reset
+            </button>
+          </li>
+        }
+      }
+    </ul>
+  }
+</div>
