@@ -1,13 +1,14 @@
 import { Component, computed, inject, output } from '@angular/core';
 
+import { BadgeComponent } from '@components/badge/badge.component';
+import { LocaleCurrencyPipe } from '@pipes/locale-currency.pipe';
 import { AuthService } from '@services/auth.service';
-
-import { BadgeComponent } from '../../../../../../shared/components/badge/badge.component';
 
 @Component({
     selector: 'app-sidebar-user-details',
     imports: [
         BadgeComponent,
+        LocaleCurrencyPipe,
     ],
     templateUrl: './sidebar-user-details.component.html',
     styleUrl: './sidebar-user-details.component.css',
@@ -17,6 +18,7 @@ export class SidebarUserDetailsComponent {
 
     // Since this page can only be accessed by authenticated users, we can safely assert that currentUser is not null.
     public userDetail = this.authService.currentUser()!;
+    public currencyInfo = this.authService.currencyInfo;
 
     public openSettings = output();
 

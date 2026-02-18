@@ -17,7 +17,9 @@
   </div>
   <div class="flex h-full cursor-default flex-col justify-evenly">
     <p class="text-right text-xs">Balance:</p>
-    <p class="text-lg font-semibold text-highlight">{{ userDetail.balance }} {{ userDetail.valuta }}</p>
+    <p class="text-lg font-semibold text-highlight">
+      {{ userDetail.balance | localeCurrency: currencyInfo() }}
+    </p>
   </div>
   <button class="h-full" (click)="openSettings.emit()">
     <span class="flex h-full w-10 items-center justify-center hover:animate-spin"

@@ -10,6 +10,7 @@ import { TypedTemplateDirective } from '@directives/typed-template.directive';
 import { AuthService } from '@services/auth.service';
 import { UsersApiService } from '@services/users-api.service';
 
+import { LocaleCurrencyPipe } from '../../shared/pipes/locale-currency.pipe';
 import { CreateUserFormComponent } from './create-user-form/create-user-form.component';
 @Component({
     selector: 'app-users',
@@ -21,6 +22,7 @@ import { CreateUserFormComponent } from './create-user-form/create-user-form.com
         TableComponent,
         TypedTemplateDirective,
         CreateUserFormComponent,
+        LocaleCurrencyPipe,
     ],
     templateUrl: './users.component.html',
     styleUrl: './users.component.css',
@@ -31,6 +33,8 @@ export class UsersComponent {
     private usersApiService = inject(UsersApiService);
 
     public readonly typeToken!: TableBodyData<User>;
+    public currentUser = this.authService.currentUser;
+    public currencyInfo = this.authService.currencyInfo;
 
     public usersResource = resource({
         defaultValue: [],
@@ -55,8 +59,6 @@ export class UsersComponent {
     public errorFetching = signal(false);
     public loading = signal(true);
     public showCreateUserModal = signal(false);
-
-    public currentUser = this.authService.currentUser;
 
     public goBack() {
         this.router.navigate([ '/pos' ]);

@@ -29,9 +29,10 @@
         {{ item().name }}
       </p>
       <div class="grid grid-flow-row grid-cols-1 text-sm text-text-on-light/70">
-        <p class="font-semibold text-text-on-light">
+        <p class="text-left font-semibold text-text-on-light">
           {{ item().averagePrice | localeCurrency: currencyInfo() }}
         </p>
+        <p class="text-left font-semibold text-text-on-light">{{ item().volume }} cl</p>
         <p class="flex flex-row gap-x-1">
           <span>{{ item().currentStock }}</span>
           <span>in stock</span>

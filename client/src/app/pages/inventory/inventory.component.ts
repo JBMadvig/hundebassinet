@@ -3,7 +3,7 @@ import { Component, inject, resource, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { InventoryRequest, ItemSortValues, sortDirection } from 'app/shared/types/items.types';
+import { InventoryRequest, ItemSortValues, SortDirection } from 'app/shared/types/items.types';
 
 import { ButtonComponent } from '@components/button/button.component';
 import { TableComponent } from '@components/table/table.component';
@@ -31,7 +31,7 @@ export class InventoryComponent {
     public searchForm = this.formBuilder.group({
         searchQuery: '',
         sortBy: 'name' as ItemSortValues,
-        sortDirection: 'ascending' as sortDirection,
+        sortDirection: 'ascending' as SortDirection,
         page: [ 1, [ Validators.min(1) ] ],
         entriesPrPage: [ 25, [ Validators.min(25), Validators.max(100) ] ],
     });

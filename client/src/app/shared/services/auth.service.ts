@@ -5,12 +5,14 @@ import { catchError, of, tap } from 'rxjs';
 import { LoginRequest } from '../types/auth.types';
 import { User } from '../types/user.types';
 import { AuthApiService } from './auth-api.service';
+import { CurrencyService } from './currency.service';
 
 @Injectable({
     providedIn: 'root',
 })
 export class AuthService {
     private authApi = inject(AuthApiService);
+    private currencyService = inject(CurrencyService);
     private router = inject(Router);
 
     // Signals for state management
@@ -19,6 +21,12 @@ export class AuthService {
     public isAdmin = computed(() => {
         const user = this.currentUser();
         return user?.role === 'admin' || user?.role === 'sudo-admin';
+    });
+
+    // Currency info for current user, used in various places to display currency correctly
+    public currencyInfo = computed(() => {
+        const code = this.currentUser()?.currency ?? 'DKK';
+        return this.currencyService.getLocaleFromCurrency(code);
     });
 
     /**

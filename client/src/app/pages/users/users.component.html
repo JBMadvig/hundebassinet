@@ -71,7 +71,7 @@
               <td>
                 {{ data.role }}
               </td>
-              <td>{{ data.balance }} {{ data.valuta }}</td>
+              <td>{{ data.balance | localeCurrency: currencyInfo() }}</td>
               <td>
                 {{ data.createdAt | date: 'dd. MMM - yyyy' }}
               </td>
@@ -86,4 +86,7 @@
   }
 </main>
 
-<app-create-user-form [(visible)]="showCreateUserModal" (userCreated)="usersResource.reload()"></app-create-user-form>
+<app-create-user-form
+  (userCreated)="usersResource.reload()"
+  [(visible)]="showCreateUserModal"
+></app-create-user-form>
