@@ -1,0 +1,44 @@
+@if (valueFormGroup && valueFormControl) {
+  <div
+    class="flex flex-col"
+    [ngClass]="{
+      'flex-col gap-y-1': textPosition() === 'top' || textPosition() === 'bottom',
+      'flex-row items-center gap-x-1': textPosition() === 'right' || textPosition() === 'left',
+    }"
+    [formGroup]="valueFormGroup"
+  >
+    @if (label()) {
+      <label
+        class="mb-1 text-xs"
+        [ngClass]="{
+          'order-last': textPosition() === 'bottom' || textPosition() === 'right',
+        }"
+        [for]="controlId"
+      >
+        {{ label() }}
+      </label>
+    }
+
+    <div class="flex flex-row items-center gap-x-2">
+      @if (falseLabel()) {
+        <span class="text-xs">{{ falseLabel() }}</span>
+      }
+
+      <label class="relative inline-block h-4 w-8 shrink-0 rounded-full">
+        <input
+          [id]="controlId"
+          class="peer h-0 w-0 opacity-0"
+          [formControlName]="formControlNameDirective.name"
+          type="checkbox"
+        />
+        <span
+          class="bg-gray-100 peer-checked:bg-accent before:border-gray-400 absolute top-0 right-0 bottom-0 left-0 cursor-pointer rounded-full transition-colors before:absolute before:h-[1.2rem] before:w-[1.2rem] before:translate-y-[-0.1rem] before:rounded-full before:border before:bg-white before:transition-transform before:content-[''] peer-checked:before:translate-x-[0.8rem]"
+        ></span>
+      </label>
+
+      @if (trueLabel()) {
+        <span class="text-xs">{{ trueLabel() }}</span>
+      }
+    </div>
+  </div>
+}
