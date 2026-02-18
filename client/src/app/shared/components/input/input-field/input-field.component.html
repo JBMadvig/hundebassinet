@@ -31,8 +31,7 @@
         class="box-border w-full text-lg font-bold text-text-on-light placeholder-text-secondary placeholder:italic focus:outline-hidden"
         [ngClass]="{
           'ml-2': !icon(),
-          'pointer-events-none cursor-not-allowed bg-gray-200': disabled(),
-          'bg-white': !disabled(),
+          'bg-white': true,
         }"
         [appAutoFocus]="autofocus()"
         [formControlName]="controlName"

@@ -107,6 +107,21 @@ export class DropdownComponent<T> implements OnInit {
         return this.formControlNameDirective.name;
     }
 
+    get enabled() {
+        return this.valueFormControl?.enabled;
+    }
+
+    get selectedText(): string {
+        const value = this.valueFormControl?.value;
+        if (value == null) return this.label() ?? '';
+        for (const group of this.optGroupsWithId()) {
+            for (const option of group.options) {
+                if (option.value === value) return option.text;
+            }
+        }
+        return String(value);
+    }
+
     ngOnInit() {
         this.valueFormGroup = this.formGroupDirective.form;
         this.valueFormControl = this.formGroupDirective.getControl(this.formControlNameDirective);

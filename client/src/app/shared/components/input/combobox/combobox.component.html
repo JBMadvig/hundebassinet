@@ -1,6 +1,8 @@
+@let controlValue = valueFormControl?.value;
+
 <div class="relative">
   @if (label()) {
-    <label [for]="controlId">
+    <label class="ml-3" [for]="controlId">
       {{ label() }}
     </label>
     @if (isRequired()) {
@@ -9,18 +11,17 @@
   }
   <div
     #searchContainer
-    class="box-border flex items-center gap-x-1 rounded-sm border px-3 py-1 align-middle"
+    class="box-border flex items-center gap-x-1 border bg-white px-3 py-2 align-middle"
     [ngClass]="{
       'border-error': invalid(),
-      'border-border': !invalid(),
-      'rounded-b-none': initialized() && isFocused() && valueFormControl?.value !== '',
+      'border-gray-400': !invalid(),
+      'rounded-full': !initialized() || !isFocused() || controlValue === '' || controlValue === undefined,
+      'rounded-t-3xl': initialized() && isFocused() && controlValue !== '',
     }"
   >
-    @if (icon()) {
-      <i class="fa-xs text-text-primary" [ngClass]="icon()"></i>
-    }
     <input
-      class="box-border w-full bg-text-primary text-lg placeholder-text-secondary placeholder:italic focus:outline-hidden"
+      class="box-border w-full bg-white text-lg text-text-on-light placeholder-text-secondary placeholder:italic focus:outline-hidden"
+      [appAutoFocus]="autofocus()"
       [placeholder]="placeholder()"
       (blur)="onBlur()"
       (click)="onInputFieldClick()"
@@ -28,10 +29,33 @@
       [(ngModel)]="inputValue"
       type="text"
     />
+    @if (controlValue) {
+      <button
+        class="ml-2 flex items-center justify-center text-text-secondary transition-colors hover:text-text-on-light focus:outline-none"
+        (click)="onReset($event)"
+        type="button"
+      >
+        <svg
+          fill="currentColor"
+          height="24"
+          viewBox="0 0 24 24"
+          width="24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+          <path
+            d="M14.83 7.76 12 10.59 9.17 7.76 7.76 9.17 10.59 12l-2.83 2.83 1.41 1.41L12 13.41l2.83 2.83 1.41-1.41L13.41 12l2.83-2.83z"
+          ></path>
+          <path
+            d="M12 2C9.33 2 6.82 3.04 4.93 4.93S2 9.33 2 12s1.04 5.18 2.93 7.07c1.95 1.95 4.51 2.92 7.07 2.92s5.12-.97 7.07-2.92S22 14.67 22 12s-1.04-5.18-2.93-7.07A9.93 9.93 0 0 0 12 2m5.66 15.66c-3.12 3.12-8.19 3.12-11.31 0-1.51-1.51-2.34-3.52-2.34-5.66s.83-4.15 2.34-5.66S9.87 4 12.01 4s4.15.83 5.66 2.34 2.34 3.52 2.34 5.66-.83 4.15-2.34 5.66Z"
+          ></path>
+        </svg>
+      </button>
+    }
   </div>
-  @if (isFocused() && valueFormControl?.value !== '') {
+  @if (isFocused() && controlValue !== '') {
     <ul
-      class="fixed z-9 mb-4 max-h-72 w-full overflow-auto rounded-b-sm border border-t-0 border-border [&_li]:odd:bg-white [&_li]:even:bg-gray-100 [&_li]:hover:bg-gray-300"
+      class="fixed z-9 mb-4 max-h-72 w-full overflow-auto rounded-b-3xl border border-t-0 border-gray-300 transition-colors [&_li]:odd:bg-white [&_li]:even:bg-gray-100 [&_li]:hover:bg-gray-200"
       [ngStyle]="{
         width: dropdownWidth(),
       }"
@@ -55,11 +79,23 @@
             </button>
           </li>
         } @empty {
-          <li>
-            <p class="p-3 text-left text-lg font-bold text-text-on-light" i18n>
-              No results found. Please adjust your search
-            </p>
-          </li>
+          @if (emptyTemplate()) {
+            <li>
+              <button
+                class="w-full cursor-pointer p-3 text-left"
+                (mousedown)="onSelectEmptyTemplate($event)"
+                type="button"
+              >
+                <ng-container *ngTemplateOutlet="emptyTemplate()"></ng-container>
+              </button>
+            </li>
+          } @else {
+            <li>
+              <p class="p-3 text-left text-lg font-bold text-text-on-light">
+                No results found. Please adjust your search
+              </p>
+            </li>
+          }
         }
         @let dataVar = data();
         @if (dataVar && dataVar.length > 0) {
@@ -68,7 +104,6 @@
               class="w-full p-3 text-left text-lg font-bold"
               (mousedown)="onReset($event)"
               type="button"
-              i18n
             >
               Reset
             </button>

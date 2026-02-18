@@ -7,7 +7,7 @@
           'py-1': !isRequired(),
         }"
       >
-        <label class="text-text-on-light/80" [for]="controlId">
+        <label class="text-text-on-light/80 text-xs" [for]="controlId">
           {{ label() }}
         </label>
         @if (isRequired()) {
@@ -16,40 +16,48 @@
       </div>
     }
 
-    <select
-      [id]="controlId"
-      class="w-full rounded-full border bg-white px-4 py-2 font-bold text-text-on-light"
-      [ngClass]="{
-        ' text-text-secondary italic': valueFormControl.value === null,
-        'border-error': isInvalid(),
-        'border-gray-300': !isInvalid(),
-      }"
-      [formControlName]="controlName"
-    >
-      @if (placeholder()) {
-        <option [ngValue]="null" disabled hidden selected>{{ placeholder() }}</option>
-      }
-      @for (optGroup of optGroupsWithId(); track $index) {
-        @if (optGroup.label) {
-          <optgroup [label]="optGroup.label">
+    @if (enabled) {
+      <select
+        [id]="controlId"
+        class="w-full rounded-full border bg-white px-4 py-2 font-bold text-text-on-light"
+        [ngClass]="{
+          ' text-text-secondary italic': valueFormControl.value === null,
+          'border-error': isInvalid(),
+          'border-gray-300': !isInvalid(),
+        }"
+        [formControlName]="controlName"
+      >
+        @if (placeholder()) {
+          <option [ngValue]="null" disabled hidden selected>{{ placeholder() }}</option>
+        }
+        @for (optGroup of optGroupsWithId(); track $index) {
+          @if (optGroup.label) {
+            <optgroup [label]="optGroup.label">
+              @for (option of optGroup.options; track option.id) {
+                <option [disabled]="option.disabled" [hidden]="option.hidden" [ngValue]="option.value">
+                  {{ option.text }}
+                </option>
+              }
+            </optgroup>
+          } @else {
             @for (option of optGroup.options; track option.id) {
               <option [disabled]="option.disabled" [hidden]="option.hidden" [ngValue]="option.value">
                 {{ option.text }}
               </option>
             }
-          </optgroup>
-        } @else {
-          @for (option of optGroup.options; track option.id) {
-            <option [disabled]="option.disabled" [hidden]="option.hidden" [ngValue]="option.value">
-              {{ option.text }}
-            </option>
           }
         }
-      }
 
-      @if (resetOption()) {
-        <option [hidden]="valueFormControl.value === null" ngValue="dropdownreset">Reset</option>
-      }
-    </select>
+        @if (resetOption()) {
+          <option [hidden]="valueFormControl.value === null" ngValue="dropdownreset">Reset</option>
+        }
+      </select>
+    } @else {
+      <div
+        class="pointer-events-none box-border w-full cursor-not-allowed rounded-full border border-gray-300 bg-gray-100 px-4 py-2 font-bold text-gray-400"
+      >
+        {{ selectedText }}
+      </div>
+    }
   </div>
 }

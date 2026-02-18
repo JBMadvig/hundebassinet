@@ -83,12 +83,6 @@ export class InputFieldComponent implements OnInit {
     public focus = output<boolean>();
 
     /**
-     * If boolean attribute is added, then the button will be disabled and users can't interact with it.
-     * This is used to disable the inputfield when the form is invalid or if a scenario calls for it.
-     */
-    public disabled = input<boolean | null>(null);
-
-    /**
      * Changes the input field to a error state so you can show an error visually
     */
     public isInvalid = signal<boolean>(false);

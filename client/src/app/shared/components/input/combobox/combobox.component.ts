@@ -1,8 +1,10 @@
 import { CommonModule } from '@angular/common';
 import {
+    booleanAttribute,
     Component,
     computed,
     contentChild,
+    effect,
     ElementRef,
     inject,
     input,
@@ -18,6 +20,7 @@ import { FormControl, FormControlName, FormGroup, FormGroupDirective, FormsModul
 import { map, skip } from 'rxjs';
 
 import { AutoSub, AutoUnsubscribe } from '@decorators/auto-unsub.decorator';
+import { AutofocusDirective } from '@directives/auto-focus.directive';
 import { generateId } from '@lib/utils';
 
 export type ComboboxData<T> = {$implicit: T, index: string};
@@ -25,6 +28,7 @@ export type ComboboxData<T> = {$implicit: T, index: string};
 @Component({
     selector: 'app-combobox',
     imports: [
+        AutofocusDirective,
         CommonModule,
         FormsModule,
     ],
@@ -65,6 +69,12 @@ export class ComboboxComponent <T extends {id: string, name: string}> implements
     public label = input<string>('');
 
     /**
+     * Whether the input field should autofocus or not.
+     * If true, the input field will be focused when the component is loaded.
+    */
+    public autofocus = input(false, { transform: booleanAttribute });
+
+    /**
      * The loading state when searching.
      * Sinc the search is done outside, we'll have a signal as input that changes depending on the loading state.
      */
@@ -94,7 +104,9 @@ export class ComboboxComponent <T extends {id: string, name: string}> implements
      */
     public currentValue = signal<string>('');
 
+    public inputValueChange = output<string>();
     public selectedRowValue = output<T>();
+    public selectedEmptyTemplate = output<void>();
 
     public isFocused = signal(false);
     public isRequired = signal(false);
@@ -107,6 +119,9 @@ export class ComboboxComponent <T extends {id: string, name: string}> implements
     public optionsTemplateRef = contentChild<TemplateRef<ComboboxData<T>>>('optionsTemplate');
     public optionsTemplate = computed(() => this.optionsTemplateRef() ?? null);
 
+    public emptyTemplateRef = contentChild<TemplateRef<void>>('emptyTemplate');
+    public emptyTemplate = computed(() => this.emptyTemplateRef() ?? null);
+
     public internalLoading = linkedSignal(() => {
         this.data();
         return this.loading();
@@ -117,6 +132,10 @@ export class ComboboxComponent <T extends {id: string, name: string}> implements
         skip(1),
         map(() => true),
     ), { initialValue: false });
+
+    private inputValueEffect = effect(() => {
+        this.inputValueChange.emit(this.inputValue());
+    });
 
     public dropdownWidth = computed(() => {
         const input = this.searchContainerRef()?.nativeElement;
@@ -165,6 +184,13 @@ export class ComboboxComponent <T extends {id: string, name: string}> implements
         this.inputValue.set(newValue.name);
         this.currentValue.set(newValue.name);
         this.selectedRowValue.emit(newValue);
+    }
+
+    public onSelectEmptyTemplate(event: MouseEvent): void {
+        event.stopPropagation();
+        const control = this.valueFormControl;
+        if (!control) return;
+        this.selectedEmptyTemplate.emit();
     }
 
     public onReset(event: MouseEvent) {
