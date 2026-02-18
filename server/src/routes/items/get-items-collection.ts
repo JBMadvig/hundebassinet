@@ -25,7 +25,7 @@ export default <FastifyPluginCallback>function (app, opts, done) {
             reply: FastifyReplyTypebox<typeof schema>,
         ) => {
 
-            const items = await ItemModel.find({}).select('_id name primaryCategory secondaryCategory averagePrice currentStock abv');
+            const items = await ItemModel.find({}).select('_id name primaryCategory secondaryCategory averagePrice volume currentStock abv');
 
             // Get users currency setting for convertion of prices and values
             const user = await UserModel.findById(req.user.userId).select('currency');
