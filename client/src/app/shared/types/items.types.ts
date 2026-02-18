@@ -6,6 +6,7 @@ interface BaseItem {
     currentStock: number;
     totalStockValue: number;
     abv: number,
+    volume: number,
     createdAt: Date;
     updatedAt: Date;
     imageUrl?: string;
@@ -160,6 +161,8 @@ interface OtherItem extends BaseItem {
 export type Item = BeerItem | CiderItem | SodaItem | WineItem | SpiritItem | OtherItem;
 
 export type PrimaryItemCategoriesType = Item['primaryItemCategory'];
+
+export const PrimaryItemCategoriesTypeValues: PrimaryItemCategoriesType[] = [ 'beer', 'cider', 'soda', 'wine', 'spirit', 'other' ];
 export type SecondaryItemCategoriesType =
     | BeerTypes
     | CiderTypes

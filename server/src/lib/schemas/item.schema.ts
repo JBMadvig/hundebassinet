@@ -38,6 +38,7 @@ export const FullItemSchema = Type.Object({
     currentStock: Type.Number(),
     totalStockValue: Type.Number(),
     abv: Type.Number(),
+    volume: Type.Number(),
     currency: Type.String(),
     updatedAt: MongooseDateType,
     createdAt: MongooseDateType,
@@ -52,6 +53,7 @@ export const CollectionItemSchema = Type.Object({
     averagePrice: Type.Number(),
     currentStock: Type.Number(),
     abv: Type.Number(),
+    volume: Type.Number(),
     currency: Type.String(),
 });
 

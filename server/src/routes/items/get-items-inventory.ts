@@ -51,7 +51,7 @@ export default <FastifyPluginCallback>function (app, opts, done) {
                     .sort({ [sortBy]: sortDirection })
                     .skip(resultsToSkip)
                     .limit(entriesPrPage)
-                    .select('_id name primaryCategory secondaryCategory averagePrice currentStock totalStockValue abv updatedAt createdAt'),
+                    .select('_id name primaryCategory secondaryCategory averagePrice currentStock totalStockValue abv volume updatedAt createdAt'),
                 ItemModel.countDocuments(filter),
                 ItemModel.countDocuments(),
             ]);

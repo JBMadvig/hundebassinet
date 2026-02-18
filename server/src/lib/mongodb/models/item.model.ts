@@ -27,6 +27,9 @@ export class Item extends TimeStamps {
     @prop({ type: () => Number, required: false, default: 0, min: 0, max: 100 })
     public abv: number;
 
+    @prop({ type: () => Number, required: true, default: 0, min: 0 })
+    public volume: number;
+
     @prop({ type: () => Number, required: true, default: 0 })
     public averagePrice: number;
 
