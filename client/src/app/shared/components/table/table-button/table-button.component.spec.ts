@@ -3,21 +3,21 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TableButtonComponent } from './table-button.component';
 
 describe('TableButtonComponent', () => {
-  let component: TableButtonComponent;
-  let fixture: ComponentFixture<TableButtonComponent>;
+    let component: TableButtonComponent;
+    let fixture: ComponentFixture<TableButtonComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [TableButtonComponent]
-    })
-    .compileComponents();
+    beforeEach(async () => {
+        await TestBed.configureTestingModule({
+            imports: [TableButtonComponent],
+        }).compileComponents();
 
-    fixture = TestBed.createComponent(TableButtonComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+        fixture = TestBed.createComponent(TableButtonComponent);
+        component = fixture.componentInstance;
+        fixture.componentRef.setInput('label', 'Test');
+        fixture.detectChanges();
+    });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });

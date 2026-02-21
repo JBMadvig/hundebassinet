@@ -1,5 +1,8 @@
+import { provideHttpClient } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 
+import { CreateUserFormComponent } from './create-user-form/create-user-form.component';
 import { UsersComponent } from './users.component';
 
 describe('UsersComponent', () => {
@@ -8,9 +11,11 @@ describe('UsersComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [ UsersComponent ],
+            imports: [UsersComponent],
+            providers: [provideRouter([]), provideHttpClient()],
         })
-            .compileComponents();
+        .overrideComponent(CreateUserFormComponent, { set: { template: '' } })
+        .compileComponents();
 
         fixture = TestBed.createComponent(UsersComponent);
         component = fixture.componentInstance;

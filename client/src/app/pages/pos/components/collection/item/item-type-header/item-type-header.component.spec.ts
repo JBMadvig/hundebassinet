@@ -8,12 +8,12 @@ describe('ItemTypeHeaderComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [ ItemTypeHeaderComponent ],
-        })
-            .compileComponents();
+            imports: [ItemTypeHeaderComponent],
+        }).compileComponents();
 
         fixture = TestBed.createComponent(ItemTypeHeaderComponent);
         component = fixture.componentInstance;
+        fixture.componentRef.setInput('itemTypeId', 'beer');
         fixture.detectChanges();
     });
 
