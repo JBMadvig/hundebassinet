@@ -80,7 +80,7 @@ export class InputFieldComponent implements OnInit {
      * This is emitted on every keypress.
      */
     public valueChange = output<string>();
-    public focus = output<boolean>();
+    public focusChange = output<boolean>();
 
     /**
      * Changes the input field to a error state so you can show an error visually
@@ -140,11 +140,11 @@ export class InputFieldComponent implements OnInit {
     }
 
     public onFocus() {
-        this.focus.emit(true);
+        this.focusChange.emit(true);
     }
 
     public onBlur() {
-        this.focus.emit(false);
+        this.focusChange.emit(false);
     }
 
     public togglePasswordVisibility() {
