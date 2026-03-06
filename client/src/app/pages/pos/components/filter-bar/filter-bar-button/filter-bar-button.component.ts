@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, input, output } from '@angular/core';
 
-import { PrimaryItemCategoriesType } from '../../../../../shared/types/items.types';
+import { PrimaryCategoriesType } from '../../../../../shared/types/items.types';
 
 @Component({
     selector: 'app-filter-bar-button',
@@ -13,12 +13,12 @@ import { PrimaryItemCategoriesType } from '../../../../../shared/types/items.typ
 })
 export class FilterBarButtonComponent {
 
-    public itemCategory = input.required<PrimaryItemCategoriesType | 'all' | 'search'>();
-    public currentFilter = input.required<PrimaryItemCategoriesType | 'all' | 'search'>();
+    public category = input.required<PrimaryCategoriesType | 'all' | 'search'>();
+    public currentFilter = input.required<PrimaryCategoriesType | 'all' | 'search'>();
 
-    public filterChange = output<PrimaryItemCategoriesType | 'all' | 'search'>();
+    public filterChange = output<PrimaryCategoriesType | 'all' | 'search'>();
 
     public onClick() {
-        this.filterChange.emit(this.itemCategory());
+        this.filterChange.emit(this.category());
     }
 }

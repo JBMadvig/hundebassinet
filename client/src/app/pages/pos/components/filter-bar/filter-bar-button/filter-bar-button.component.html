@@ -1,13 +1,13 @@
 <button
   class="cursor-pointer rounded-full border-2 border-border-strong px-4 py-4 font-semibold text-text-primary transition-all duration-200 hover:bg-accent hover:text-white"
   [ngClass]="{
-    'bg-accent text-white': currentFilter() === 'search' && itemCategory() === 'search',
+    'bg-accent text-white': currentFilter() === 'search' && category() === 'search',
   }"
   (click)="onClick()"
 >
   <p class="flex flex-row transition-all duration-250 ease-in-out">
     <span>
-      @switch (itemCategory()) {
+      @switch (category()) {
         @case ('beer') {
           <svg
             fill="currentColor"
@@ -129,11 +129,11 @@
     <span
       class="overflow-hidden font-heading whitespace-nowrap transition-all duration-250 ease-in-out"
       [ngClass]="{
-        'ml-2 max-w-xs opacity-100': currentFilter() === itemCategory() || itemCategory() === 'all',
-        'ml-0 max-w-0 opacity-0': currentFilter() !== itemCategory() && itemCategory() !== 'all',
-        'text-white': currentFilter() === 'search' && itemCategory() === 'search',
+        'ml-2 max-w-xs opacity-100': currentFilter() === category() || category() === 'all',
+        'ml-0 max-w-0 opacity-0': currentFilter() !== category() && category() !== 'all',
+        'text-white': currentFilter() === 'search' && category() === 'search',
       }"
-      >{{ itemCategory().toLocaleUpperCase() }}</span
+      >{{ category().toLocaleUpperCase() }}</span
     >
   </p>
 </button>

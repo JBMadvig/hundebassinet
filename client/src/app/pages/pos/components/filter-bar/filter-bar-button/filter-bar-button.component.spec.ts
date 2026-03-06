@@ -13,7 +13,7 @@ describe('FilterBarButtonComponent', () => {
 
         fixture = TestBed.createComponent(FilterBarButtonComponent);
         component = fixture.componentInstance;
-        fixture.componentRef.setInput('itemCategory', 'all');
+        fixture.componentRef.setInput('Category', 'all');
         fixture.componentRef.setInput('currentFilter', 'all');
         fixture.detectChanges();
     });

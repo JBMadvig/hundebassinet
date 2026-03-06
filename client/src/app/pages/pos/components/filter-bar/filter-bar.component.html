@@ -2,14 +2,14 @@
   @for (category of currentStockFilter(); track category) {
     <app-filter-bar-button
       [currentFilter]="currentFilter()"
-      [itemCategory]="category"
+      [category]="category"
       (filterChange)="onFilterChange($event)"
     ></app-filter-bar-button>
   }
   <app-filter-bar-button
     [currentFilter]="currentFilter()"
     (filterChange)="onFilterChange($event)"
-    itemCategory="search"
+    category="search"
   />
   <div
     class="transition-all duration-300 ease-in-out"
@@ -21,7 +21,7 @@
     <app-filter-bar-button
       [currentFilter]="currentFilter()"
       (filterChange)="onFilterChange($event)"
-      itemCategory="all"
+      category="all"
     />
   </div>
 </section>
