@@ -11,7 +11,10 @@ import { CollectionItemSchema } from '@lib/schemas/item.schema';
 export default <FastifyPluginCallback>function (app, opts, done) {
     const schema = {
         response: {
-            200: Type.Array(CollectionItemSchema),
+            200: Type.Object({
+                items: Type.Array(CollectionItemSchema),
+                currency: Type.String(),
+            }),
         },
     } satisfies FastifySchema;
 
@@ -31,14 +34,16 @@ export default <FastifyPluginCallback>function (app, opts, done) {
             const user = await UserModel.findById(req.user.userId).select('currency');
             const currency = user?.currency || 'DKK';
 
-            await reply.send(items.map(item => {
-                const obj = item.toObject();
-                return {
-                    ...obj,
-                    averagePrice: convertFromDKK(obj.averagePrice, currency),
-                    currency,
-                };
-            }));
+            await reply.send({
+                items: items.map(item => {
+                    const obj = item.toObject();
+                    return {
+                        ...obj,
+                        averagePrice: convertFromDKK(obj.averagePrice, currency),
+                    };
+                }),
+                currency,
+            });
         },
     });
 

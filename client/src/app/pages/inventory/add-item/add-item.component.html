@@ -7,4 +7,101 @@
    - If pick item that is already in the DB we add input fields with those data and they can add price and quantity 
    - If a new item we add all empty fields they have to fill out, and then we create a new item
    -->
+  @if (!itemChosenSignal()) {
+    <p class="mb-4 text-text-on-light">
+      Search for an item in the database. If it doesn't exist, you can create a new one.
+    </p>
+    <form [formGroup]="searchItemsForm">
+      <app-combobox
+        [data]="itemSearchResource.value()"
+        [loading]="itemSearchResource.isLoading()"
+        (inputValueChange)="searchItemsForm.controls.search.setValue($event)"
+        (selectedEmptyTemplate)="setNewItemValues()"
+        (selectedRowValue)="setItemValues($event)"
+        autofocus
+        formControlName="search"
+        label="Item name"
+        ngDefaultControl
+        placeholder="Search for an item or add a new one"
+      >
+        <ng-template #optionsTemplate [appTypedTemplate]="itemComboboxType" let-item>
+          <p>{{ item.name }} ({{ item.volume }} cl)</p>
+        </ng-template>
+        <ng-template #emptyTemplate>
+          <p>Create new item</p>
+        </ng-template>
+      </app-combobox>
+    </form>
+  } @else {
+    @if (itemExistsSignal()) {
+      <p class="mb-4 text-text-on-light">
+        Item found in database. You can adjust the volume to add a new variant, or keep it as-is and fill in
+        the price and quantity.
+      </p>
+    } @else {
+      <p class="mb-4 text-text-on-light">
+        Item not found in database. Please fill out the all of the fields below to create the item and add it
+        to inventory.
+      </p>
+    }
+    <form class="flex flex-col gap-y-2" [formGroup]="itemForm" (submit)="confirmAddToInventory()">
+      <app-input-field formControlName="name" label="Name" ngDefaultControl placeholder="Enter item name" />
+      <app-dropdown
+        [options]="primaryCategoryOptions()"
+        formControlName="primaryCategory"
+        label="Primary item category"
+        ngDefaultControl
+        placeholder="Select a primary item category"
+      />
+      <app-input-field
+        formControlName="secondaryCategory"
+        label="Secondary item category"
+        ngDefaultControl
+        placeholder="Enter secondary item category (optional)"
+      />
+      <app-input-field
+        formControlName="abv"
+        label="ABV (Alcohol by volume)"
+        ngDefaultControl
+        placeholder="Enter item ABV (if contains alcohol)"
+        type="number"
+      />
+      <app-input-field
+        formControlName="volume"
+        label="Volume (in cl pr. unit)"
+        ngDefaultControl
+        placeholder="Volume in cl pr. unit"
+        type="number"
+      />
+      <div class="grid w-full grid-cols-[1fr_auto]">
+        <app-input-field
+          formControlName="price"
+          label="Total price paid"
+          ngDefaultControl
+          placeholder="Total price for all units"
+          type="number"
+        />
+        <app-dropdown
+          [options]="currencyOptions"
+          formControlName="currency"
+          label="Currency"
+          ngDefaultControl
+          placeholder="Select currency for price"
+        />
+      </div>
+      <app-input-field
+        formControlName="units"
+        label="Units"
+        ngDefaultControl
+        placeholder="Number of items to add to inventory"
+        type="number"
+      />
+      @if (pricePerUnit() !== null) {
+        <p class="text-xs ml-2 text-text-on-light">
+          (Equals to {{ pricePerUnit()! | localeCurrency: currencyInfo() }} per unit)
+        </p>
+      }
+      <app-button class="mt-4 w-full" [disabled]="itemForm.invalid" label="Submit" type="submit" />
+    </form>
+  }
 </app-dialog>

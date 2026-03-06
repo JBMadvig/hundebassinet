@@ -69,9 +69,9 @@ export default <FastifyPluginCallback>function (app, opts, done) {
                         ...obj,
                         averagePrice: convertFromDKK(obj.averagePrice, currency),
                         totalStockValue: convertFromDKK(obj.totalStockValue, currency),
-                        currency,
                     };
                 }),
+                currency,
                 itemsInSearch,
                 totalItems,
                 searchParams:{

@@ -47,5 +47,8 @@
   </div>
 </div>
 
+@if (showItemsAddDialog()) {
+  <app-add-item [(visible)]="showItemsAddDialog" />
+}
+
 <app-settings (showAddItemsDialog)="showItemsAddDialog.set(true)" [(visible)]="openSettings"></app-settings>
-<app-add-item [(visible)]="showItemsAddDialog" />
