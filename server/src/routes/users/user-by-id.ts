@@ -1,3 +1,4 @@
+import { convertFromDKK } from '@services/currency.service';
 import { Type } from '@sinclair/typebox';
 import { FastifyPluginCallback, FastifySchema } from 'fastify';
 
@@ -31,7 +32,13 @@ export default <FastifyPluginCallback>function (app, opts, done) {
             if (!user) {
                 throw new UnauthorizedError('User not found');
             }
-            await reply.send(user.toObject());
+
+            const userObj = user.toObject();
+
+            await reply.send({
+                ...userObj,
+                balance: convertFromDKK(userObj.balance, userObj.currency),
+            });
         },
     });
 

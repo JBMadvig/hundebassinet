@@ -37,6 +37,7 @@ export interface CreateUserRequest {
     password: string;
     role: string;
     balance: number;
+    currency: string;
 }
 
 export interface CreateUserResponse {

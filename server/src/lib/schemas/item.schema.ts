@@ -39,7 +39,6 @@ export const FullItemSchema = Type.Object({
     totalStockValue: Type.Number(),
     abv: Type.Number(),
     volume: Type.Number(),
-    currency: Type.String(),
     updatedAt: MongooseDateType,
     createdAt: MongooseDateType,
 });
@@ -54,11 +53,23 @@ export const CollectionItemSchema = Type.Object({
     currentStock: Type.Number(),
     abv: Type.Number(),
     volume: Type.Number(),
-    currency: Type.String(),
+});
+
+// Create Item schema when adding new item to inventory
+export const CreateItemSchema = Type.Object({
+    _id: MongooseObjectIdType,
+    name: Type.String(),
+    primaryCategory: PrimaryItemUnionCategories,
+    secondaryCategory: Type.String(),
+    totalPaid: Type.Number(),
+    abv: Type.Number(),
+    volume: Type.Number(),
+    amount: Type.Number(),
 });
 
 export const ItemSchemaWithSearchAndSortAndPagination = Type.Object({
     items: Type.Array(FullItemSchema),
+    currency: Type.String(),
     itemsInSearch: Type.Number(),
     totalItems: Type.Number(),
     searchParams: Type.Object({

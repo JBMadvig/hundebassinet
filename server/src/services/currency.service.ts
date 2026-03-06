@@ -100,6 +100,20 @@ export function convertFromDKK(amount: number, targetCurrency: string): number {
     return Math.round(amount * rate * 100) / 100;
 }
 
+export function convertToDKK(amount: number, sourceCurrency: string): number {
+    if (sourceCurrency === BASE_CURRENCY) {
+        return amount;
+    }
+
+    const rate = cachedRates[sourceCurrency];
+    if (!rate) {
+        console.warn(`No exchange rate found for ${sourceCurrency}, returning original value`);
+        return amount;
+    }
+
+    return Math.round((amount / rate) * 100) / 100;
+}
+
 export function getAvailableCurrencies(): string[] {
     return [ BASE_CURRENCY, ...Object.keys(cachedRates).sort() ];
 }

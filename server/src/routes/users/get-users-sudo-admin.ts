@@ -1,3 +1,4 @@
+import { convertFromDKK } from '@services/currency.service';
 import { Type } from '@sinclair/typebox';
 import { FastifyPluginCallback, FastifySchema } from 'fastify';
 
@@ -25,7 +26,16 @@ export default <FastifyPluginCallback>function (app, opts, done) {
             // Fetch all user data for sudo-admin panel. This is only accessible for sudo-admins, so we can include users with role "sudo-admin"
             const users = await UserModel.find();
 
-            await reply.send(users.map(user => user.toObject()));
+            // Get users currency setting for convertion of prices and values
+            const user = await UserModel.findById(req.user.userId).select('currency');
+            const currency = user?.currency || 'DKK';
+
+            await reply.send(users.map(user => {
+                const userObject = user.toObject();
+                // Convert balance from DKK to the user's currency
+                userObject.balance = convertFromDKK(userObject.balance, currency);
+                return userObject;
+            }));
         },
     });
 

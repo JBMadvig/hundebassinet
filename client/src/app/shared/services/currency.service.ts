@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 
+import { DropdownOption } from '@components/input/dropdown/dropdown.component';
 import { environment } from '@environment';
 
 export interface CurrencyLocaleInfo {
@@ -42,6 +43,10 @@ const CURRENCY_LOCALE_MAP: Record<string, CurrencyLocaleInfo> = {
     USD: { currency: 'USD', locale: 'en-US', name: 'United States Dollar' },
     ZAR: { currency: 'ZAR', locale: 'en-ZA', name: 'South African Rand' },
 };
+
+export const currencyDropdownOptions: DropdownOption<string>[] = Object.values(CURRENCY_LOCALE_MAP).map(
+    ({ currency, name }) => ({ text: `${name} (${currency})`, value: currency }),
+);
 
 @Injectable({
     providedIn: 'root',

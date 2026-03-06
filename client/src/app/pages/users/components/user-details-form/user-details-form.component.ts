@@ -8,12 +8,13 @@ import { ChangePasswordRequest, UpdateUserDetailsRequest, User } from 'app/share
 
 import { ButtonComponent } from '@components/button/button.component';
 import { CheckboxComponent } from '@components/input/checkbox/checkbox.component';
-import { DropdownComponent, DropdownOption } from '@components/input/dropdown/dropdown.component';
+import { DropdownComponent } from '@components/input/dropdown/dropdown.component';
 import { EditableInputFieldComponent } from '@components/input/editable-input-field/editable-input-field.component';
 import { InputFieldComponent } from '@components/input/input-field/input-field.component';
+import { currencyValidator } from '@lib/input-validators/currency.validator';
 import { emailValidator } from '@lib/input-validators/email.validator';
 import { AuthService } from '@services/auth.service';
-import { CurrencyService } from '@services/currency.service';
+import { currencyDropdownOptions } from '@services/currency.service';
 import { ErrorService } from '@services/error.service';
 import { UsersApiService } from '@services/users-api.service';
 
@@ -33,25 +34,21 @@ import { UsersApiService } from '@services/users-api.service';
 })
 export class UserDetailsFormComponent implements OnInit {
     private authService = inject(AuthService);
-    private currencyService = inject(CurrencyService);
     private destroyRef = inject(DestroyRef);
     private errorService = inject(ErrorService);
     private formBuilder = inject(FormBuilder);
     private usersApiService = inject(UsersApiService);
 
     public readonly roleList = rolesList;
-
+    public readonly currencyOptions = currencyDropdownOptions;
     public currentUser = this.authService.currentUser;
-
-    public readonly currencyOptions = signal<DropdownOption[]>([]);
-
 
     public userDetailsForm = this.formBuilder.group({
         name: [ '', [ Validators.required, Validators.minLength(2) ] ],
         email: [ '', [ Validators.required, emailValidator() ] ],
         role: [ '' ],
         balance: 0,
-        currency: 'DKK',
+        currency: [ 'DKK', [ currencyValidator() ] ],
     });
     public passwordForm = this.formBuilder.group({
         currentPassword: [ '', [ Validators.required ] ],
@@ -112,12 +109,8 @@ export class UserDetailsFormComponent implements OnInit {
         return this.roleList;
     });
 
-    public async ngOnInit(): Promise<void> {
+    public ngOnInit(): void {
         const form = this.userDetailsForm;
-
-        // Get the currency possibilites
-        const currencies = await this.currencyService.getCurrencyOptions();
-        this.currencyOptions.set(currencies.map(c => ({ text: c, value: c })));
 
         // set the form values based on the input user
         form.setValue({

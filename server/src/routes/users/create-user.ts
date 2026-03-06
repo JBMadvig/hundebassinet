@@ -1,3 +1,4 @@
+import { convertFromDKK, convertToDKK } from '@services/currency.service';
 import { Type } from '@sinclair/typebox';
 import { FastifyPluginCallback, FastifySchema } from 'fastify';
 import { MongoServerError } from 'mongodb';
@@ -48,13 +49,16 @@ export default <FastifyPluginCallback>function (app, _opts, done) {
                 throw new ConflictError('A user with this email already exists');
             }
 
+            // Convert balance to DKK currency, before adding it to the database, if the provided currency is not DKK
+            const balanceInDKK = convertToDKK(balance, currency);
+
             const newUser = new UserModel({
                 email,
                 name,
                 password,
                 role,
-                balance,
-                currency: 'DKK',
+                balance: balanceInDKK,
+                currency,
                 avatarUrl: '',
             });
 
@@ -70,8 +74,12 @@ export default <FastifyPluginCallback>function (app, _opts, done) {
 
             const { password: _, ...userResponse } = newUser.toObject();
 
+            // Convert balance back from DKK to the provided currency before sending the response
             await reply.status(201).send({
-                user: userResponse,
+                user: {
+                    ...userResponse,
+                    balance: convertFromDKK(userResponse.balance, currency),
+                },
             });
         },
     });

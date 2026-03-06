@@ -22,12 +22,22 @@
           ngDefaultControl
           placeholder="Select a role"
         />
-        <app-input-field
+        <div class="w-full grid grid-cols-[1fr_auto] gap-x-2">
+
+          <app-input-field
           formControlName="balance"
           label="Balance"
           ngDefaultControl
           placeholder="Change balance for user"
-        />
+          />
+          <app-dropdown
+          [options]="currencyOptions"
+          formControlName="currency"
+          label="Prefered currency"
+          ngDefaultControl
+          placeholder="Prefered currency"
+          />
+        </div>
         @if (passwordNotMatching()) {
           <p class="text-error">Passwords do not match</p>
         }

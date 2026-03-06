@@ -10,8 +10,10 @@ import { ButtonComponent } from '@components/button/button.component';
 import { DialogComponent } from '@components/dialog/dialog.component';
 import { DropdownComponent } from '@components/input/dropdown/dropdown.component';
 import { InputFieldComponent } from '@components/input/input-field/input-field.component';
+import { currencyValidator } from '@lib/input-validators/currency.validator';
 import { emailValidator } from '@lib/input-validators/email.validator';
 import { AuthService } from '@services/auth.service';
+import { currencyDropdownOptions } from '@services/currency.service';
 import { UsersApiService } from '@services/users-api.service';
 
 enum CreateUserError {
@@ -39,14 +41,15 @@ export class CreateUserFormComponent {
     private usersApiService = inject(UsersApiService);
 
     public readonly createUserErrorOptions = CreateUserError;
-
     public readonly roleList = rolesList;
+    public readonly currencyOptions = currencyDropdownOptions;
     public currentUser = this.authService.currentUser;
 
     public createUserForm = this.formBuilder.group({
         name: [ '', [ Validators.required, Validators.minLength(2) ] ],
         email: [ '', [ Validators.required, emailValidator() ] ],
         role: [ null, [ Validators.required ] ],
+        currency: [ 'DKK', [ Validators.required, currencyValidator() ] ],
         balance: [ 0, [ Validators.required ] ],
         newPassword: [ '', [ Validators.required, Validators.minLength(8) ] ],
         confirmNewPassword: [ '', [ Validators.required, Validators.minLength(8) ] ],
@@ -90,6 +93,7 @@ export class CreateUserFormComponent {
                 password: form.newPassword ?? '',
                 role: form.role ?? 'user',
                 balance: form.balance ?? 0,
+                currency: form.currency ?? 'DKK',
             });
 
             this.visible.set(false);

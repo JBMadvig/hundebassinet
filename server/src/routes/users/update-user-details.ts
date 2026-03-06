@@ -1,3 +1,4 @@
+import { convertFromDKK, convertToDKK } from '@services/currency.service';
 import { Type } from '@sinclair/typebox';
 import { FastifyPluginCallback, FastifySchema } from 'fastify';
 import { MongoServerError } from 'mongodb';
@@ -99,7 +100,7 @@ export default <FastifyPluginCallback>function (app, _opts, done) {
                 if (!isAdminOrAbove) {
                     throw new ForbiddenError('Only admins can update user balance');
                 }
-                targetUser.balance = req.body.balance;
+                targetUser.balance = convertToDKK(req.body.balance, targetUser.currency);
             }
 
             // ROLE: complex authorization rules
@@ -164,8 +165,13 @@ export default <FastifyPluginCallback>function (app, _opts, done) {
                 refreshToken = tokens.refreshToken;
             }
 
+            const userObj = targetUser.toObject();
+
             await reply.send({
-                user: targetUser.toObject(),
+                user: {
+                    ...userObj,
+                    balance: convertFromDKK(userObj.balance, userObj.currency),
+                },
                 ...(accessToken && { accessToken }),
                 ...(refreshToken && { refreshToken }),
             });

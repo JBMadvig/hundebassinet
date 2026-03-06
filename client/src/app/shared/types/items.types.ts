@@ -75,8 +75,8 @@ type BeerTypes =
 
 // Discriminated union for each primary category with its specific secondary categories
 interface BeerItem extends BaseItem {
-    primaryItemCategory: 'beer';
-    secondaryItemCategory: BeerTypes | 'other';
+    primaryCategory: 'beer';
+    secondaryCategory: BeerTypes | 'other';
 }
 
 // Cider Categories
@@ -96,8 +96,8 @@ type CiderTypes =
     | 'sweet cider';
 
 interface CiderItem extends BaseItem {
-    primaryItemCategory: 'cider';
-    secondaryItemCategory: CiderTypes | 'other';
+    primaryCategory: 'cider';
+    secondaryCategory: CiderTypes | 'other';
 }
 
 type SodaTypes =
@@ -110,8 +110,8 @@ type SodaTypes =
     | 'sweppes lemon';
 
 interface SodaItem extends BaseItem {
-    primaryItemCategory: 'soda';
-    secondaryItemCategory: SodaTypes | 'other';
+    primaryCategory: 'soda';
+    secondaryCategory: SodaTypes | 'other';
 }
 
 //Wine Gategories
@@ -125,8 +125,8 @@ type WineTypes =
     | 'white';
 
 interface WineItem extends BaseItem {
-    primaryItemCategory: 'wine';
-    secondaryItemCategory: WineTypes | 'other';
+    primaryCategory: 'wine';
+    secondaryCategory: WineTypes | 'other';
 }
 
 // Spirit Categories
@@ -148,21 +148,21 @@ type SpiritTypes =
   | 'whiskey';
 
 interface SpiritItem extends BaseItem {
-    primaryItemCategory: 'spirit';
-    secondaryItemCategory: SpiritTypes | 'other';
+    primaryCategory: 'spirit';
+    secondaryCategory: SpiritTypes | 'other';
 }
 
 interface OtherItem extends BaseItem {
-    primaryItemCategory: 'other';
-    secondaryItemCategory: string;
+    primaryCategory: 'other';
+    secondaryCategory: string;
 }
 
-// Union type that TypeScript can discriminate on primaryItemCategory
+// Union type that TypeScript can discriminate on primaryCategory
 export type Item = BeerItem | CiderItem | SodaItem | WineItem | SpiritItem | OtherItem;
 
-export type PrimaryItemCategoriesType = Item['primaryItemCategory'];
+export type PrimaryCategoriesType = Item['primaryCategory'];
 
-export const PrimaryItemCategoriesTypeValues: PrimaryItemCategoriesType[] = [ 'beer', 'cider', 'soda', 'wine', 'spirit', 'other' ];
+export const PrimaryCategoriesTypeValues: PrimaryCategoriesType[] = [ 'beer', 'cider', 'soda', 'wine', 'spirit', 'other' ];
 export type SecondaryItemCategoriesType =
     | BeerTypes
     | CiderTypes
@@ -172,3 +172,18 @@ export type SecondaryItemCategoriesType =
     | 'other';
 
 export type ItemWithQuantity = Item & { quantity: number };
+
+export interface CreateItemRequest {
+    name: string;
+    primaryCategory: PrimaryCategoriesType;
+    secondaryCategory: string;
+    abv: number;
+    volume: number;
+    price: number;
+    amount: number;
+    currency: string;
+}
+
+export interface CreateItemResponse {
+    itemAdded: Item;
+}
