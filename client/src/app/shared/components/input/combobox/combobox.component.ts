@@ -6,6 +6,7 @@ import {
     contentChild,
     effect,
     ElementRef,
+    HostListener,
     inject,
     input,
     linkedSignal,
@@ -42,6 +43,18 @@ export class ComboboxComponent <T extends {id: string, name: string}> implements
     private formControlNameDirective = inject(FormControlName);
 
     public searchContainerRef = viewChild<ElementRef<HTMLDivElement>>('searchContainer');
+
+    @HostListener('document:keydown.enter', [ '$event' ])
+    public onKeydownHandler(event: Event) {
+        if (!(event instanceof KeyboardEvent)
+            || event.key !== 'Enter'
+            || !this.isFocused()
+            || !this.emptyTemplate()
+            || !this.inputValue()
+            || this.data().length > 0
+        ) return;
+        this.selectedEmptyTemplate.emit();
+    }
 
     /**
      * The data supplied to the template.
