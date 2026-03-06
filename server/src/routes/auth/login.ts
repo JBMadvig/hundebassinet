@@ -37,15 +37,13 @@ export default <FastifyPluginCallback>function (app, _opts, done) {
                 throw new UnauthorizedError('Invalid email or password');
             }
 
-            // Generate tokens
-            const { accessToken, refreshToken } = await generateTokens(reply, user);
+            // Generate tokens (sets HttpOnly cookies automatically)
+            await generateTokens(reply, user);
 
             // Return user without password
             const { password: _, ...userResponse } = user.toObject();
 
             await reply.send({
-                accessToken,
-                refreshToken,
                 user: userResponse,
             });
         },

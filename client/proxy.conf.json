@@ -1,0 +1,13 @@
+{
+    "/api": {
+        "target": "http://192.168.111.9:9001",
+        "secure": false,
+        "changeOrigin": true
+    },
+    "/ws": {
+        "target": "http://192.168.111.9:9001",
+        "secure": false,
+        "changeOrigin": true,
+        "ws": true
+    }
+}

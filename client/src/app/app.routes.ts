@@ -3,6 +3,7 @@ import { Route } from '@angular/router';
 import { adminGuard } from '@guards/admin.guard';
 
 import { authGuard } from './shared/guards/auth.guard';
+import { deviceGuard } from './shared/guards/device.guard';
 import { posRedirectGuard } from './shared/guards/pos-redirect.guard';
 
 export interface RouteData {
@@ -17,7 +18,8 @@ interface CustomRoute extends Route {
 // Update possible routes for this type
 export type RedirectPaths = '/landing'
 | '/pos' | '/pos/inventory'
-| '/users' | '/users/me' ;
+| '/users' | '/users/me'
+| '/qr-display' | '/poslogin' | '/device-activate' ;
 
 export const routes: CustomRoute[] = [
     {
@@ -27,6 +29,32 @@ export const routes: CustomRoute[] = [
             .then(m => m.LandingComponent),
         data: {
             id: 'landing',
+        },
+    },
+    {
+        path: 'qr-display',
+        canActivate: [ authGuard ],
+        loadComponent: () => import('./pages/qr-display/qr-display.component')
+            .then(m => m.QrDisplayComponent),
+        data: {
+            id: 'qr-display',
+        },
+    },
+    {
+        path: 'device-activate',
+        loadComponent: () => import('./pages/device-activate/device-activate.component')
+            .then(m => m.DeviceActivateComponent),
+        data: {
+            id: 'device-activate',
+        },
+    },
+    {
+        path: 'poslogin',
+        canActivate: [ deviceGuard ],
+        loadComponent: () => import('./pages/pos-login/pos-login.component')
+            .then(m => m.PosLoginComponent),
+        data: {
+            id: 'poslogin',
         },
     },
     {

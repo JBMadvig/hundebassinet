@@ -44,4 +44,12 @@ export class SettingsComponent {
         this.visible.set(false);
     }
 
+    public handleLogout() {
+        if (localStorage.getItem('deviceActivated')) {
+            this.authService.posLogout();
+        } else {
+            this.authService.logout();
+        }
+    }
+
 }

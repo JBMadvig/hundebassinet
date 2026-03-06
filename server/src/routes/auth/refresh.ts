@@ -35,12 +35,10 @@ export default <FastifyPluginCallback>function (app, _opts, done) {
                 throw new UnauthorizedError('Session invalidated. Please log in again.');
             }
 
-            // Generate new tokens
-            const { accessToken, refreshToken } = await generateTokens(reply, user);
+            // Generate new tokens (sets HttpOnly cookies automatically)
+            await generateTokens(reply, user);
 
             await reply.send({
-                accessToken,
-                refreshToken,
                 user: user.toObject(),
             });
         },

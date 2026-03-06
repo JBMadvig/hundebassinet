@@ -1,5 +1,5 @@
 <div class="flex h-dvh flex-col items-center justify-center p-6">
-  <section class="flex w-full max-w-xs flex-col items-center gap-6">
+  <section class="flex w-full max-w-md flex-col items-center gap-6">
     <!-- Logo -->
     <div class="w-48">
       <img
@@ -10,36 +10,39 @@
     </div>
 
     <!-- Title -->
-    <h1 class="text-2xl font-bold text-text-primary">Sign In</h1>
+    <div class="text-center">
+      <h1 class="text-2xl font-bold text-text-primary">Activate Device</h1>
+      <p class="mt-2 text-sm text-text-secondary">Sign in with a sudo-admin account to activate this POS terminal</p>
+    </div>
 
-    <!-- Login form -->
-    <form class="flex w-full flex-col gap-4" [formGroup]="loginForm">
+    <!-- Activation form -->
+    <form class="flex w-full flex-col gap-4" [formGroup]="activateForm">
       <app-input-field
         autofocus
         formControlName="email"
         label="Email"
         ngDefaultControl
-        placeholder="Enter your email"
+        placeholder="Enter sudo-admin email"
         type="text"
       />
       <app-input-field
         formControlName="password"
         label="Password"
         ngDefaultControl
-        placeholder="Enter your password"
+        placeholder="Enter password"
         type="password"
       />
     </form>
 
-    @if (loginError()) {
-      <p class="text-sm text-error">{{ loginError() }}</p>
+    @if (error()) {
+      <p class="text-sm text-error">{{ error() }}</p>
     }
 
     <app-button
       class="w-full"
-      (handleClick)="logIn()"
-      label="Sign In"
-      [loading]="loginLoader()"
+      (handleClick)="activate()"
+      label="Activate Device"
+      [loading]="loading()"
     />
   </section>
 </div>

@@ -1,0 +1,71 @@
+<div class="flex h-dvh flex-col items-center justify-center gap-8 p-8">
+  <h1 class="text-3xl font-bold text-text-primary">Scan QR Code to Login</h1>
+  <p class="max-w-100 text-center text-text-primary">
+    Please login on your phone by going to
+    <a
+      class="transition-colors duration-500 ease-in-out hover:underline hover:underline-offset-2"
+      href="/landing"
+      >the landing page</a
+    >. Here you will generate a QR code for this device to scan and log you in.
+  </p>
+
+  <!-- QR Scanner viewport -->
+  <div #qrReader id="qr-reader" class="w-80 overflow-hidden rounded-xl"></div>
+
+  @if (error()) {
+    <p class="text-sm text-error">{{ error() }}</p>
+  }
+
+  @if (!scanning()) {
+    <p class="text-sm text-text-secondary">Processing...</p>
+  }
+
+  <!-- SudoAdmin bypass button -->
+  <button
+    class="fixed right-6 bottom-6 flex h-12 w-12 items-center justify-center rounded-full border border-border bg-surface text-text-secondary shadow-lg transition-colors hover:bg-surface-raised hover:text-text-primary"
+    (click)="openBypassModal()"
+    title="Admin login"
+  >
+    <svg fill="currentColor" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M12 12c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5m0-8c1.65 0 3 1.35 3 3s-1.35 3-3 3-3-1.35-3-3 1.35-3 3-3M4 22h16c.55 0 1-.45 1-1v-1c0-3.86-3.14-7-7-7h-4c-3.86 0-7 3.14-7 7v1c0 .55.45 1 1 1m6-7h4c2.76 0 5 2.24 5 5H5c0-2.76 2.24-5 5-5"
+      ></path>
+    </svg>
+  </button>
+</div>
+
+<!-- SudoAdmin bypass modal -->
+@if (showBypassModal()) {
+  <app-dialog [(visible)]="showBypassModal" dialogTitle="Admin Login">
+    <div class="flex w-full flex-col items-start justify-center gap-y-4">
+      @if (bypassLoading()) {
+        <p class="text-text-on-light"><span>Logging in...</span><span class="loader-on-light-bg"></span></p>
+      } @else {
+        <form class="flex w-full min-w-[35vw] flex-col gap-4" [formGroup]="bypassForm">
+          <app-input-field
+            autofocus
+            formControlName="email"
+            label="Email"
+            ngDefaultControl
+            placeholder="Enter sudo-admin email"
+            type="text"
+          />
+          <app-input-field
+            formControlName="password"
+            label="Password"
+            ngDefaultControl
+            placeholder="Enter password"
+            type="password"
+          />
+        </form>
+        @if (bypassError()) {
+          <p class="text-error">{{ bypassError() }}</p>
+        }
+        <div class="grid w-full grid-cols-2 gap-x-2">
+          <app-button (handleClick)="showBypassModal.set(false)" label="Cancel" variant="subtle" />
+          <app-button (handleClick)="bypassLogin()" label="Login" />
+        </div>
+      }
+    </div>
+  </app-dialog>
+}

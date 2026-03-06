@@ -1,3 +1,4 @@
+import fastifyCookie from '@fastify/cookie';
 import cors from '@fastify/cors';
 import fjwt from '@fastify/jwt';
 import fastifyMultipart from '@fastify/multipart';
@@ -24,11 +25,14 @@ import routes from './routes';
         secret: process.env['JWT_SECRET'] || 'your-secret-key-change-in-production',
     });
 
+    await fastify.register(fastifyCookie);
+
     await fastify.register(fastifyWebsocket);
     await initWebsocket(fastify);
 
     await fastify.register(cors, {
-        origin: '*',
+        origin: true,
+        credentials: true,
         methods: [ 'GET', 'POST', 'PATCH', 'PUT', 'DELETE', 'OPTIONS' ],
         allowedHeaders: [ 'Content-Type', 'Authorization', 'access-control-allow-headers' ],
     });

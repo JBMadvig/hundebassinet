@@ -1,7 +1,9 @@
+import { HttpClient } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, of, tap } from 'rxjs';
 
+import { environment } from '../../../environments/environment';
 import { LoginRequest } from '../types/auth.types';
 import { User } from '../types/user.types';
 import { AuthApiService } from './auth-api.service';
@@ -12,6 +14,7 @@ import { CurrencyService } from './currency.service';
 })
 export class AuthService {
     private authApi = inject(AuthApiService);
+    private http = inject(HttpClient);
     private currencyService = inject(CurrencyService);
     private router = inject(Router);
 
@@ -31,18 +34,10 @@ export class AuthService {
 
     /**
      * Initialize authentication state on app startup
-     * Called by the app initializer
+     * Tries to fetch current user using existing cookie
      */
     public initializeAuth(): Promise<void> {
         return new Promise((resolve) => {
-            const accessToken = this.getAccessToken();
-
-            if (!accessToken) {
-                resolve();
-                return;
-            }
-
-            // Attempt to fetch current user
             this.authApi
                 .me()
                 .pipe(
@@ -50,7 +45,7 @@ export class AuthService {
                         this.currentUser.set(user);
                     }),
                     catchError(() => {
-                        // Token invalid, try refresh
+                        // Cookie invalid or missing, try refresh
                         return this.attemptRefreshInternal();
                     }),
                 )
@@ -67,20 +62,51 @@ export class AuthService {
     public login(credentials: LoginRequest) {
         return this.authApi.login(credentials).pipe(
             tap((response) => {
-                this.handleAuthSuccess(response.accessToken, response.refreshToken, response.user);
-                this.router.navigate([ '/pos', response.user.id ]);
+                this.currentUser.set(response.user);
+                this.router.navigate([ '/qr-display' ]);
             }),
         );
+    }
+
+    /**
+     * Login directly to POS (sudoAdmin bypass or QR scan result)
+     */
+    public loginToPOS(user: User): void {
+        this.currentUser.set(user);
+        this.router.navigate([ '/pos', user.id ]);
     }
 
     /**
      * Logout and clear authentication state
      */
     public logout(): void {
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
+        // Server clears HttpOnly cookies
+        this.http.post(`${environment.apiUrl}/auth/logout`, {}, { withCredentials: true }).subscribe();
         this.currentUser.set(null);
-        this.router.navigate([ '/landing' ]);
+
+        // If on an activated device, go to POS login scanner instead of landing
+        if (localStorage.getItem('deviceActivated')) {
+            this.router.navigate([ '/poslogin' ]);
+        } else {
+            this.router.navigate([ '/landing' ]);
+        }
+    }
+
+    /**
+     * POS-specific logout: clears user session but keeps device token
+     */
+    public posLogout(): void {
+        const userId = this.currentUser()?.id;
+        if (userId) {
+            // Server clears auth cookies + notifies phone via WebSocket
+            this.http.post(
+                `${environment.apiUrl}/auth/pos-logout`,
+                { userId },
+                { withCredentials: true },
+            ).subscribe();
+        }
+        this.currentUser.set(null);
+        this.router.navigate([ '/poslogin' ]);
     }
 
     /**
@@ -95,46 +121,17 @@ export class AuthService {
     }
 
     /**
-     * Get the current access token from localStorage
-     */
-    public getAccessToken(): string | null {
-        return localStorage.getItem('accessToken');
-    }
-
-    /**
-     * Get the current refresh token from localStorage
-     */
-    public getRefreshToken(): string | null {
-        return localStorage.getItem('refreshToken');
-    }
-
-    /**
      * Internal method to attempt token refresh
      */
     private attemptRefreshInternal() {
-        const refreshToken = this.getRefreshToken();
-
-        if (!refreshToken) {
-            return of(null);
-        }
-
         return this.authApi.refresh().pipe(
             tap((response) => {
-                this.handleAuthSuccess(response.accessToken, response.refreshToken, response.user);
+                this.currentUser.set(response.user);
             }),
             catchError(() => {
-                this.logout();
+                this.currentUser.set(null);
                 return of(null);
             }),
         );
-    }
-
-    /**
-     * Handle successful authentication
-     */
-    private handleAuthSuccess(accessToken: string, refreshToken: string, user: User): void {
-        localStorage.setItem('accessToken', accessToken);
-        localStorage.setItem('refreshToken', refreshToken);
-        this.currentUser.set(user);
     }
 }

@@ -53,10 +53,8 @@ export const loginRequestSchema = Type.Object({
     password: Type.String(),
 });
 
-// Auth response schema
+// Auth response schema (tokens are in HttpOnly cookies, not in the response body)
 export const authResponseSchema = Type.Object({
-    accessToken: Type.String(),
-    refreshToken: Type.String(),
     user: userPublicSchema,
 });
 

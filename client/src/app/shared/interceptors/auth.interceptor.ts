@@ -6,22 +6,14 @@ import { AuthService } from '../services/auth.service';
 
 /**
  * HTTP Interceptor for authentication
- * - Adds Authorization header with Bearer token to all requests
+ * - Sets withCredentials on all requests so cookies are sent
  * - Handles 401 errors by attempting to refresh the token
  */
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
     const authService = inject(AuthService);
-    const accessToken = authService.getAccessToken();
 
-    // Clone request and add Authorization header if token exists
-    let authReq = req;
-    if (accessToken) {
-        authReq = req.clone({
-            setHeaders: {
-                Authorization: `Bearer ${accessToken}`,
-            },
-        });
-    }
+    // Clone request with withCredentials so cookies are sent/received
+    const authReq = req.clone({ withCredentials: true });
 
     return next(authReq).pipe(
         catchError((error: HttpErrorResponse) => {

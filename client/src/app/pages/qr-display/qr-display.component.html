@@ -1,0 +1,52 @@
+<div class="flex h-dvh flex-col items-center justify-center p-6">
+  <section class="flex w-full max-w-xs flex-col items-center gap-6">
+    <!-- Logo -->
+    <div class="w-32">
+      <img
+        class="h-auto w-full object-contain"
+        alt="Hundebassinet Logo"
+        src="assets/hundebassinet_logo.webp"
+      />
+    </div>
+
+    @if (posLoggedIn()) {
+      <p class="text-sm font-medium text-green-500">You are currently logged in!</p>
+    }
+
+    <!-- QR Code display -->
+    @if (loading()) {
+        <div class="flex flex-col items-center gap-4">
+          <div class="h-[250px] w-[250px] animate-pulse rounded-xl bg-surface"></div>
+          <p class="text-sm text-text-secondary">Generating QR code...</p>
+        </div>
+      } @else if (error()) {
+        <div class="flex flex-col items-center gap-4">
+          <p class="text-sm text-error">{{ error() }}</p>
+          <button
+            class="rounded-full bg-accent px-6 py-2 text-sm text-text-primary"
+            (click)="generateQr()"
+          >
+            Retry
+          </button>
+        </div>
+      } @else {
+        <div class="flex flex-col items-center gap-4">
+          <img
+            class="rounded-xl"
+            [src]="qrDataUrl()"
+            alt="Login QR Code"
+            width="250"
+            height="250"
+          />
+          <p class="text-center text-sm text-text-secondary">
+            Scan this code at the POS to log in
+          </p>
+        </div>
+      }
+
+    <!-- User info -->
+    <p class="text-xs text-text-secondary">
+      Signed in as <span class="font-medium text-text-primary">{{ authService.currentUser()?.name }}</span>
+    </p>
+  </section>
+</div>

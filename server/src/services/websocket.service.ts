@@ -9,6 +9,18 @@ type Payload = {
     type: 'ping',
 } | {
     type: 'initRequest',
+} | {
+    type: 'subscribe',
+    room: string,
+} | {
+    type: 'unsubscribe',
+    room: string,
+} | {
+    type: 'pos-login',
+    userId: string,
+} | {
+    type: 'pos-logout',
+    userId: string,
 }
 
 export const initWebsocket = async(fastify: FastifyInstance) => {
@@ -59,8 +71,26 @@ const handleIncomingMessage = (socket: WebSocket, payload: Payload) => {
             console.log('Ping');
             break;
 
+        case 'subscribe': {
+            const conn = activeConnections.find((c) => c.webSocket === socket);
+            if (conn && !conn.roomsSubscribed.includes(payload.room)) {
+                conn.roomsSubscribed.push(payload.room);
+            }
+            break;
+        }
+
+        case 'unsubscribe': {
+            const conn = activeConnections.find((c) => c.webSocket === socket);
+            if (conn) {
+                conn.roomsSubscribed = conn.roomsSubscribed.filter((r) => r !== payload.room);
+            }
+            break;
+        }
+
         // These are only ever sent by the server
         case 'initRequest':
+        case 'pos-login':
+        case 'pos-logout':
             break;
 
         default:
