@@ -18,7 +18,7 @@
         [ngClass]="{
           'opacity-0': loading(),
           'opacity-100': !loading(),
-          'text-nowrap': textNoWrap()
+          'text-nowrap': textNoWrap(),
         }"
       >
         @if (icon()) {
@@ -30,7 +30,7 @@
         {{ label() | uppercase }}
       </span>
       @if (loading()) {
-        <div class="loader col-start-1 row-start-1"></div>
+        <div class="loader-on-dark-bg col-start-1 row-start-1"></div>
       }
     </button>
   }
@@ -49,7 +49,7 @@
       (click)="onClick($event)"
     >
       @if (loading()) {
-        <div class="loader"></div>
+        <div class="loader-on-dark-bg"></div>
       } @else {
         @if (icon()) {
           <i class="text-xs">
@@ -90,7 +90,7 @@
         {{ label() | uppercase }}
       </span>
       @if (loading()) {
-        <div class="loader col-start-1 row-start-1"></div>
+        <div class="loader-on-dark-bg col-start-1 row-start-1"></div>
       }
     </button>
   }
@@ -109,7 +109,7 @@
       (click)="onClick($event)"
     >
       @if (loading()) {
-        <div class="loader col-start-1 row-start-1"></div>
+        <div class="loader-on-light-bg col-start-1 row-start-1"></div>
       } @else {
         {{ label() | uppercase }}
       }

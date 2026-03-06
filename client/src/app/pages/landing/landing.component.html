@@ -11,6 +11,7 @@
 
     <!-- Title -->
     <h1 class="text-3xl font-bold text-text-primary">Choose user</h1>
+    <span class="loader-on-dark-bg"></span>
 
     <!-- User cards -->
     @if (usersResource.isLoading()) {
@@ -61,7 +62,7 @@
   <app-dialog [dialogTitle]="titleModal()" [(visible)]="enterPasswordDialog">
     <div class="flex w-full flex-col items-start justify-center gap-y-4">
       @if (loginLoader()) {
-        <p class="text-text-on-light"><span>Logging in...</span><span class="loader"></span></p>
+        <p class="text-text-on-light"><span>Logging in...</span><span class="loader-on-light-bg"></span></p>
       } @else {
         <form class="min-w-[35vw]" [formGroup]="passwordForm">
           <app-input-field
