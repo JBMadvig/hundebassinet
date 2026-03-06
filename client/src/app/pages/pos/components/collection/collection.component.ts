@@ -33,15 +33,15 @@ export class CollectionComponent {
                 filteredItems = this.items.filter(item => item.name.toLowerCase().includes(this.searchQuery().toLowerCase()));
                 break;
             default:
-                filteredItems = this.items.filter(item => item.primaryItemCategory === this.currentFilter());
+                filteredItems = this.items.filter(item => item.primaryCategory === this.currentFilter());
         }
 
-        // Sort items by primaryItemCategory. Return as Item[]
+        // Sort items by primaryCategory. Return as Item[]
         return filteredItems.slice().sort((a, b) => {
-            if (a.primaryItemCategory < b.primaryItemCategory) {
+            if (a.primaryCategory < b.primaryCategory) {
                 return -1;
             }
-            if (a.primaryItemCategory > b.primaryItemCategory) {
+            if (a.primaryCategory > b.primaryCategory) {
                 return 1;
             }
             return 0;

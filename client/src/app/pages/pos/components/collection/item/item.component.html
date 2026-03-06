@@ -2,16 +2,16 @@
   class="grid h-full w-full cursor-pointer grid-cols-1 grid-rows-[auto_1fr] overflow-y-hidden rounded-xl border border-gray-200 bg-white"
   (click)="basketService.addItemToBasket(item())"
 >
-  <app-item-type-header [itemTypeId]="item().primaryItemCategory" />
+  <app-item-type-header [itemTypeId]="item().primaryCategory" />
   <div class="grid grid-cols-1 grid-rows-[auto_1fr] gap-1 px-4 py-2">
     <div class="relative">
       <p class="inline-flex h-30 w-full items-center justify-center bg-gray-400"></p>
       <div class="absolute top-2 left-2 flex flex-row flex-wrap gap-1">
-        @if (item().primaryItemCategory) {
-          <app-badge [badgeText]="item().primaryItemCategory" [badgeType]="'primaryItemCategory'" />
+        @if (item().primaryCategory) {
+          <app-badge [badgeText]="item().primaryCategory" [badgeType]="'primaryCategory'" />
         }
-        @if (item().secondaryItemCategory) {
-          <app-badge [badgeText]="item().secondaryItemCategory" [badgeType]="'secondaryItemCategory'" />
+        @if (item().secondaryCategory) {
+          <app-badge [badgeText]="item().secondaryCategory" [badgeType]="'secondaryCategory'" />
         }
       </div>
       <div class="text-text absolute bottom-3 left-2 flex flex-row flex-wrap gap-1">

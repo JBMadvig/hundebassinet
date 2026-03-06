@@ -10,7 +10,7 @@ import { Item } from '../../../../../../shared/types/items.types';
 })
 export class ItemTypeHeaderComponent {
 
-    public itemTypeId = input.required<Item['primaryItemCategory']>();
+    public itemTypeId = input.required<Item['primaryCategory']>();
 
     // TODO: Make this generic return method since it's also used in filter-bar.component.ts
     public itemTypeClass = computed(() => {

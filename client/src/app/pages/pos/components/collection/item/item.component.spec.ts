@@ -9,8 +9,8 @@ describe('ItemComponent', () => {
 
     const mockItem = {
         id: 'test-1',
-        primaryItemCategory: 'beer',
-        secondaryItemCategory: 'pilsner',
+        primaryCategory: 'beer',
+        secondaryCategory: 'pilsner',
         name: 'Test Beer',
         averagePrice: 20,
         currentStock: 5,
