@@ -12,6 +12,7 @@ import { DropdownComponent } from '@components/input/dropdown/dropdown.component
 import { InputFieldComponent } from '@components/input/input-field/input-field.component';
 import { currencyValidator } from '@lib/input-validators/currency.validator';
 import { emailValidator } from '@lib/input-validators/email.validator';
+import { matchingControlsValidator } from '@lib/input-validators/matchingControls.validators';
 import { AuthService } from '@services/auth.service';
 import { currencyDropdownOptions } from '@services/currency.service';
 import { UsersApiService } from '@services/users-api.service';
@@ -47,24 +48,26 @@ export class CreateUserFormComponent {
 
     public createUserForm = this.formBuilder.group({
         name: [ '', [ Validators.required, Validators.minLength(2) ] ],
-        email: [ '', [ Validators.required, emailValidator() ] ],
+        email: [ '', [ Validators.required, emailValidator ] ],
         role: [ null, [ Validators.required ] ],
         currency: [ 'DKK', [ Validators.required, currencyValidator() ] ],
         balance: [ 0, [ Validators.required ] ],
-        newPassword: [ '', [ Validators.required, Validators.minLength(8) ] ],
-        confirmNewPassword: [ '', [ Validators.required, Validators.minLength(8) ] ],
+        passwords: this.formBuilder.group({
+            newPassword: [ '', [ Validators.required, Validators.minLength(8) ] ],
+            confirmNewPassword: [ '', [ Validators.required, Validators.minLength(8) ] ],
+        }, { validators: matchingControlsValidator([ 'newPassword', 'confirmNewPassword' ]) }),
     });
 
     public visible = model(false);
 
     public userCreated = output<void>();
 
-    public passwordSignal = toSignal(this.createUserForm.controls.newPassword.valueChanges);
-    public confirmPasswordSignal = toSignal(this.createUserForm.controls.confirmNewPassword.valueChanges);
-
-    public passwordNotMatching = computed(() => {
-        return this.createUserForm.value.newPassword !== this.createUserForm.value.confirmNewPassword;
-    });
+    public passwordSignal = toSignal(
+        this.createUserForm.controls.passwords.controls['newPassword'].valueChanges,
+    );
+    public confirmPasswordSignal = toSignal(
+        this.createUserForm.controls.passwords.controls['confirmNewPassword'].valueChanges,
+    );
 
     public createUserError = signal<CreateUserError | null>(null);
 
@@ -79,18 +82,21 @@ export class CreateUserFormComponent {
     });
 
     public async createUser() {
-        if (this.passwordNotMatching() || !this.createUserForm.valid) {
+        const formValid = this.createUserForm.status === 'VALID';
+
+        if (!formValid) {
             return;
         }
 
         this.createUserError.set(null);
         const form = this.createUserForm.value;
+        const passwordForm = this.createUserForm.controls.passwords.value;
 
         try {
             const response = await this.usersApiService.createUser({
                 name: form.name ?? '',
                 email: form.email ?? '',
-                password: form.newPassword ?? '',
+                password: passwordForm.newPassword ?? '',
                 role: form.role ?? 'user',
                 balance: form.balance ?? 0,
                 currency: form.currency ?? 'DKK',

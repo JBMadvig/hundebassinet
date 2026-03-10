@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { booleanAttribute, Component, inject, input, OnInit, output, signal } from '@angular/core';
-import { FormControl, FormControlName, FormGroup, FormGroupDirective, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormControlName, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { AutoSub, AutoUnsubscribe } from '@decorators/auto-unsub.decorator';
 import { AutofocusDirective } from '@directives/auto-focus.directive';
@@ -14,7 +14,6 @@ import { generateId } from '@lib/utils';
 })
 @AutoUnsubscribe()
 export class InputFieldComponent implements OnInit {
-    private formGroupDirective = inject(FormGroupDirective);
     private formControlNameDirective = inject(FormControlName);
 
     /**
@@ -76,6 +75,23 @@ export class InputFieldComponent implements OnInit {
     public theme = input<'light' | 'dark'>('light');
 
     /**
+     * The Validator the validationExplainer is attached to.
+     * There can only be 1 validation condition. If more a needed, make a custom validator, to make sure all cases are in a single Validator.
+     * Add all new custom validators to the input type
+    */
+    public validationCondition = input<'required' | 'minlength' | 'email' | 'min' | 'max' | 'pattern' | 'fieldsMismatch' | 'currency' | null>(null);
+
+    /**
+     * A custom error description for validation explainers.
+     * Accepts both single string and/or arrays of string that will be showed on a <ul>.
+     * This is used by input fields, that wants to explain why an input field is not valid, ie:
+     * "Passwords needs to be at least 8 characters long"
+     * "The confirm password does not match the new password"
+     * "Email does not contain '@'"
+    */
+    public validationExplainer = input<string | string[]>('');
+
+    /**
      * Emits the value of the input field.
      * This is emitted on every keypress.
      */
@@ -86,6 +102,12 @@ export class InputFieldComponent implements OnInit {
      * Changes the input field to a error state so you can show an error visually
     */
     public isInvalid = signal<boolean>(false);
+
+    /**
+     * Toggle to show / hide the validation explainer if validationCindition is the one that is triggered.
+    */
+    public validationError = signal<boolean>(false);
+
 
     /**
      * Whether the input field is required or not.
@@ -104,14 +126,44 @@ export class InputFieldComponent implements OnInit {
     public valueFormControl?: FormControl;
 
     ngOnInit() {
-        this.valueFormGroup = this.formGroupDirective.form;
-        this.valueFormControl = this.formGroupDirective.getControl(this.formControlNameDirective);
+        this.valueFormControl = this.formControlNameDirective.control as FormControl;
+        this.valueFormGroup = this.valueFormControl.parent as FormGroup;
         this.isRequired.set(this.valueFormControl.hasValidator(Validators.required));
 
         AutoSub(this).reg['checkForInvalidFormControlSub'] = this.valueFormControl?.valueChanges
             .subscribe(() => {
-                this.isInvalid.set(this.valueFormControl?.invalid ?? false);
+                const control = this.valueFormControl;
+                if(!control) return;
+
+                const condition = this.validationCondition();
+                const hasError = condition !== null && (
+                    control.hasError(condition) || (this.valueFormGroup?.hasError(condition) ?? false)
+                );
+
+                if (hasError) {
+                    this.validationError.set(true);
+                    this.isInvalid.set(true);
+                } else {
+                    this.validationError.set(false);
+                    this.isInvalid.set(control.invalid ?? false);
+                }
             });
+
+        AutoSub(this).reg['checkGroupStatusSub'] = this.valueFormGroup?.statusChanges
+            .subscribe(() => {
+                const condition = this.validationCondition();
+                if (!condition) return;
+                const hasError = (this.valueFormControl?.hasError(condition) ?? false)
+                    || (this.valueFormGroup?.hasError(condition) ?? false);
+                this.validationError.set(hasError);
+                if (hasError) this.isInvalid.set(true);
+            });
+    }
+
+    get explainerList(): string[] {
+        const explanation = this.validationExplainer();
+        if (Array.isArray(explanation)) return explanation;
+        return explanation ? [ explanation ] : [];
     }
 
     get controlName() {

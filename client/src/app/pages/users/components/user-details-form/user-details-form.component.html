@@ -147,35 +147,38 @@
                 ngDefaultControl
               />
             }
-            @if (changePasswordSignalError() === 'noMatch') {
-              <p class="text-error">New passwords do not match.</p>
-            }
-            <app-input-field
-              class="transition-all duration-200 ease-in-out"
-              [ngClass]="{
-                hidden:
-                  passwordForm.controls.currentPassword.value === '' &&
-                  !passwordForm.controls.overwriteCurrentPassword.value,
-              }"
-              formControlName="newPassword"
-              label="New Password"
-              ngDefaultControl
-              placeholder="Enter new password"
-              tabindex="2"
-              type="password"
-            />
-            <app-input-field
-              class="transition-all duration-200 ease-in-out"
-              [ngClass]="{
-                hidden: passwordForm.controls.newPassword.value === '',
-              }"
-              formControlName="confirmNewPassword"
-              label="Confirm New Password"
-              ngDefaultControl
-              placeholder="Confirm new password"
-              tabindex="3"
-              type="password"
-            />
+            <div class="grid-rows-auto grid w-full grid-cols-1" formGroupName="passwords">
+              <app-input-field
+                class="transition-all duration-200 ease-in-out"
+                [ngClass]="{
+                  hidden:
+                    passwordForm.controls.currentPassword.value === '' &&
+                    !passwordForm.controls.overwriteCurrentPassword.value,
+                }"
+                formControlName="newPassword"
+                label="New Password"
+                ngDefaultControl
+                placeholder="Enter new password"
+                tabindex="2"
+                type="password"
+                validationCondition="minlength"
+                validationExplainer="Passwords need to be at least 8 characters long"
+              />
+              <app-input-field
+                class="transition-all duration-200 ease-in-out"
+                [ngClass]="{
+                  hidden: passwordForm.controls.passwords.controls['newPassword'].value === '',
+                }"
+                formControlName="confirmNewPassword"
+                label="Confirm New Password"
+                ngDefaultControl
+                placeholder="Confirm new password"
+                tabindex="3"
+                type="password"
+                validationCondition="fieldsMismatch"
+                validationExplainer="Passwords does not match"
+              />
+            </div>
             <app-button [loading]="changePasswordLoading()" label="Update Password" type="submit" />
             @if (changePasswordSuccess()) {
               <p class="flex items-center gap-1 text-success">

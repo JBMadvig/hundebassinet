@@ -9,12 +9,12 @@
         <p class="text-error">Something went wrong. Please try again</p>
       }
       <form
-        class="grid-rows-auto grid w-full grid-cols-1 gap-4"
+        class="grid-rows-auto grid w-full grid-cols-1"
         [formGroup]="createUserForm"
         (submit)="createUser()"
       >
         <app-input-field formControlName="name" label="Name" ngDefaultControl placeholder="Enter name" />
-        <app-input-field formControlName="email" label="Email" ngDefaultControl placeholder="Enter email" />
+        <app-input-field validationCondition="email" [validationExplainer]="createUserForm.controls.email.errors?.['email'] ?? []" formControlName="email" label="Email" ngDefaultControl placeholder="Enter email" />
         <app-dropdown
           [options]="roleListComputedValue()"
           formControlName="role"
@@ -22,41 +22,43 @@
           ngDefaultControl
           placeholder="Select a role"
         />
-        <div class="w-full grid grid-cols-[1fr_auto] gap-x-2">
-
+        <div class="grid w-full grid-cols-[1fr_auto] gap-x-2">
           <app-input-field
-          formControlName="balance"
-          label="Balance"
-          ngDefaultControl
-          placeholder="Change balance for user"
+            formControlName="balance"
+            label="Balance"
+            ngDefaultControl
+            placeholder="Change balance for user"
           />
           <app-dropdown
-          [options]="currencyOptions"
-          formControlName="currency"
-          label="Prefered currency"
-          ngDefaultControl
-          placeholder="Prefered currency"
+            [options]="currencyOptions"
+            formControlName="currency"
+            label="Prefered currency"
+            ngDefaultControl
+            placeholder="Prefered currency"
           />
         </div>
-        @if (passwordNotMatching()) {
-          <p class="text-error">Passwords do not match</p>
-        }
-        <app-input-field
-          formControlName="newPassword"
-          label="New Password"
-          ngDefaultControl
-          placeholder="Enter new password"
-          tabindex="2"
-          type="password"
-        />
-        <app-input-field
-          formControlName="confirmNewPassword"
-          label="Confirm New Password"
-          ngDefaultControl
-          placeholder="Confirm new password"
-          tabindex="3"
-          type="password"
-        />
+        <div class="grid-rows-auto grid w-full grid-cols-1" formGroupName="passwords">
+          <app-input-field
+            formControlName="newPassword"
+            label="New Password"
+            ngDefaultControl
+            placeholder="Enter new password"
+            tabindex="2"
+            type="password"
+            validationCondition="minlength"
+            validationExplainer="Passwords need to be at least 8 characters long"
+          />
+          <app-input-field
+            formControlName="confirmNewPassword"
+            label="Confirm New Password"
+            ngDefaultControl
+            placeholder="Confirm new password"
+            tabindex="3"
+            type="password"
+            validationCondition="fieldsMismatch"
+            validationExplainer="Passwords does not match"
+          />
+        </div>
         <app-button class="mt-4" label="save changes" type="submit" />
       </form>
     </div>

@@ -13,6 +13,7 @@ import { EditableInputFieldComponent } from '@components/input/editable-input-fi
 import { InputFieldComponent } from '@components/input/input-field/input-field.component';
 import { currencyValidator } from '@lib/input-validators/currency.validator';
 import { emailValidator } from '@lib/input-validators/email.validator';
+import { matchingControlsValidator } from '@lib/input-validators/matchingControls.validators';
 import { AuthService } from '@services/auth.service';
 import { currencyDropdownOptions } from '@services/currency.service';
 import { ErrorService } from '@services/error.service';
@@ -45,7 +46,7 @@ export class UserDetailsFormComponent implements OnInit {
 
     public userDetailsForm = this.formBuilder.group({
         name: [ '', [ Validators.required, Validators.minLength(2) ] ],
-        email: [ '', [ Validators.required, emailValidator() ] ],
+        email: [ '', [ Validators.required, emailValidator ] ],
         role: [ '' ],
         balance: 0,
         currency: [ 'DKK', [ currencyValidator() ] ],
@@ -53,8 +54,11 @@ export class UserDetailsFormComponent implements OnInit {
     public passwordForm = this.formBuilder.group({
         currentPassword: [ '', [ Validators.required ] ],
         overwriteCurrentPassword: [ false ],
-        newPassword: [ '', [ Validators.required, Validators.minLength(8) ] ],
-        confirmNewPassword: [ '', [ Validators.required, Validators.minLength(8) ] ],
+        passwords: this.formBuilder.group({
+            newPassword: [ '', [ Validators.required, Validators.minLength(8) ] ],
+            confirmNewPassword: [ '', [ Validators.required, Validators.minLength(8) ] ],
+        }, { validators: matchingControlsValidator([ 'newPassword', 'confirmNewPassword' ]),
+        }),
     });
 
     public user = input.required<User>();
@@ -79,10 +83,10 @@ export class UserDetailsFormComponent implements OnInit {
         this.passwordForm.controls.currentPassword.valueChanges,
     );
     public newPasswordSignal = toSignal(
-        this.passwordForm.controls.newPassword.valueChanges,
+        this.passwordForm.controls.passwords.controls['newPassword'].valueChanges,
     );
     public confirmNewPasswordSignal = toSignal(
-        this.passwordForm.controls.confirmNewPassword.valueChanges,
+        this.passwordForm.controls.passwords.controls['confirmNewPassword'].valueChanges,
     );
     public overwriteCurrentPasswordSignal = toSignal(
         this.passwordForm.controls.overwriteCurrentPassword.valueChanges,
@@ -191,10 +195,11 @@ export class UserDetailsFormComponent implements OnInit {
 
     public async changePassword() {
         const form = this.passwordForm.controls;
+        const passwordForm = this.passwordForm.controls.passwords.controls;
 
         const bypassCurrentPassword = form.overwriteCurrentPassword.value ?? false;
-        const newPassword = form.newPassword.value;
-        const confirmNewPassword = form.confirmNewPassword.value;
+        const newPassword = passwordForm['newPassword'].value;
+        const confirmNewPassword = passwordForm['confirmNewPassword'].value;
 
         if (newPassword !== confirmNewPassword) {
             this.changePasswordSignalError.set('noMatch');

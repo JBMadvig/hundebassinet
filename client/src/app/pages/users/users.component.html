@@ -85,8 +85,9 @@
     </div>
   }
 </main>
-
-<app-create-user-form
-  (userCreated)="usersResource.reload()"
-  [(visible)]="showCreateUserModal"
-></app-create-user-form>
+@if (showCreateUserModal()) {
+  <app-create-user-form
+    (userCreated)="usersResource.reload()"
+    [(visible)]="showCreateUserModal"
+  ></app-create-user-form>
+}
