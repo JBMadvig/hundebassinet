@@ -33,7 +33,7 @@
         <p class="flex flex-row justify-between">
           <span>Balance after purchase</span>
           <span
-            class="italic"
+            class="italic font-numeric"
             [ngClass]="{
               'text-error': userData.balance - totalPrice() < 0,
               'text-success': userData.balance - totalPrice() >= 0,
@@ -43,7 +43,7 @@
         </p>
       }
       <p class="flex flex-row justify-between text-xl font-bold text-highlight">
-        <span>Subtotal</span><span>{{ totalPrice() }}&nbsp;,-</span>
+        <span>Subtotal</span><span class="font-numeric">{{ totalPrice() }}&nbsp;,-</span>
       </p>
     </div>
   }

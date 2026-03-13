@@ -35,7 +35,7 @@
   } @else {
     @if (itemExistsSignal()) {
       <p class="mb-4 text-text-on-light">
-        Item found in database. You can adjust the volume to add a new variant, or keep it as-is and fill in
+        Item found in database! You can adjust the volume to add a new variant, or keep it as-is and fill in
         the price and quantity.
       </p>
     } @else {
@@ -97,8 +97,12 @@
         type="number"
       />
       @if (pricePerUnit() !== null) {
-        <p class="text-xs ml-2 text-text-on-light">
-          (Equals to {{ pricePerUnit()! | localeCurrency: currencyInfo() }} per unit)
+        <p class="ml-2 flex flex-row gap-x-2 text-xs text-text-on-light">
+          <span>(Equals to</span>
+          <span class="font-numeric">
+            {{ pricePerUnit()! | localeCurrency: currencyInfo() }} 
+          </span>
+          <span>per unit)</span>
         </p>
       }
       <app-button class="mt-4 w-full" [disabled]="itemForm.invalid" label="Submit" type="submit" />

@@ -31,10 +31,10 @@
         <span class="capitalize">{{ item().secondaryCategory }}</span>
       </p>
       <p class="flex flex-row gap-x-1 text-xs">
-        <span class="whitespace-nowrap">{{ item().averagePrice }},- DKK</span>
+        <span class="whitespace-nowrap font-numeric">{{ item().averagePrice }},- DKK</span>
         <span>|</span>
 
-        <span class="whitespace-nowrap"
+        <span class="whitespace-nowrap font-numeric"
           >{{ item().currentStock }}
           pcs in stock
         </span>
@@ -43,7 +43,7 @@
 
     <div class="grid h-full grid-cols-3 grid-rows-2">
       <p class="col-span-2 flex flex-row justify-end gap-x-1 text-lg text-accent-muted">
-        <span>{{ collectivePrice() }}</span>
+        <span class="font-numeric">{{ collectivePrice() }}</span>
         <span>DKK</span>
       </p>
 

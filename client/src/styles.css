@@ -164,3 +164,7 @@ body {
   border: 2px solid var(--color-text-on-light);
 }
 
+.font-numeric {
+    font-variant-numeric: tabular-nums;
+}
+

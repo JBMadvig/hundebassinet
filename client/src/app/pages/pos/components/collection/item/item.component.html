@@ -16,7 +16,7 @@
       </div>
       <div class="text-text absolute bottom-3 left-2 flex flex-row flex-wrap gap-1">
         @if (item().abv && item().abv > 0) {
-          <app-badge [badgeText]="`${item().abv}%`" badgeType="neutral" />
+          <app-badge class="font-numeric" [badgeText]="`${item().abv}%`" badgeType="neutral" />
         }
       </div>
       <!-- TODO: Add image of item in database that can be fetched
@@ -29,12 +29,12 @@
         {{ item().name }}
       </p>
       <div class="grid grid-flow-row grid-cols-1 text-sm text-text-on-light/70">
-        <p class="text-left font-semibold text-text-on-light">
+        <p class="text-left font-semibold text-text-on-light font-numeric">
           {{ item().averagePrice | localeCurrency: currencyInfo() }}
         </p>
-        <p class="text-left font-semibold text-text-on-light">{{ item().volume }} cl</p>
+        <p class="text-left font-semibold text-text-on-light font-numeric">{{ item().volume }} cl</p>
         <p class="flex flex-row gap-x-1">
-          <span>{{ item().currentStock }}</span>
+          <span class="font-numeric">{{ item().currentStock }}</span>
           <span>in stock</span>
         </p>
       </div>
