@@ -20,6 +20,7 @@
         label="Email"
         ngDefaultControl
         placeholder="Enter your email"
+        textOnDark
         type="text"
       />
       <app-input-field
@@ -27,6 +28,7 @@
         label="Password"
         ngDefaultControl
         placeholder="Enter your password"
+        textOnDark
         type="password"
       />
     </form>
@@ -35,11 +37,6 @@
       <p class="text-sm text-error">{{ loginError() }}</p>
     }
 
-    <app-button
-      class="w-full"
-      (handleClick)="logIn()"
-      label="Sign In"
-      [loading]="loginLoader()"
-    />
+    <app-button class="w-full" [loading]="loginLoader()" (handleClick)="logIn()" label="Sign In" />
   </section>
 </div>

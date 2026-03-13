@@ -2,9 +2,16 @@
   @let controlValue = valueFormControl.value;
 
   @if (label()) {
-    <label class="inline-block text-xs" [for]="controlId">{{ label() }}</label>
+    <label
+      class="inline-block text-xs"
+      [ngClass]="{
+      'text-text-primary': textOnDark(),
+    }"
+      [for]="controlId"
+      >{{ label() }}</label
+    >
     @if (isRequired()) {
-      <span class="hover:cursor-default">&#42;</span>
+      <span class="text-text-primary hover:cursor-default">&#42;</span>
     }
   }
   @if (enabled) {
