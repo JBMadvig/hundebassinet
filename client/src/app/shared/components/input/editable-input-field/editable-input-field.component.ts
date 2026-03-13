@@ -33,6 +33,23 @@ export class EditableInputFieldComponent implements OnInit {
      */
     public disabled = input(false);
 
+    /**
+     * The Validator the validationExplainer is attached to.
+     * There can only be 1 validation condition. If more a needed, make a custom validator, to make sure all cases are in a single Validator.
+     * Add all new custom validators to the input type
+    */
+    public validationCondition = input<'required' | 'minlength' | 'email' | 'min' | 'max' | 'pattern' | 'fieldsMismatch' | 'currency' | null>(null);
+
+    /**
+     * A custom error description for validation explainers.
+     * Accepts both single string and/or arrays of string that will be showed on a <ul>.
+     * This is used by input fields, that wants to explain why an input field is not valid, ie:
+     * "Passwords needs to be at least 8 characters long"
+     * "The confirm password does not match the new password"
+     * "Email does not contain '@'"
+    */
+    public validationExplainer = input<string | string[]>('');
+
     public placeholder = input<string>('');
 
     public valueChange = output<string>();
@@ -64,6 +81,12 @@ export class EditableInputFieldComponent implements OnInit {
             .subscribe((value) => {
                 this.invalidFormInput.update(() => value === 'INVALID');
             });
+    }
+
+    get explainerList(): string[] {
+        const explanation = this.validationExplainer();
+        if (Array.isArray(explanation)) return explanation;
+        return explanation ? [ explanation ] : [];
     }
 
     public toggleEditing() {

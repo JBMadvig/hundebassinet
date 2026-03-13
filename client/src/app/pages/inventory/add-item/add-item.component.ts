@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, computed, effect, inject, model, resource, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CreateItemRequest, InventoryRequest, Item, PrimaryCategoriesType, PrimaryCategoriesTypeValues } from 'app/shared/types/items.types';
+import { CreateItemRequest, InventoryRequest, Item, PrimaryCategoriesType, PrimaryCategoriesTypeValues, UpdateItemRequest } from 'app/shared/types/items.types';
 import { isNonNull } from 'app/shared/utils';
 import { debounceTime } from 'rxjs/internal/operators/debounceTime';
 import { filter } from 'rxjs/internal/operators/filter';
@@ -208,12 +208,23 @@ export class AddItemComponent {
         if (!itemId) {
             try {
                 const resp = await this.inventoryService.createItem(itemBody);
+                // TODO: Redirect to new item on inventory/:id, but this component need to be build next.
                 console.log('Item created successfully:', resp);
             } catch (error) {
                 console.error('Error creating item:', error);
             }
         } else {
-            console.log('Updating existing item: ', itemBody, ', with id:', itemId);
+            const updatedItem: UpdateItemRequest = {
+                ...itemBody,
+                id: itemId,
+            };
+            try {
+                const resp = await this.inventoryService.updateItem(updatedItem);
+                // TODO: Redirect to new item on inventory/:id, but this component need to be build next.
+                console.log('Item created successfully:', resp);
+            } catch (error) {
+                console.error('Error creating item:', error);
+            }
         }
     }
 }

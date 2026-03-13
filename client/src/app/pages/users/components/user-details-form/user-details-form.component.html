@@ -15,10 +15,12 @@
           placeholder="Enter name"
         />
         <app-editable-input-field
+          [validationExplainer]="userDetailsForm.controls.email.errors?.['email'] ?? []"
           formControlName="email"
           label="Email"
           ngDefaultControl
           placeholder="Enter email"
+          validationCondition="email"
         />
         @if (currentUser()?.role === 'admin' || currentUser()?.role === 'sudo-admin') {
           <app-dropdown

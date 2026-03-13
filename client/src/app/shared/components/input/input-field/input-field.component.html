@@ -15,7 +15,6 @@
         'border-error': isInvalid(),
         'border-gray-300': !isInvalid() && theme() === 'light',
         'border-gray-400': !isInvalid() && theme() === 'dark',
-        'mb-4': !validationError() || explainerList.length === 0,
       }"
       [formGroup]="valueFormGroup"
     >

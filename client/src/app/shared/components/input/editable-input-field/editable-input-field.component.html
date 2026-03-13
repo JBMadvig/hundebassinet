@@ -35,7 +35,11 @@
           </label>
 
           @if (!disabled()) {
-            <button class="leading-4 hover:text-accent" (click)="submit(); $event.stopPropagation()" type="submit">
+            <button
+              class="leading-4 hover:text-accent"
+              (click)="submit(); $event.stopPropagation()"
+              type="submit"
+            >
               <svg
                 fill="currentColor"
                 height="24"
@@ -52,7 +56,14 @@
           }
         </div>
 
-        <app-input-field [formControlName]="controlName" [placeholder]="placeholder()" autofocus ngDefaultControl />
+        <app-input-field
+          [formControlName]="controlName"
+          [placeholder]="placeholder()"
+          [validationCondition]="validationCondition()"
+          [validationExplainer]="validationExplainer()"
+          autofocus
+          ngDefaultControl
+        />
       </div>
     }
   }
@@ -106,6 +117,8 @@
           class="w-full"
           [formControlName]="controlName"
           [placeholder]="placeholder()"
+          [validationCondition]="validationCondition()"
+          [validationExplainer]="validationExplainer()"
           autofocus
           ngDefaultControl
         />
@@ -127,7 +140,11 @@
               </svg>
             </span>
           } @else {
-            <button class="ml-2 cursor-pointer hover:text-accent" (click)="submit(); $event.stopPropagation()" type="submit">
+            <button
+              class="ml-2 cursor-pointer hover:text-accent"
+              (click)="submit(); $event.stopPropagation()"
+              type="submit"
+            >
               <svg
                 fill="currentColor"
                 height="24"
