@@ -184,6 +184,28 @@ export interface CreateItemRequest {
     currency: string;
 }
 
+
 export interface CreateItemResponse {
     itemAdded: Item;
+}
+
+export type UpdateItemRequest = CreateItemRequest & {
+    id: string;
+}
+
+export interface UpdateItemReponse {
+    updatedItem: Item;
+    currency: string;
+    avgPriceChange: {
+        prevAvgPrice: number;
+        newAvgPrice: number;
+    };
+    stockChange:{
+        prevStock: number;
+        newStock: number;
+    };
+    totalStockValueChange: {
+        prevTotalStockValue: number;
+        newTotalStockValue: number;
+    },
 }
