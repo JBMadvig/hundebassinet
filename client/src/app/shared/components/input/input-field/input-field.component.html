@@ -62,6 +62,7 @@
           class="ml-2 flex items-center justify-center text-text-secondary transition-colors hover:text-text-on-light focus:outline-none"
           (click)="onClearField()"
           type="button"
+          tabindex="-1"
         >
           <svg
             fill="currentColor"
@@ -85,6 +86,7 @@
           class="ml-2 flex items-center justify-center text-text-secondary transition-colors hover:text-text-on-light focus:outline-none"
           (click)="togglePasswordVisibility()"
           type="button"
+          tabindex="-1"
         >
           @if (toggleShowPassword()) {
             <svg
