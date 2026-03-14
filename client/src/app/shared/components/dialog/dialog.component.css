@@ -2,3 +2,7 @@
   display: grid;
   grid-template-rows: auto minmax(0, 1fr);
 }
+
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+}

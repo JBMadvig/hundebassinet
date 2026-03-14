@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { booleanAttribute, Component, ElementRef, HostListener, input, model, output, viewChild } from '@angular/core';
+import { afterRenderEffect, booleanAttribute, Component, ElementRef, input, model, output, viewChild } from '@angular/core';
 
 @Component({
     selector: 'app-dialog',
@@ -10,7 +10,7 @@ import { booleanAttribute, Component, ElementRef, HostListener, input, model, ou
     styleUrl: './dialog.component.css',
 })
 export class DialogComponent {
-    private dialog = viewChild<ElementRef>('dialog');
+    private dialogEl = viewChild<ElementRef<HTMLDialogElement>>('dialogEl');
 
     /**
      * To display an icon left to the modal title
@@ -50,21 +50,33 @@ export class DialogComponent {
      */
     public closeDialog = output();
 
-    @HostListener('document:keydown.escape', [ '$event' ])
-    public onKeydownHandler(event: Event) {
-        if (!event || !this.visible()) return;
-        this.onHandleClose();
-    }
-
-    public clickOutside(n: KeyboardEvent | MouseEvent) {
-        const dialog = this.dialog();
-        if (!dialog || !this.allowCloseOutside) return;
-        if (n instanceof KeyboardEvent) return;
-
-        // If the click was outside of the dialog, close it.
-        if (!dialog.nativeElement.contains(n.target)) {
+    private readonly onClickOutside = (event: MouseEvent) => {
+        if (!this.allowCloseOutside()) return;
+        if (event.target === this.dialogEl()?.nativeElement) {
             this.onHandleClose();
         }
+    };
+
+    constructor() {
+        afterRenderEffect(() => {
+            const isVisible = this.visible();
+            const dialog = this.dialogEl()?.nativeElement;
+            if (!dialog) return;
+
+            if (isVisible && !dialog.open) {
+                dialog.showModal();
+                dialog.addEventListener('click', this.onClickOutside);
+            } else if (!isVisible && dialog.open) {
+                dialog.removeEventListener('click', this.onClickOutside);
+                dialog.close();
+            }
+        });
+    }
+
+    /** Handles the native cancel event (ESC key on modal dialogs). */
+    public onCancel(event: Event): void {
+        event.preventDefault();
+        this.onHandleClose();
     }
 
     public onHandleClose() {

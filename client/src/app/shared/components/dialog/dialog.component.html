@@ -1,66 +1,51 @@
-@if (visible()) {
+<dialog
+  #dialogEl
+  class="m-0 flex h-full max-h-none w-full max-w-none items-start justify-center bg-transparent p-0 pt-23 border-none outline-none"
+  (cancel)="onCancel($event)"
+>
   <div
-    class="fixed top-0 left-0 z-21 flex h-full w-full items-start justify-center bg-black/50 pt-[5.75rem]"
+    class="modal-grid max-h-[80dvh] w-full max-w-3/5 overflow-hidden rounded-xl px-6 py-6 shadow-lg"
     [ngClass]="{
-      'scroll-styling': theme() === 'dark',
+      'w-3/4': useFullWidth(),
     }"
-    (keypress)="clickOutside($event)"
-    (mousedown)="clickOutside($event)"
-    tabindex="-1"
+    [ngClass]="{
+      'bg-white text-text-on-light': theme() === 'light',
+      'bg-surface-overlay text-text-primary': theme() === 'dark',
+    }"
   >
-    <!-- removed from BSP
-    [ngClass]="{
-      'text-font-primary': theme() === 'light',
-      'text-gray-light': theme() === 'dark',
-    }"
-    -->
-    <div
-      class="max-h-[80dvh] max-w-3/4 overflow-hidden"
-      [ngClass]="{ 'w-3/4': useFullWidth() }"
-    >
-      <div
-        #dialog
-        class="modal-grid max-h-[inherit] w-full rounded-xl py-6 px-6 shadow-lg"
-        [ngClass]="{
-          'bg-white text-text-on-light': theme() === 'light',
-          'bg-surface-overlay text-text-primary': theme() === 'dark',
-        }"
-      >
-        <header>
-          <div class="grid grid-cols-[auto_1fr_auto] gap-x-2">
-            <div class="flex items-center gap-x-2">
-              @if (icon()) {
-                <i>
-                  <ng-content select="[dialogIcon]"></ng-content>
-                </i>
-              }
-              <p class="text-2xl font-semibold font-heading">{{ dialogTitle() }}</p>
-            </div>
-            <div class="w-full self-center">
-              <ng-content select="[headerAction]"></ng-content>
-            </div>
-            <button class="cursor-pointer self-start" (click)="onHandleClose()">
-              <!-- removed from BSP
-              [ngClass]="{
-                  'hover:text-gray': theme() === 'light',
-                  'hover:text-white': theme() === 'dark',
-                }" 
-              -->
-              <i>
-                <svg fill="currentColor" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-                  <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
-                  <path
-                    d="m7.76 14.83-2.83 2.83 1.41 1.41 2.83-2.83 2.12-2.12.71-.71.71.71 1.41 1.42 3.54 3.53 1.41-1.41-3.53-3.54-1.42-1.41-.71-.71 5.66-5.66-1.41-1.41L12 10.59 6.34 4.93 4.93 6.34 10.59 12l-.71.71z"
-                  ></path>
-                </svg>
-              </i>
-            </button>
-          </div>
-        </header>
-        <main class="overflow-y-auto pt-4">
-          <ng-content></ng-content>
-        </main>
+    <header>
+      <div class="grid grid-cols-[auto_1fr_auto] gap-x-2">
+        <div class="flex items-center gap-x-2">
+          @if (icon()) {
+            <i>
+              <ng-content select="[dialogIcon]"></ng-content>
+            </i>
+          }
+          <p class="font-heading text-2xl font-semibold">{{ dialogTitle() }}</p>
+        </div>
+        <div class="w-full self-center">
+          <ng-content select="[headerAction]"></ng-content>
+        </div>
+        <button class="cursor-pointer self-start" (click)="onHandleClose()">
+          <i>
+            <svg
+              fill="currentColor"
+              height="24"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+              <path
+                d="m7.76 14.83-2.83 2.83 1.41 1.41 2.83-2.83 2.12-2.12.71-.71.71.71 1.41 1.42 3.54 3.53 1.41-1.41-3.53-3.54-1.42-1.41-.71-.71 5.66-5.66-1.41-1.41L12 10.59 6.34 4.93 4.93 6.34 10.59 12l-.71.71z"
+              ></path>
+            </svg>
+          </i>
+        </button>
       </div>
-    </div>
+    </header>
+    <main class="overflow-y-auto pt-4">
+      <ng-content></ng-content>
+    </main>
   </div>
-}
+</dialog>
