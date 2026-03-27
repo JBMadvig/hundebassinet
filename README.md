@@ -10,7 +10,7 @@ A full-stack Point of Sale and inventory management system built on the MFAN sta
 - **User management** – Role-based access control (User, Admin, Sudo Admin), user avatars, balance tracking
 - **Multi-currency support** – Per-user currency selection with live exchange rates (default: DKK)
 
-- **And more to come **
+- **And more to come**
 
 ## Tech Stack
 
