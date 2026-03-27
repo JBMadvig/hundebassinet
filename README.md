@@ -1,75 +1,107 @@
-# MFAN Stack – Docker Setup
+# Hundebassinet – POS & Inventory Management
 
-This repository provides a simple Docker Compose configuration for running a full MFAN stack (MongoDB, Fastify, Angular, Node.js) locally using containers.
+A full-stack Point of Sale and inventory management system built on the MFAN stack (MongoDB, Fastify, Angular, Node.js), containerized with Docker.
 
-## Stack Overview
+## Current Features
 
-- **MongoDB** – NoSQL database
-- **Fastify** – Node.js framework
-- **Angular** – Frontend framework
+- **Point of Sale** – Basket management, real-time updates via WebSocket
+- **Inventory management** – Track stock, pricing, categories, and total stock value for products (beer, wine, spirits, soda, etc.)
+- **Authentication** – Email/password login with JWT, QR code-based login for POS devices, device activation flow
+- **User management** – Role-based access control (User, Admin, Sudo Admin), user avatars, balance tracking
+- **Multi-currency support** – Per-user currency selection with live exchange rates (default: DKK)
+
+- **And more to come **
+
+## Tech Stack
+
+| Layer     | Technology                          |
+|-----------|-------------------------------------|
+| Frontend  | Angular 21, TypeScript, Tailwind CSS |
+| Backend   | Fastify 5, Node.js 22, TypeScript   |
+| Database  | MongoDB 7 (Replica Set)             |
+| ORM       | Typegoose                           |
+| Auth      | JWT, bcrypt                         |
+| Runtime   | Docker, Docker Compose              |
 
 ## Getting Started
 
-1. Clone the repo:
+### Requirements
 
-    ```bash
-    git clone https://github.com/enslev/mfan-startup.git
-    cd mfan-startup
-    ```
+- [Docker Desktop](https://docs.docker.com/desktop/) (recommended) — includes Docker and Docker Compose
+  Or: [Docker Engine](https://docs.docker.com/engine/install/) + [Compose plugin](https://docs.docker.com/compose/install/) (Linux)
 
-2. Start the stack:
+### Run the app
 
-    ```bash
-    docker compose up --build
-    ```
+```bash
+git clone https://github.com/jbmadvig/hundebassinet.git
+cd hundebassinet
+docker compose up --build
+```
 
-3. Access the app:
-    - Angular frontend: `http://localhost:4200`
-    - Fastify API: `http://localhost:9001`
-    - MongoDB: `mongodb://localhost:27017?directConnection=true`
+Once running, the services are available at:
+
+| Service          | URL                                           |
+|------------------|-----------------------------------------------|
+| Angular frontend | http://localhost:4200                         |
+| Fastify API      | http://localhost:9001                         |
+| MongoDB          | `mongodb://localhost:27017?directConnection=true` |
 
 ## Environment
 
-A sample .env file is included to configure the server port and local MongoDB connection string.  
-You can customize it as needed.
+A `.env` file is included with default values for local development:
 
-## MongoDB UI connection
+```env
+SERVER_PORT=9001
+MONGODB_URL=mongodb://mongodb:27017/mfan?replicaSet=rs0
+JWT_SECRET=change-this-in-production
+```
 
-If you're connecting to MongoDB using a UI tool like [MongoDB Compass](https://www.mongodb.com/products/tools/compass), make sure to use:
+Change `JWT_SECRET` before deploying to any non-local environment.
+
+## Connecting to MongoDB with a UI tool
+
+If you use [MongoDB Compass](https://www.mongodb.com/products/tools/compass) or a similar tool, connect with:
 
 ```
 mongodb://localhost:27017?directConnection=true
 ```
- 
-#### ⚠️ **Don't use the connection string from `.env`**, which points to `mongodb://mongodb:27017` — that hostname only works inside the Docker network.
 
-This setup uses a single-node Replica Set to enable features like Change Streams and Transactions. Adding `directConnection=true` tells Compass to skip cluster discovery and connect directly.
+> **Note:** The connection string in `.env` uses `mongodb://mongodb:27017` — that hostname only resolves inside the Docker network and will not work from your host machine.
 
-## Structure
+The database runs as a single-node Replica Set to support Change Streams and Transactions. `directConnection=true` bypasses cluster discovery and connects directly.
 
-- `client/` – Angular app
-- `server/` – Fastify API
-- `docker-compose.yml` – Service configuration
-- `Dockerfile` – App build instructions (in each subfolder)
+## Project Structure
 
-## Requirements
-
-- Docker
-- Docker Compose
-
-Docker Compose comes with [Docker Desktop](https://docs.docker.com/desktop/) (recommended), or install [plugin only](https://docs.docker.com/compose/install/) separately on Linux along side [Docker Engine](https://docs.docker.com/engine/install/)
+```
+hundebassinet/
+├── client/               # Angular frontend
+│   └── src/
+│       ├── app/
+│       │   ├── pages/    # Route components (POS, inventory, users, login, ...)
+│       │   └── shared/   # Services, guards, interceptors, UI components
+│       └── environments/
+├── server/               # Fastify API
+│   └── src/
+│       ├── routes/       # API endpoints (auth, users, items, currency, health)
+│       ├── lib/          # MongoDB models, schemas, JWT/cookie helpers
+│       └── services/     # WebSocket, currency exchange
+├── docker-compose.yml
+├── docker-entrypoint.sh  # MongoDB replica set initialization
+└── .env
+```
 
 ## Cleanup
 
-To stop and remove containers (but not volumes)
+Stop containers (data is preserved):
 
-```
+```bash
 docker compose down
 ```
 
-To stop and remove containers, networks, and volumes:
-#### ⛔ **This will permanently delete all local data in the database**
+Stop containers and delete all data (volumes):
 
-```
+> **Warning: this permanently deletes the database.**
+
+```bash
 docker compose down -v
 ```
