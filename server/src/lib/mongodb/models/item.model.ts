@@ -38,6 +38,9 @@ export class Item extends TimeStamps {
 
     @prop({ type: () => Number, required: true, default: 0 })
     public totalStockValue: number;
+
+    @prop({ type: () => String, sparse: true, unique: true })
+    public barcode?: string;
 }
 
 export const ItemModel = getModelForClass(Item);

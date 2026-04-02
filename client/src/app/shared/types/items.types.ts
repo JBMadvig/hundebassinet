@@ -10,6 +10,7 @@ interface BaseItem {
     createdAt: Date;
     updatedAt: Date;
     imageUrl?: string;
+    barcode?: string;
 }
 
 export type ItemSortValues = 'id' | 'name' | 'averagePrice' | 'curentStock' | 'totalStockValue' | 'createdAt' | 'updatedAt' | 'abv';
