@@ -4,11 +4,14 @@
     [visible]="errorService.errorOccurred()"
     (closeModal)="errorService.clearError()"
   >
-    <div class="max-w-[600px]">
-      <p class="font-heading font-semibold  text-nowrap">
+    <div class="md:max-w-150 w-full">
+      <p class="font-heading font-semibold md:text-nowrap">
         Please contact support if the problem persists.
       </p>
       <p class="text-balance">{{ errorService.errorMessage() }}</p>
+      @if (errorService.location()) {
+        <p class="mt-2 text-xs text-text-secondary">Location: {{ errorService.location() }}</p>
+      }
     </div>
   </app-dialog>
 }

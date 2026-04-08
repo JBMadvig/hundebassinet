@@ -9,10 +9,14 @@ import { ButtonComponent } from '@components/button/button.component';
 import { TableComponent } from '@components/table/table.component';
 import { AuthService } from '@services/auth.service';
 import { InventoryService } from '@services/inventory.service';
+import { WebSocketService } from '@services/websocket.service';
+
+import { AddItemComponent } from './add-item/add-item.component';
 
 @Component({
     selector: 'app-inventory',
     imports: [
+        AddItemComponent,
         ButtonComponent,
         CommonModule,
         TableComponent,
@@ -25,6 +29,9 @@ export class InventoryComponent {
     private inventoryService = inject(InventoryService);
     private formBuilder = inject(FormBuilder);
     private router = inject(Router);
+    private wsService = inject(WebSocketService);
+
+    private addItemComp = viewChild(AddItemComponent);
 
     private readonly currentUser = this.authService.currentUser;
 

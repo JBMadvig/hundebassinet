@@ -46,6 +46,7 @@
     }
     <form class="flex flex-col gap-y-2" [formGroup]="itemForm" (submit)="confirmAddToInventory()">
       <app-input-field formControlName="name" label="Name" ngDefaultControl placeholder="Enter item name" />
+      <app-input-field formControlName="barcode" label="Barcode" ngDefaultControl placeholder="Scan barcode from phone to add here" />
       <app-dropdown
         [options]="primaryCategoryOptions()"
         formControlName="primaryCategory"

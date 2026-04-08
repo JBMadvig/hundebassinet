@@ -85,3 +85,7 @@
     </app-table>
   }
 </main>
+
+@if (addItemsToInvetory()) {
+  <app-add-item [(visible)]="addItemsToInvetory" />
+}

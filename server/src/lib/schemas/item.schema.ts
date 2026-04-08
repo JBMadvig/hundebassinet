@@ -18,6 +18,8 @@ export const SortingUnionDirections = Type.Union([
 export const FullItemUnionSchema = Type.Union([
     Type.Literal('_id'),
     Type.Literal('name'),
+    Type.Literal('volume'),
+    Type.Literal('barcode'),
     Type.Literal('primaryCategory'),
     Type.Literal('secondaryCategory'),
     Type.Literal('averagePrice'),
@@ -67,6 +69,7 @@ export const CreateItemSchema = Type.Object({
     abv: Type.Number(),
     volume: Type.Number(),
     amount: Type.Number(),
+    barcode: Type.Optional(Type.String()),
 });
 
 export const ItemSchemaWithSearchAndSortAndPagination = Type.Object({

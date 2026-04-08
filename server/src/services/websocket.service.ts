@@ -21,6 +21,21 @@ type Payload = {
 } | {
     type: 'pos-logout',
     userId: string,
+} | {
+    type: 'item-scanned',
+    item: {
+        id: string;
+        name: string;
+        primaryCategory: string;
+        secondaryCategory: string;
+        averagePrice: number;
+        currentStock: number;
+        abv: number;
+        volume: number;
+    };
+} | {
+    type: 'new-item-scanned',
+    barcode: string;
 }
 
 export const initWebsocket = async(fastify: FastifyInstance) => {
@@ -91,6 +106,8 @@ const handleIncomingMessage = (socket: WebSocket, payload: Payload) => {
         case 'initRequest':
         case 'pos-login':
         case 'pos-logout':
+        case 'item-scanned':
+        case 'new-item-scanned':
             break;
 
         default:

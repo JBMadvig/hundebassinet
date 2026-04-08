@@ -19,7 +19,7 @@ interface CustomRoute extends Route {
 export type RedirectPaths = '/landing'
 | '/pos' | '/pos/inventory'
 | '/users' | '/users/me'
-| '/qr-display' | '/poslogin' | '/device-activate' ;
+| '/qr-display' | '/poslogin' | '/device-activate' | '/scan-item' ;
 
 export const routes: CustomRoute[] = [
     {
@@ -46,6 +46,15 @@ export const routes: CustomRoute[] = [
             .then(m => m.DeviceActivateComponent),
         data: {
             id: 'device-activate',
+        },
+    },
+    {
+        path: 'scan-item',
+        canActivate: [ authGuard ],
+        loadComponent: () => import('./pages/scan-item/scan-item.component')
+            .then(m => m.ScanItemComponent),
+        data: {
+            id: 'scan-item',
         },
     },
     {
