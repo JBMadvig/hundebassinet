@@ -1,12 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, resource, signal } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, resource, signal, viewChild } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { InventoryRequest, ItemSortValues, SortDirection } from 'app/shared/types/items.types';
+import { InventoryRequest, Item, ItemSortValues, SortDirection } from 'app/shared/types/items.types';
 
 import { ButtonComponent } from '@components/button/button.component';
 import { TableComponent } from '@components/table/table.component';
+import { AutoSub, AutoUnsubscribe } from '@decorators/auto-unsub.decorator';
 import { AuthService } from '@services/auth.service';
 import { InventoryService } from '@services/inventory.service';
 import { WebSocketService } from '@services/websocket.service';
@@ -24,7 +25,8 @@ import { AddItemComponent } from './add-item/add-item.component';
     templateUrl: './inventory.component.html',
     styleUrl: './inventory.component.css',
 })
-export class InventoryComponent {
+@AutoUnsubscribe()
+export class InventoryComponent implements OnInit, OnDestroy {
     private authService = inject(AuthService);
     private inventoryService = inject(InventoryService);
     private formBuilder = inject(FormBuilder);
@@ -81,6 +83,29 @@ export class InventoryComponent {
     public sortDirectionValueChangeSignal = toSignal(this.searchForm.controls.sortDirection.valueChanges);
     public pageValueChangeSignal = toSignal(this.searchForm.controls.page.valueChanges);
     public entriesPrPageValueChangeSignal = toSignal(this.searchForm.controls.entriesPrPage.valueChanges);
+
+    ngOnInit() {
+        const userId = this.authService.currentUser()?.id;
+        if (userId) {
+            this.wsService.connect();
+            this.wsService.subscribe(`pos:${userId}`);
+            // TODO: Make sure this is handled correctly
+            AutoSub(this).reg['scanSub'] = this.wsService.messages$.subscribe((msg) => {
+                if (msg['type'] === 'item-scanned') {
+                    const item = msg['item'] as Item;
+                    this.addItemsToInvetory.set(true);
+                    setTimeout(() => this.addItemComp()?.setItemValues(item), 0);
+                }
+            });
+        }
+    }
+
+    ngOnDestroy() {
+        const userId = this.authService.currentUser()?.id;
+        if (userId) {
+            this.wsService.unsubscribe(`pos:${userId}`);
+        }
+    }
 
     public goBackToPos() {
         this.router.navigate([ '/pos' ]);
