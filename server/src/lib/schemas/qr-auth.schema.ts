@@ -39,3 +39,9 @@ export const posLogoutRequestSchema = Type.Object({
 export const posLogoutResponseSchema = Type.Object({
     success: Type.Boolean(),
 });
+
+// GET /api/auth/pos-status response
+export const posStatusResponseSchema = Type.Object({
+    loggedIn: Type.Boolean(),
+    userId: Type.Optional(Type.String()),
+});

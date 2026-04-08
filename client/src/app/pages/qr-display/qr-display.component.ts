@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import QRCode from 'qrcode';
 import { Subscription } from 'rxjs';
 
@@ -9,7 +10,7 @@ import { WebSocketService } from '@services/websocket.service';
 
 @Component({
     selector: 'app-qr-display',
-    imports: [ CommonModule ],
+    imports: [ CommonModule, RouterLink ],
     templateUrl: './qr-display.component.html',
 })
 export class QrDisplayComponent implements OnInit, OnDestroy {
@@ -28,6 +29,12 @@ export class QrDisplayComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.generateQr();
         this.refreshInterval = setInterval(() => this.generateQr(), 9 * 60 * 1000); // 9 minutes
+
+        // Check current POS login status on load
+        this.qrAuthApi.posStatus().subscribe({
+            next: (status) => this.posLoggedIn.set(status.loggedIn),
+            error: () => {},
+        });
 
         // Connect WebSocket and subscribe to user room
         this.wsService.connect();

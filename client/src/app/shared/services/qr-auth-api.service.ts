@@ -43,4 +43,8 @@ export class QrAuthApiService {
             { userId },
         );
     }
+
+    posStatus(): Observable<{ loggedIn: boolean; userId?: string }> {
+        return this.http.get<{ loggedIn: boolean; userId?: string }>(`${this.apiUrl}/pos-status`);
+    }
 }
