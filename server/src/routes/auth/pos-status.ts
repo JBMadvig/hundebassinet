@@ -17,7 +17,7 @@ export default <FastifyPluginCallback>function (app, _opts, done) {
         url: '/pos-status',
         method: 'GET',
         schema,
-        preHandler: [deviceTokenHook],
+        preHandler: [ deviceTokenHook ],
         handler: async (
             req: FastifyRequestTypebox<typeof schema>,
             reply: FastifyReplyTypebox<typeof schema>,
