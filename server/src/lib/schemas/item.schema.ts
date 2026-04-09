@@ -18,6 +18,8 @@ export const SortingUnionDirections = Type.Union([
 export const FullItemUnionSchema = Type.Union([
     Type.Literal('_id'),
     Type.Literal('name'),
+    Type.Literal('volume'),
+    Type.Literal('barcode'),
     Type.Literal('primaryCategory'),
     Type.Literal('secondaryCategory'),
     Type.Literal('averagePrice'),
@@ -39,6 +41,7 @@ export const FullItemSchema = Type.Object({
     totalStockValue: Type.Number(),
     abv: Type.Number(),
     volume: Type.Number(),
+    barcode: Type.Optional(Type.String()),
     updatedAt: MongooseDateType,
     createdAt: MongooseDateType,
 });
@@ -53,6 +56,7 @@ export const CollectionItemSchema = Type.Object({
     currentStock: Type.Number(),
     abv: Type.Number(),
     volume: Type.Number(),
+    barcode: Type.Optional(Type.String()),
 });
 
 // Create Item schema when adding new item to inventory
@@ -65,6 +69,7 @@ export const CreateItemSchema = Type.Object({
     abv: Type.Number(),
     volume: Type.Number(),
     amount: Type.Number(),
+    barcode: Type.Optional(Type.String()),
 });
 
 export const ItemSchemaWithSearchAndSortAndPagination = Type.Object({

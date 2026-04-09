@@ -6,6 +6,7 @@ export default <FastifyPluginCallback>async function (app) {
         app.register(import('./create-item')),
         app.register(import('./get-items-inventory')),
         app.register(import('./get-items-collection')),
+        app.register(import('./scan')),
     ];
 
     await Promise.all(routes);

@@ -65,9 +65,9 @@ export class DialogComponent {
 
             if (isVisible && !dialog.open) {
                 dialog.showModal();
-                dialog.addEventListener('click', this.onClickOutside);
+                dialog.addEventListener('mousedown', this.onClickOutside);
             } else if (!isVisible && dialog.open) {
-                dialog.removeEventListener('click', this.onClickOutside);
+                dialog.removeEventListener('mousedown', this.onClickOutside);
                 dialog.close();
             }
         });

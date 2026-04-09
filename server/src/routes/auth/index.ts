@@ -9,6 +9,7 @@ export default <FastifyPluginCallback>async function (app) {
         app.register(import('./qr-login')),
         app.register(import('./device-activate')),
         app.register(import('./pos-logout')),
+        app.register(import('./pos-status')),
         app.register(import('./logout')),
     ];
 

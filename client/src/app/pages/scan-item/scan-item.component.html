@@ -1,0 +1,64 @@
+<div class="p-4">
+  <button
+          class="flex flex-row gap-4 text-text-primary hover:cursor-pointer hover:text-text-secondary"
+          (click)="goBackToQR()"
+        >
+          <svg
+            fill="currentColor"
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
+            <path
+              d="M12 2C6.49 2 2 6.49 2 12s4.49 10 10 10 10-4.49 10-10S17.51 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8"
+            ></path>
+            <path d="m12.71 8.71-1.42-1.42L6.59 12l4.7 4.71 1.42-1.42-2.3-2.29H17v-2h-6.59z"></path>
+          </svg>
+          <span>Go back to QR Login</span>
+        </button>
+        </div>
+<div class="flex h-dvh flex-col items-center justify-center gap-8 p-8">
+  <h1 class="text-3xl font-bold text-text-primary">Scan Item Barcode</h1>
+  <p class="max-w-100 text-center text-text-primary">
+    Hold a product barcode up to the camera to add it to the POS basket or inventory.
+  </p>
+
+  
+  @if (!useFallback()) {
+    <!-- Barcode Scanner viewport -->
+    <div #barcodeReader id="barcode-reader" class="w-80 overflow-hidden rounded-xl"></div>
+  } @else {
+    <!-- Fallback: capture image with native camera -->
+    <div class="flex flex-col items-center gap-4">
+      <p class="text-sm text-text-secondary">
+        Live camera is not available. Tap below to take a photo of the barcode.
+      </p>
+      <app-button
+      label="Open Camera"
+      variant="subtle"
+      (handleClick)="fileInput.click()"
+      />
+      <input
+      #fileInput
+      type="file"
+      accept="image/*"
+      capture="environment"
+      class="hidden"
+      (change)="onFileSelected($event)"
+      />
+    </div>
+    <!-- Required by Html5Qrcode for file scanning — must not be display:none -->
+    <div id="file-scanner" class="absolute size-0 overflow-hidden"></div>
+  }
+
+  @if (toast()) {
+    <div
+      class="fixed bottom-6 left-1/2 -translate-x-1/2 rounded-full px-6 py-3 text-sm font-medium shadow-lg"
+      [class]="toastType() === 'success' ? 'bg-green-600 text-white' : 'bg-red-600 text-white'"
+    >
+      {{ toast() }}
+    </div>
+  }
+</div>

@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, effect, inject, model, resource, signal } from '@angular/core';
+import { Component, computed, effect, inject, model, OnInit, resource, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { CreateItemRequest, InventoryRequest, Item, PrimaryCategoriesType, PrimaryCategoriesTypeValues, UpdateItemRequest } from 'app/shared/types/items.types';
 import { isNonNull } from 'app/shared/utils';
 import { debounceTime } from 'rxjs/internal/operators/debounceTime';
@@ -12,12 +13,14 @@ import { DialogComponent } from '@components/dialog/dialog.component';
 import { ComboboxComponent, ComboboxData } from '@components/input/combobox/combobox.component';
 import { DropdownComponent } from '@components/input/dropdown/dropdown.component';
 import { InputFieldComponent } from '@components/input/input-field/input-field.component';
+import { AutoSub, AutoUnsubscribe } from '@decorators/auto-unsub.decorator';
 import { TypedTemplateDirective } from '@directives/typed-template.directive';
 import { currencyValidator } from '@lib/input-validators/currency.validator';
 import { LocaleCurrencyPipe } from '@pipes/locale-currency.pipe';
 import { AuthService } from '@services/auth.service';
 import { currencyDropdownOptions, CurrencyService } from '@services/currency.service';
 import { InventoryService } from '@services/inventory.service';
+import { WebSocketService } from '@services/websocket.service';
 
 @Component({
     selector: 'app-add-item',
@@ -35,11 +38,14 @@ import { InventoryService } from '@services/inventory.service';
     templateUrl: './add-item.component.html',
     styleUrl: './add-item.component.css',
 })
-export class AddItemComponent {
+@AutoUnsubscribe()
+export class AddItemComponent implements OnInit {
     private authService = inject(AuthService);
     private currencyService = inject(CurrencyService);
     private formBuilder = inject(FormBuilder);
     private inventoryService = inject(InventoryService);
+    private route = inject(ActivatedRoute);
+    private wsService = inject(WebSocketService);
 
     public itemComboboxType!: ComboboxData<Item>;
 
@@ -78,6 +84,7 @@ export class AddItemComponent {
         itemId: [ '' ],
         itemExists: [ false ],
         name: [ '', [ Validators.required ] ],
+        barcode: [ '' ],
         primaryCategory: [ '' as PrimaryCategoriesType, [ Validators.required ] ],
         secondaryCategory: [ '' ],
         abv: 0,
@@ -133,8 +140,25 @@ export class AddItemComponent {
         });
     }
 
+    ngOnInit() {
+        const userId = this.currentUser()?.id;
+
+        if (userId) {
+            this.wsService.connect();
+            this.wsService.subscribe(`pos:${userId}`);
+
+            AutoSub(this).reg['scanSub'] = this.wsService.messages$.subscribe((msg) => {
+                if (msg['type'] === 'new-item-scanned') {
+                    const barcode = msg['barcode'];
+                    if (typeof barcode === 'string') {
+                        this.itemForm.patchValue({ barcode });
+                    }
+                }
+            });
+        }
+    }
+
     public setItemValues(item: Item) {
-        console.log('🚀 ~ AddItemComponent ~ setItemValues ~ item:', item);
         this.searchItemsForm.patchValue({
             itemChosen: true,
         });

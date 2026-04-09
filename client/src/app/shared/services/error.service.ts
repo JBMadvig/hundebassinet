@@ -30,6 +30,7 @@ export class ErrorService {
 
 
         console.error('An unknown error occurred:', error);
+        this.errorMessage.set(JSON.stringify(error) || 'An unknown error occurred.');
         this.errorOccurred.set(true);
     }
 
