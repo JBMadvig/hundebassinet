@@ -4,6 +4,7 @@
   "compileOnSave": false,
   "compilerOptions": {
     "outDir": "./dist/out-tsc",
+    "rootDir": "./src",
     "strict": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
@@ -17,17 +18,17 @@
     "importHelpers": true,
     "target": "ES2022",
     "module": "ES2022",
-    "baseUrl": "./src",
     "paths": {
-      "@components/*": [ "app/shared/components/*" ],
-      "@decorators/*": [ "app/shared/decorators/*" ],
-      "@directives/*": [ "app/shared/directives/*" ],
-      "@environment": [ "environments/environment" ],
-      "@guards/*": [ "app/shared/guards/*" ],
-      "@interceptors/*": [ "app/shared/interceptors/*" ],
-      "@lib/*": [ "app/lib/*" ],
-      "@pipes/*": [ "app/shared/pipes/*" ],
-      "@services/*": [ "app/shared/services/*" ]
+      "@components/*": [ "./src/app/shared/components/*" ],
+      "@decorators/*": [ "./src/app/shared/decorators/*" ],
+      "@directives/*": [ "./src/app/shared/directives/*" ],
+      "@environment": [ "./src/environments/environment" ],
+      "@guards/*": [ "./src/app/shared/guards/*" ],
+      "@interceptors/*": [ "./src/app/shared/interceptors/*" ],
+      "@lib/*": [ "./src/app/lib/*" ],
+      "@pipes/*": [ "./src/app/shared/pipes/*" ],
+      "@services/*": [ "./src/app/shared/services/*" ],
+      "app/*": [ "./src/app/*" ]
     }
   },
   "angularCompilerOptions": {
