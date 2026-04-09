@@ -4,9 +4,9 @@ import { provideRouter, withViewTransitions } from '@angular/router';
 
 import { InternalErrorHandler } from '@services/internal-error-handlet.service';
 
+import { routes } from './app.routes';
 import { initializeAuth } from './shared/initializers/auth.initializer';
 import { authInterceptor } from './shared/interceptors/auth.interceptor';
-import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
     providers: [
