@@ -17,7 +17,7 @@ declare module '@fastify/jwt' {
  * Throws UnauthorizedError if the token has been invalidated.
  */
 async function verifyAndValidateUser(request: FastifyRequest): Promise<JWTPayload> {
-    const payload = await verifyAccessToken(request);
+    const payload = verifyAccessToken(request);
     const user = await UserModel.findById(payload.userId).select('tokenVersion');
 
     if (!user || user.tokenVersion !== payload.tokenVersion) {
