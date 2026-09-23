@@ -6,7 +6,7 @@
       <div class="flex flex-row justify-between">
         <div class="grid-rows-auto grid w-full items-center gap-6">
           <button
-            class="flex flex-row gap-4 text-text-primary hover:cursor-pointer hover:text-text-secondary"
+            class="flex flex-row gap-4 text-foreground hover:cursor-pointer hover:text-text-secondary"
             (click)="goBack()"
           >
             <svg
@@ -24,7 +24,7 @@
             </svg>
             <span>Go back</span>
           </button>
-          <p class="font-heading text-2xl font-semibold text-text-primary">Current users</p>
+          <p class="font-heading text-2xl font-semibold text-foreground">Current users</p>
         </div>
         <app-button
           class="shrink-0"
@@ -36,7 +36,7 @@
       @if (usersResource.error()) {
         <p class="text-2xl text-error">Error fetching users. Please try again later.</p>
       } @else {
-        <app-table class="mt-4 text-text-primary" [data]="usersResource.value()">
+        <app-table class="mt-4 text-foreground" [data]="usersResource.value()">
           <ng-template #headerTemplate>
             <tr>
               <th class="text-left">ID</th>

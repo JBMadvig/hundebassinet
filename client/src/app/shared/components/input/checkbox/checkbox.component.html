@@ -29,7 +29,7 @@
     }
 
     <label
-      class="group relative inline-block h-6 w-6 rounded-full"
+      class="group relative inline-block h-6 w-6 rounded-base"
       [ngClass]="{
         'mt-0.5': (labelPosition() === 'left' || labelPosition() === 'right') && textSize() === 'medium',
         'mt-1': (labelPosition() === 'left' || labelPosition() === 'right') && textSize() === 'regular',
@@ -37,13 +37,13 @@
     >
       <input
         [id]="controlId"
-        class="peer h-6 w-6 cursor-pointer appearance-none rounded-sm border border-gray-400 bg-transparent transition-colors checked:border-0 checked:bg-accent checked:group-hover:cursor-pointer checked:group-hover:bg-accent-hover focus:ring-1 focus:ring-accent focus:ring-offset-0"
+        class="nb-focus peer h-6 w-6 cursor-pointer appearance-none rounded-base nb-border bg-secondary-background transition-colors checked:bg-main checked:group-hover:cursor-pointer checked:group-hover:bg-main/80"
         [checked]="value"
         [formControlName]="controlName"
         type="checkbox"
       />
       <div
-        class="pointer-events-none absolute top-0 left-0 hidden h-3 w-1 text-white peer-checked:block hover:cursor-pointer"
+        class="pointer-events-none absolute top-0 left-0 hidden h-3 w-1 text-main-foreground peer-checked:block hover:cursor-pointer"
       >
         <svg
           fill="currentColor"

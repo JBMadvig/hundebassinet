@@ -12,13 +12,13 @@ describe('PosComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [PosComponent],
-            providers: [provideRouter([])],
+            imports: [ PosComponent ],
+            providers: [ provideRouter([]) ],
         })
-        .overrideComponent(FilterBarComponent, { set: { template: '' } })
-        .overrideComponent(CollectionComponent, { set: { template: '' } })
-        .overrideComponent(SidebarUserDetailsComponent, { set: { template: '' } })
-        .compileComponents();
+            .overrideComponent(FilterBarComponent, { set: { template: '' } })
+            .overrideComponent(CollectionComponent, { set: { template: '' } })
+            .overrideComponent(SidebarUserDetailsComponent, { set: { template: '' } })
+            .compileComponents();
 
         fixture = TestBed.createComponent(PosComponent);
         component = fixture.componentInstance;

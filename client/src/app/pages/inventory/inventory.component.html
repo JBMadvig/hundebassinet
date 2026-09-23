@@ -3,7 +3,7 @@
     <div class="flex flex-row justify-between">
       <div class="grid-rows-auto grid w-full items-center gap-6">
         <button
-          class="flex flex-row gap-4 text-text-primary hover:cursor-pointer hover:text-text-secondary"
+          class="flex flex-row gap-4 text-foreground hover:cursor-pointer hover:text-text-secondary"
           (click)="goBackToPos()"
         >
           <svg
@@ -21,7 +21,7 @@
           </svg>
           <span>Go back to POS</span>
         </button>
-        <p class="font-heading text-2xl font-semibold text-text-primary">Inventory management</p>
+        <p class="font-heading text-2xl font-semibold text-foreground">Inventory management</p>
       </div>
       <app-button
         class="shrink-0"
@@ -37,12 +37,12 @@
     <p class="text-2xl text-error">Error fetching users. Please try again later.</p>
   } @else if (inventoryResource.value().length === 0) {
     <div class="flex h-full justify-center pt-4">
-      <p class="w-full text-lg text-text-primary">
+      <p class="w-full text-lg text-foreground">
         No items currently in the inventory. Add some to see and manage them here.
       </p>
     </div>
   } @else {
-    <app-table class="mt-4 text-text-primary" [data]="inventoryResource.value()">
+    <app-table class="mt-4 text-foreground" [data]="inventoryResource.value()">
       <ng-template #headerTemplate>
         <tr>
           <th class="text-left">ID</th>

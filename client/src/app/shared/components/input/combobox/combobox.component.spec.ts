@@ -10,7 +10,7 @@ import { ComboboxComponent } from './combobox.component';
         <app-combobox formControlName="field" [data]="[]" ngDefaultControl></app-combobox>
     </form>`,
     standalone: true,
-    imports: [ReactiveFormsModule, ComboboxComponent],
+    imports: [ ReactiveFormsModule, ComboboxComponent ],
 })
 class TestHostComponent {
     form = new FormGroup({ field: new FormControl('') });
@@ -22,7 +22,7 @@ describe('ComboboxComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [TestHostComponent],
+            imports: [ TestHostComponent ],
         }).compileComponents();
 
         fixture = TestBed.createComponent(TestHostComponent);

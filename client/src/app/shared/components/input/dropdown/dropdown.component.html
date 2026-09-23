@@ -7,7 +7,7 @@
           'py-1': !isRequired(),
         }"
       >
-        <label class="text-text-on-light/80 text-xs" [for]="controlId">
+        <label class="text-foreground/80 text-xs" [for]="controlId">
           {{ label() }}
         </label>
         @if (isRequired()) {
@@ -19,11 +19,10 @@
     @if (enabled) {
       <select
         [id]="controlId"
-        class="w-full rounded-full border bg-white px-4 py-2 text-lg font-bold text-text-on-light"
+        class="nb-focus w-full rounded-base nb-border bg-secondary-background px-4 py-2 text-lg font-bold text-foreground"
         [ngClass]="{
           ' text-text-secondary italic': valueFormControl.value === null,
-          'border-error': isInvalid(),
-          'border-gray-300': !isInvalid(),
+          'border-error focus-visible:ring-error': isInvalid(),
         }"
         [formControlName]="controlName"
       >
@@ -54,7 +53,7 @@
       </select>
     } @else {
       <div
-        class="pointer-events-none box-border w-full cursor-not-allowed rounded-full border border-gray-300 bg-gray-100 px-4 py-2 font-bold text-gray-400"
+        class="pointer-events-none box-border w-full cursor-not-allowed rounded-base nb-border bg-secondary-background px-4 py-2 font-bold text-foreground opacity-50"
       >
         {{ selectedText }}
       </div>

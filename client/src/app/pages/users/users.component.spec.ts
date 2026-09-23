@@ -11,11 +11,11 @@ describe('UsersComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [UsersComponent],
-            providers: [provideRouter([]), provideHttpClient()],
+            imports: [ UsersComponent ],
+            providers: [ provideRouter([]), provideHttpClient() ],
         })
-        .overrideComponent(CreateUserFormComponent, { set: { template: '' } })
-        .compileComponents();
+            .overrideComponent(CreateUserFormComponent, { set: { template: '' } })
+            .compileComponents();
 
         fixture = TestBed.createComponent(UsersComponent);
         component = fixture.componentInstance;

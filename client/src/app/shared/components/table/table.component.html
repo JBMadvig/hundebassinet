@@ -1,12 +1,12 @@
-<div #wrapper class="flex h-full w-full overflow-auto overscroll-none">
-  <table class="h-full w-full border-separate border-spacing-0">
+<div #wrapper class="flex h-full w-full overflow-auto overscroll-none shadow-shadow">
+  <table class="h-full w-full border-separate border-spacing-0 nb-border">
     <thead
-      class="sticky top-0 z-2 w-full text-left outline-2 outline-border-strong [&_th]:text-xl [&_th]:sticky [&_th]:top-0 [&_th]:font-heading [&_th]:font-semibold [&_th]:border [&_th]:border-border-strong [&_th]:pt-2 [&_th]:pr-6 [&_th]:pb-1 [&_th]:pl-2 [&_th]:uppercase [&_th]:first:rounded-tl-2xl [&_th]:first:pl-4 [&_th]:last:rounded-tr-2xl [&_th]:last:pr-4"
+      class="sticky top-0 z-2 w-full bg-secondary-background text-left [&_th]:sticky [&_th]:top-0 [&_th]:border-b-2 [&_th]:border-border [&_th]:pt-2 [&_th]:pr-6 [&_th]:pb-1 [&_th]:pl-2 [&_th]:font-heading [&_th]:text-xl [&_th]:font-bold [&_th]:uppercase [&_th]:first:pl-4 [&_th]:last:pr-4"
     >
       <ng-container *ngTemplateOutlet="headerTemplate()"></ng-container>
     </thead>
     <tbody
-      class="[&_td]:border [&_td]:border-border [&_td]:py-3 [&_td]:pr-6 [&_td]:pl-2 [&_td]:first:pl-4 [&_td]:last:border-b [&_td]:last:pr-4 [&_tr]:transition-all [&_tr]:duration-150 [&_tr]:ease-linear [&_tr]:not-first:border-t [&_tr]:odd:bg-surface [&_tr]:even:bg-transparent [&_tr:hover]:bg-surface-raised [&_tr:last-child_td:first-child]:rounded-bl-2xl [&_tr:last-child_td:last-child]:rounded-br-2xl"
+      class="[&_td]:border-b-2 [&_td]:border-border [&_td]:py-3 [&_td]:pr-6 [&_td]:pl-2 [&_td]:first:pl-4 [&_td]:last:pr-4 [&_tr]:transition-all [&_tr]:duration-150 [&_tr]:ease-linear [&_tr]:odd:bg-secondary-background [&_tr]:even:bg-background [&_tr:hover]:bg-main [&_tr:hover]:text-main-foreground"
     >
       @for (row of optionsWithTrackBy(); let i = $index; track row.trackByValue) {
         <ng-container *ngTemplateOutlet="rowTemplate(); context: { $implicit: row, index: i }">

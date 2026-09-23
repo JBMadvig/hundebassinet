@@ -5,23 +5,21 @@
     <label
       class="inline-block text-xs"
       [ngClass]="{
-      'text-text-primary': textOnDark(),
+      'text-foreground': textOnDark(),
     }"
       [for]="controlId"
       >{{ label() }}</label
     >
     @if (isRequired()) {
-      <span class="text-text-primary hover:cursor-default">&#42;</span>
+      <span class="text-foreground hover:cursor-default">&#42;</span>
     }
   }
   @if (enabled) {
     <div
-      class="box-border flex items-center rounded-full border bg-white p-2 align-middle"
+      class="nb-focus-within box-border flex items-center rounded-base nb-border bg-secondary-background p-2 align-middle"
       [ngClass]="{
         'border-l-0': noLeftBorder(),
-        'border-error': isInvalid(),
-        'border-gray-300': !isInvalid() && theme() === 'light',
-        'border-gray-400': !isInvalid() && theme() === 'dark',
+        'border-error focus-within:ring-error': isInvalid(),
       }"
       [formGroup]="valueFormGroup"
     >
@@ -29,16 +27,15 @@
         <i
           class="fa-xs px-2 {{ icon() }}"
           [ngClass]="{
-            'text-text-on-light': theme() === 'light',
+            'text-foreground': theme() === 'light',
             'text-text-secondary': theme() === 'dark',
           }"
         ></i>
       }
       <input
-        class="box-border w-full text-lg font-bold text-text-on-light placeholder-text-secondary placeholder:italic focus:outline-hidden"
+        class="box-border w-full bg-secondary-background text-lg font-bold text-foreground placeholder-text-secondary placeholder:italic focus:outline-hidden"
         [ngClass]="{
           'ml-2': !icon(),
-          'bg-white': true,
         }"
         [appAutoFocus]="autofocus()"
         [formControlName]="controlName"
@@ -59,7 +56,7 @@
       />
       @if (controlValue) {
         <button
-          class="ml-2 flex items-center justify-center text-text-secondary transition-colors hover:text-text-on-light focus:outline-none"
+          class="ml-2 flex items-center justify-center text-text-secondary transition-colors hover:text-foreground focus:outline-none"
           (click)="onClearField()"
           type="button"
           tabindex="-1"
@@ -83,7 +80,7 @@
       }
       @if (type() === 'password') {
         <button
-          class="ml-2 flex items-center justify-center text-text-secondary transition-colors hover:text-text-on-light focus:outline-none"
+          class="ml-2 flex items-center justify-center text-text-secondary transition-colors hover:text-foreground focus:outline-none"
           (click)="togglePasswordVisibility()"
           type="button"
           tabindex="-1"
@@ -126,11 +123,11 @@
     }
   } @else {
     <div
-      class="pointer-events-none box-border flex cursor-not-allowed items-center rounded-full border border-gray-300 bg-gray-100 p-2 px-4 align-middle text-gray-400"
+      class="pointer-events-none box-border flex cursor-not-allowed items-center rounded-base nb-border bg-secondary-background p-2 px-4 align-middle text-foreground opacity-50"
       [ngClass]="{ 'border-l-0': noLeftBorder() }"
     >
       @if (icon()) {
-        <i class="fa-xs px-2 text-text-on-light" [ngClass]="icon()"></i>
+        <i class="fa-xs px-2 text-foreground" [ngClass]="icon()"></i>
       }
       <span
         class="box-border w-full bg-transparent text-lg font-bold placeholder-text-secondary focus:outline-hidden"

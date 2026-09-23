@@ -11,7 +11,7 @@ describe('VirtualKeyboardKeyComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [VirtualKeyboardKeyComponent],
+            imports: [ VirtualKeyboardKeyComponent ],
         }).compileComponents();
 
         fixture = TestBed.createComponent(VirtualKeyboardKeyComponent);

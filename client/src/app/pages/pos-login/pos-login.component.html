@@ -1,6 +1,6 @@
 <div class="flex h-dvh flex-col items-center justify-center gap-8 p-8">
-  <h1 class="text-3xl font-bold text-text-primary">Scan QR Code to Login</h1>
-  <p class="max-w-100 text-center text-text-primary">
+  <h1 class="text-3xl font-bold text-foreground">Scan QR Code to Login</h1>
+  <p class="max-w-100 text-center text-foreground">
     Please login on your phone by going to
     <a
       class="transition-colors duration-500 ease-in-out hover:underline hover:underline-offset-2"
@@ -10,7 +10,7 @@
   </p>
 
   <!-- QR Scanner viewport -->
-  <div #qrReader id="qr-reader" class="w-80 overflow-hidden rounded-xl"></div>
+  <div #qrReader id="qr-reader" class="nb-border w-80 overflow-hidden rounded-base"></div>
 
   @if (error()) {
     <p class="text-sm text-error">{{ error() }}</p>
@@ -22,7 +22,7 @@
 
   <!-- SudoAdmin bypass button -->
   <button
-    class="fixed right-6 bottom-6 flex h-12 w-12 items-center justify-center rounded-full border border-border bg-surface text-text-secondary shadow-lg transition-colors hover:bg-surface-raised hover:text-text-primary"
+    class="nb-border fixed right-6 bottom-6 flex h-12 w-12 items-center justify-center rounded-base bg-secondary-background text-text-secondary shadow-shadow transition-colors hover:bg-background hover:text-foreground"
     (click)="openBypassModal()"
     title="Admin login"
   >
@@ -39,7 +39,7 @@
   <app-dialog [(visible)]="showBypassModal" dialogTitle="Admin Login">
     <div class="flex w-full flex-col items-start justify-center gap-y-4">
       @if (bypassLoading()) {
-        <p class="text-text-on-light"><span>Logging in...</span><span class="loader-on-light-bg"></span></p>
+        <p class="text-foreground"><span>Logging in...</span><span class="loader-on-light-bg"></span></p>
       } @else {
         <form class="flex w-full min-w-[35vw] flex-col gap-4" [formGroup]="bypassForm">
           <app-input-field

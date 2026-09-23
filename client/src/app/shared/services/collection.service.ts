@@ -1,13 +1,13 @@
 import { Injectable, signal } from '@angular/core';
 
-import { PrimaryCategoriesType } from './../..//shared/types/items.types';
+import { FilterType } from './../..//shared/types/items.types';
 
 @Injectable({
     providedIn: 'root',
 })
 export class CollectionService {
 
-    public currentFilter = signal<PrimaryCategoriesType | 'all' | 'search'>('all');
+    public currentFilter = signal<FilterType>('all');
 
     public searchQuery = signal<string>('');
 

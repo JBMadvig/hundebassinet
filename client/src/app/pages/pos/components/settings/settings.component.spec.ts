@@ -24,7 +24,7 @@ describe('SettingsComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [SettingsComponent],
+            imports: [ SettingsComponent ],
             providers: [
                 provideRouter([]),
                 {

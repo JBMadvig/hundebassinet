@@ -27,17 +27,17 @@ export class BadgeComponent {
                 return this.primaryCategoryColor(this.badgeText() as PrimaryCategoriesType);
                 // Need to handle secondary categories separately since they can be any string, not just a predefined set -- Maybe return primary color in a lighter shade or a neutral color?
             case 'secondaryCategory':
-                return 'bg-gray-700 text-gray-50 border-gray-700';
+                return 'bg-secondary-background';
             case 'success':
-                return 'bg-success/15 text-success border-success/25';
+                return 'bg-nb-green';
             case 'danger':
-                return 'bg-error/15 text-error border-error/25';
+                return 'bg-nb-red';
             case 'warning':
-                return 'bg-warning/15 text-warning border-warning/25';
+                return 'bg-nb-yellow';
             case 'info':
-                return 'bg-info-bg text-white border border-info-bg';
+                return 'bg-nb-blue';
             case 'neutral':
-                return 'bg-highlight text-text-on-light border-highlight border';
+                return 'bg-secondary-background';
         }
 
     });
@@ -45,32 +45,32 @@ export class BadgeComponent {
     public roleTypeColor = (role: UserRoles): string => {
         switch (role) {
             case 'user':
-                return 'bg-green-700 text-green-50 border-green-700';
+                return 'bg-nb-green';
             case 'admin':
-                return 'bg-red-700 text-red-50 border-red-700';
+                return 'bg-nb-red';
             case 'sudo-admin':
-                return 'bg-slate-700 text-slate-50 border-slate-700';
+                return 'bg-nb-violet';
             default:
-                return 'bg-stone-700 text-stone-50 border-stone-700';
+                return 'bg-secondary-background';
         }
     };
 
     public primaryCategoryColor = (primaryCategory: PrimaryCategoriesType): string => {
         switch (primaryCategory) {
             case 'beer':
-                return 'bg-amber-700 text-amber-50 border-amber-700';
+                return 'bg-nb-yellow';
             case 'cider':
-                return 'bg-lime-700 text-lime-50 border-lime-700';
+                return 'bg-lime-400';
             case 'soda':
-                return 'bg-purple-700 text-purple-50 border-purple-700';
+                return 'bg-nb-violet';
             case 'wine':
-                return 'bg-red-700 text-red-50 border-red-700';
+                return 'bg-nb-red';
             case 'spirit':
-                return 'bg-indigo-700 text-indigo-50 border-indigo-700';
+                return 'bg-nb-blue';
             case 'other':
-                return 'bg-zinc-100 text-zinc-800 border-zinc-200';
+                return 'bg-secondary-background';
             default:
-                return 'bg-stone-700 text-stone-50 border-stone-700';
+                return 'bg-secondary-background';
         }
     };
 }

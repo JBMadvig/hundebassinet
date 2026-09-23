@@ -172,6 +172,8 @@ export type SecondaryItemCategoriesType =
     | SpiritTypes
     | 'other';
 
+export type FilterType = PrimaryCategoriesType | 'all' | 'search';
+
 export type ItemWithQuantity = Item & { quantity: number };
 
 export interface CreateItemRequest {

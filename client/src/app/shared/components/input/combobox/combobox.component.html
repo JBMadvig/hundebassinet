@@ -11,16 +11,15 @@
   }
   <div
     #searchContainer
-    class="box-border flex items-center gap-x-1 border bg-white px-3 py-2 align-middle"
+    class="nb-border nb-focus-within box-border flex items-center gap-x-1 bg-secondary-background px-3 py-2 align-middle"
     [ngClass]="{
-      'border-error': invalid(),
-      'border-gray-400': !invalid(),
-      'rounded-full': !initialized() || !isFocused() || controlValue === '' || controlValue === undefined,
-      'rounded-t-3xl': initialized() && isFocused() && controlValue !== '',
+      'border-error focus-within:ring-error': invalid(),
+      'rounded-base': !initialized() || !isFocused() || controlValue === '' || controlValue === undefined,
+      'rounded-t-base': initialized() && isFocused() && controlValue !== '',
     }"
   >
     <input
-      class="box-border w-full bg-white text-lg text-text-on-light placeholder-text-secondary placeholder:italic focus:outline-hidden"
+      class="box-border w-full bg-secondary-background text-lg text-foreground placeholder-text-secondary placeholder:italic focus:outline-hidden"
       [appAutoFocus]="autofocus()"
       [placeholder]="placeholder()"
       (blur)="onBlur()"
@@ -31,7 +30,7 @@
     />
     @if (controlValue) {
       <button
-        class="ml-2 flex items-center justify-center text-text-secondary transition-colors hover:text-text-on-light focus:outline-none"
+        class="ml-2 flex items-center justify-center text-text-secondary transition-colors hover:text-foreground focus:outline-none"
         (click)="onReset($event)"
         type="button"
       >
@@ -55,7 +54,7 @@
   </div>
   @if (isFocused() && controlValue !== '') {
     <ul
-      class="fixed z-9 mb-4 max-h-72 w-full overflow-auto rounded-b-3xl border border-t-0 border-gray-300 transition-colors [&_li]:odd:bg-white [&_li]:even:bg-gray-100 [&_li]:hover:bg-gray-200"
+      class="fixed z-9 mb-4 max-h-72 w-full overflow-auto rounded-b-base border-2 border-t-0 border-border bg-secondary-background shadow-shadow transition-colors [&_li]:odd:bg-secondary-background [&_li]:even:bg-background [&_li]:hover:bg-main"
       [ngStyle]="{
         width: dropdownWidth(),
       }"
@@ -92,7 +91,7 @@
             </li>
           } @else {
             <li>
-              <p class="p-3 text-left text-lg font-bold text-text-on-light">
+              <p class="p-3 text-left text-lg font-bold text-foreground">
                 No results found. Please adjust your search
               </p>
             </li>

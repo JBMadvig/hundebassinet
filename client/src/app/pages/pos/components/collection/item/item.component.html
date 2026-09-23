@@ -1,5 +1,5 @@
 <button
-  class="grid h-full w-full cursor-pointer grid-cols-1 grid-rows-[auto_1fr] overflow-y-hidden rounded-xl border border-gray-200 bg-white"
+  class="nb-border transition-all hover:translate-x-boxShadowX hover:translate-y-boxShadowY hover:shadow-none grid h-full w-full cursor-pointer grid-cols-1 grid-rows-[auto_1fr] overflow-y-hidden rounded-base bg-secondary-background shadow-shadow"
   (click)="basketService.addItemToBasket(item())"
 >
   <app-item-type-header [itemTypeId]="item().primaryCategory" />
@@ -28,11 +28,11 @@
       >
         {{ item().name }}
       </p>
-      <div class="grid grid-flow-row grid-cols-1 text-sm text-text-on-light/70">
-        <p class="text-left font-semibold text-text-on-light font-numeric">
+      <div class="grid grid-flow-row grid-cols-1 text-sm text-foreground/70">
+        <p class="text-left font-semibold text-foreground font-numeric">
           {{ item().averagePrice | localeCurrency: currencyInfo() }}
         </p>
-        <p class="text-left font-semibold text-text-on-light font-numeric">{{ item().volume }} cl</p>
+        <p class="text-left font-semibold text-foreground font-numeric">{{ item().volume }} cl</p>
         <p class="flex flex-row gap-x-1">
           <span class="font-numeric">{{ item().currentStock }}</span>
           <span>in stock</span>

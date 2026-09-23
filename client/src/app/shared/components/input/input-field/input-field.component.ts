@@ -56,7 +56,7 @@ export class InputFieldComponent implements OnInit {
     public noLeftBorder = input(false, { transform: booleanAttribute });
 
     /**
-     * If this is true, add class 'text-text-primary' to label.
+     * If this is true, add class 'text-foreground' to label.
      */
     public textOnDark = input(false, { transform: booleanAttribute });
 

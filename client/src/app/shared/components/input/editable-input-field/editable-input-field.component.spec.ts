@@ -10,7 +10,7 @@ import { EditableInputFieldComponent } from './editable-input-field.component';
         <app-editable-input-field formControlName="field" ngDefaultControl></app-editable-input-field>
     </form>`,
     standalone: true,
-    imports: [ReactiveFormsModule, EditableInputFieldComponent],
+    imports: [ ReactiveFormsModule, EditableInputFieldComponent ],
 })
 class TestHostComponent {
     form = new FormGroup({ field: new FormControl('') });
@@ -22,7 +22,7 @@ describe('EditableInputFieldComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [TestHostComponent],
+            imports: [ TestHostComponent ],
         }).compileComponents();
 
         fixture = TestBed.createComponent(TestHostComponent);

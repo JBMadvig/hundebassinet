@@ -1,6 +1,6 @@
 <div class="p-4">
   <button
-          class="flex flex-row gap-4 text-text-primary hover:cursor-pointer hover:text-text-secondary"
+          class="flex flex-row gap-4 text-foreground hover:cursor-pointer hover:text-text-secondary"
           (click)="goBackToQR()"
         >
           <svg
@@ -20,15 +20,15 @@
         </button>
         </div>
 <div class="flex h-dvh flex-col items-center justify-center gap-8 p-8">
-  <h1 class="text-3xl font-bold text-text-primary">Scan Item Barcode</h1>
-  <p class="max-w-100 text-center text-text-primary">
+  <h1 class="text-3xl font-bold text-foreground">Scan Item Barcode</h1>
+  <p class="max-w-100 text-center text-foreground">
     Hold a product barcode up to the camera to add it to the POS basket or inventory.
   </p>
 
   
   @if (!useFallback()) {
     <!-- Barcode Scanner viewport -->
-    <div #barcodeReader id="barcode-reader" class="w-80 overflow-hidden rounded-xl"></div>
+    <div #barcodeReader id="barcode-reader" class="nb-border w-80 overflow-hidden rounded-base"></div>
   } @else {
     <!-- Fallback: capture image with native camera -->
     <div class="flex flex-col items-center gap-4">
@@ -55,8 +55,8 @@
 
   @if (toast()) {
     <div
-      class="fixed bottom-6 left-1/2 -translate-x-1/2 rounded-full px-6 py-3 text-sm font-medium shadow-lg"
-      [class]="toastType() === 'success' ? 'bg-green-600 text-white' : 'bg-red-600 text-white'"
+      class="nb-border fixed bottom-6 left-1/2 -translate-x-1/2 rounded-base px-6 py-3 text-sm font-medium text-foreground shadow-shadow"
+      [class]="toastType() === 'success' ? 'bg-nb-green' : 'bg-nb-red'"
     >
       {{ toast() }}
     </div>

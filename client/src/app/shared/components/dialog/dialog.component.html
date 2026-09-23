@@ -4,13 +4,11 @@
   (cancel)="onCancel($event)"
 >
   <div
-    class="modal-grid max-h-[80dvh] w-full max-w-3/5 overflow-hidden rounded-xl px-6 py-6 shadow-lg"
+    class="modal-grid max-h-[80dvh] w-full max-w-3/5 overflow-hidden rounded-base nb-border px-6 py-6 shadow-shadow"
     [ngClass]="{
       'w-3/4': useFullWidth(),
-    }"
-    [ngClass]="{
-      'bg-white text-text-on-light': theme() === 'light',
-      'bg-surface-overlay text-text-primary': theme() === 'dark',
+      'bg-secondary-background text-foreground': theme() === 'light',
+      'bg-main text-main-foreground': theme() === 'dark',
     }"
   >
     <header>
@@ -21,18 +19,21 @@
               <ng-content select="[dialogIcon]"></ng-content>
             </i>
           }
-          <p class="font-heading text-2xl font-semibold">{{ dialogTitle() }}</p>
+          <p class="font-heading text-2xl font-bold uppercase">{{ dialogTitle() }}</p>
         </div>
         <div class="w-full self-center">
           <ng-content select="[headerAction]"></ng-content>
         </div>
-        <button class="cursor-pointer self-start" (click)="onHandleClose()">
+        <button
+          class="flex size-8 shrink-0 items-center justify-center self-start rounded-base nb-border bg-secondary-background text-foreground shadow-shadow transition-all hover:translate-x-boxShadowX hover:translate-y-boxShadowY hover:shadow-none"
+          (click)="onHandleClose()"
+        >
           <i>
             <svg
               fill="currentColor"
-              height="24"
+              height="20"
               viewBox="0 0 24 24"
-              width="24"
+              width="20"
               xmlns="http://www.w3.org/2000/svg"
             >
               <!--Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free-->
@@ -44,7 +45,7 @@
         </button>
       </div>
     </header>
-    <main class="overflow-y-auto pt-4">
+    <main class="-mx-2 overflow-y-auto px-2 pt-4 pb-2">
       <ng-content></ng-content>
     </main>
   </div>

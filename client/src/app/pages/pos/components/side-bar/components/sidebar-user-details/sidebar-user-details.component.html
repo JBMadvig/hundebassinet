@@ -1,11 +1,11 @@
 <article
-  class="grid grid-cols-[auto_1fr_auto_auto] grid-rows-1 items-center gap-2 px-2 py-4 text-text-primary"
+  class="grid grid-cols-[auto_1fr_auto_auto] grid-rows-1 items-center gap-2 px-2 py-4 text-foreground"
 >
   <div
-    class="flex h-14 w-14 cursor-default items-center justify-center rounded-full border border-border-strong"
+    class="nb-border flex h-14 w-14 cursor-default items-center justify-center rounded-base"
   >
     <!-- <p class="text-xl">{{ userNameInitalComputedValue() }}</p> -->
-    <img class="h-full w-full rounded-full" [src]="userDetail.avatarUrl" alt="User avatar" />
+    <img class="h-full w-full rounded-base" [src]="userDetail.avatarUrl" alt="User avatar" />
   </div>
   <div class="flex h-full cursor-default flex-col justify-evenly">
     <p class="font-heading">{{ userDetail.name }}</p>
@@ -17,7 +17,7 @@
   </div>
   <div class="flex h-full cursor-default flex-col justify-evenly">
     <p class="text-right text-xs">Balance:</p>
-    <p class="text-lg font-semibold text-highlight font-numeric">
+    <p class="text-lg font-semibold text-nb-yellow font-numeric">
       {{ userDetail.balance | localeCurrency: currencyInfo() }}
     </p>
   </div>

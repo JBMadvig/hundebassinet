@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { Item } from '../../../../shared/types/items.types';
 import { FilterBarComponent } from './filter-bar.component';
 
 describe('FilterBarComponent', () => {
@@ -8,13 +9,13 @@ describe('FilterBarComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [FilterBarComponent],
+            imports: [ FilterBarComponent ],
         }).compileComponents();
 
         fixture = TestBed.createComponent(FilterBarComponent);
         component = fixture.componentInstance;
         // Override private items to prevent issues with testdata in test environment
-        (component as any)['items'] = [];
+        (component as unknown as { items: Item[] }).items = [];
         fixture.detectChanges();
     });
 

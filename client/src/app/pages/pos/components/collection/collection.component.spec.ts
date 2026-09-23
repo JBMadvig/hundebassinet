@@ -8,13 +8,13 @@ describe('CollectionComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [CollectionComponent],
+            imports: [ CollectionComponent ],
         }).compileComponents();
 
         fixture = TestBed.createComponent(CollectionComponent);
         component = fixture.componentInstance;
-        // Override private items to prevent issues with testdata in test environment
-        (component as any)['items'] = [];
+        // Override items to prevent issues with testdata in test environment
+        component.items = [];
         fixture.detectChanges();
     });
 

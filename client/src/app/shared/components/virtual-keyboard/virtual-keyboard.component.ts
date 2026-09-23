@@ -10,7 +10,6 @@ import { VirtualKeyboardKeyComponent } from './virtual-keyboard-key/virtual-keyb
         VirtualKeyboardKeyComponent,
     ],
     templateUrl: './virtual-keyboard.component.html',
-    styleUrl: './virtual-keyboard.component.css',
 })
 export class VirtualKeyboardComponent {
     private formBuilder = inject(FormBuilder);

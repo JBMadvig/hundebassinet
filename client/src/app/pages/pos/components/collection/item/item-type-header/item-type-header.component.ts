@@ -12,23 +12,23 @@ export class ItemTypeHeaderComponent {
 
     public itemTypeId = input.required<Item['primaryCategory']>();
 
-    // TODO: Make this generic return method since it's also used in filter-bar.component.ts
+    // Colors mirror BadgeComponent's primaryCategoryColor mapping, so a category reads the same way everywhere.
     public itemTypeClass = computed(() => {
         switch (this.itemTypeId()) {
             case 'beer':
-                return 'bg-amber-500';
+                return 'bg-nb-yellow';
             case 'cider':
-                return 'bg-green-500';
+                return 'bg-lime-400';
             case 'wine':
-                return 'bg-purple-500';
+                return 'bg-nb-red';
             case 'spirit':
-                return 'bg-red-500';
+                return 'bg-nb-blue';
             case 'soda':
-                return 'bg-blue-500';
+                return 'bg-nb-violet';
             case 'other':
-                return 'bg-gray-500';
+                return 'bg-foreground';
             default:
-                return 'bg-gray-500';
+                return 'bg-foreground';
         }
     });
 }

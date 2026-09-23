@@ -10,7 +10,7 @@ import { SwitchComponent } from './switch.component';
         <app-switch formControlName="field" ngDefaultControl></app-switch>
     </form>`,
     standalone: true,
-    imports: [ReactiveFormsModule, SwitchComponent],
+    imports: [ ReactiveFormsModule, SwitchComponent ],
 })
 class TestHostComponent {
     form = new FormGroup({ field: new FormControl(false) });
@@ -22,7 +22,7 @@ describe('SwitchComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [TestHostComponent],
+            imports: [ TestHostComponent ],
         }).compileComponents();
 
         fixture = TestBed.createComponent(TestHostComponent);

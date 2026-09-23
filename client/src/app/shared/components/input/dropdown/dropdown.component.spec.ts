@@ -10,7 +10,7 @@ import { DropdownComponent } from './dropdown.component';
         <app-dropdown formControlName="field" [options]="[]" ngDefaultControl></app-dropdown>
     </form>`,
     standalone: true,
-    imports: [ReactiveFormsModule, DropdownComponent],
+    imports: [ ReactiveFormsModule, DropdownComponent ],
 })
 class TestHostComponent {
     form = new FormGroup({ field: new FormControl(null) });
@@ -22,7 +22,7 @@ describe('DropdownComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [TestHostComponent],
+            imports: [ TestHostComponent ],
         }).compileComponents();
 
         fixture = TestBed.createComponent(TestHostComponent);

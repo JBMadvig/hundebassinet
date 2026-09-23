@@ -8,7 +8,7 @@
    - If a new item we add all empty fields they have to fill out, and then we create a new item
    -->
   @if (!itemChosenSignal()) {
-    <p class="mb-4 text-text-on-light">
+    <p class="mb-4 text-foreground">
       Search for an item in the database. If it doesn't exist, you can create a new one.
     </p>
     <form [formGroup]="searchItemsForm">
@@ -34,12 +34,12 @@
     </form>
   } @else {
     @if (itemExistsSignal()) {
-      <p class="mb-4 text-text-on-light">
+      <p class="mb-4 text-foreground">
         Item found in database! You can adjust the volume to add a new variant, or keep it as-is and fill in
         the price and quantity.
       </p>
     } @else {
-      <p class="mb-4 text-text-on-light">
+      <p class="mb-4 text-foreground">
         Item not found in database. Please fill out the all of the fields below to create the item and add it
         to inventory.
       </p>
@@ -98,7 +98,7 @@
         type="number"
       />
       @if (pricePerUnit() !== null) {
-        <p class="ml-2 flex flex-row gap-x-2 text-xs text-text-on-light">
+        <p class="ml-2 flex flex-row gap-x-2 text-xs text-foreground">
           <span>(Equals to</span>
           <span class="font-numeric">
             {{ pricePerUnit()! | localeCurrency: currencyInfo() }} 

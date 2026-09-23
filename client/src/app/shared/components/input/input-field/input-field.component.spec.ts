@@ -10,7 +10,7 @@ import { InputFieldComponent } from './input-field.component';
         <app-input-field formControlName="field" ngDefaultControl></app-input-field>
     </form>`,
     standalone: true,
-    imports: [ReactiveFormsModule, InputFieldComponent],
+    imports: [ ReactiveFormsModule, InputFieldComponent ],
 })
 class TestHostComponent {
     form = new FormGroup({ field: new FormControl('') });
@@ -22,7 +22,7 @@ describe('InputFieldComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [TestHostComponent],
+            imports: [ TestHostComponent ],
         }).compileComponents();
 
         fixture = TestBed.createComponent(TestHostComponent);

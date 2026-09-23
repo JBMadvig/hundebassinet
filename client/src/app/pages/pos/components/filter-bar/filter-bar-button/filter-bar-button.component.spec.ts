@@ -8,12 +8,12 @@ describe('FilterBarButtonComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [FilterBarButtonComponent],
+            imports: [ FilterBarButtonComponent ],
         }).compileComponents();
 
         fixture = TestBed.createComponent(FilterBarButtonComponent);
         component = fixture.componentInstance;
-        fixture.componentRef.setInput('Category', 'all');
+        fixture.componentRef.setInput('category', 'all');
         fixture.componentRef.setInput('currentFilter', 'all');
         fixture.detectChanges();
     });

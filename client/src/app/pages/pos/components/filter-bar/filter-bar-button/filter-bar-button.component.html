@@ -1,8 +1,12 @@
 <button
-  class="cursor-pointer rounded-full border-2 border-border-strong px-4 py-4 font-semibold text-text-primary transition-all duration-200 hover:bg-accent hover:text-white"
-  [ngClass]="{
-    'bg-accent text-white': currentFilter() === 'search' && category() === 'search',
-  }"
+  class="nb-border cursor-pointer rounded-base px-4 py-4 font-semibold text-foreground shadow-shadow transition-all duration-200 hover:text-main-foreground"
+  [ngClass]="[
+    currentFilter() === 'search' && category() === 'search'
+      ? 'bg-main text-main-foreground'
+      : '',
+    currentFilter() === category() ? filterButtonActiveClass() : 'bg-secondary-background',
+  ]"
+  [class]="filterButtonHoverClass()"
   (click)="onClick()"
 >
   <p class="flex flex-row transition-all duration-250 ease-in-out">
@@ -131,7 +135,7 @@
       [ngClass]="{
         'ml-2 max-w-xs opacity-100': currentFilter() === category() || category() === 'all',
         'ml-0 max-w-0 opacity-0': currentFilter() !== category() && category() !== 'all',
-        'text-white': currentFilter() === 'search' && category() === 'search',
+        'text-main-foreground': currentFilter() === 'search' && category() === 'search',
       }"
       >{{ category().toLocaleUpperCase() }}</span
     >

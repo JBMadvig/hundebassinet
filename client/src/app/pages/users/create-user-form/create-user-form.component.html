@@ -1,5 +1,5 @@
 <app-dialog [(visible)]="visible" dialogTitle="Create new user" useFullWidth>
-  <div class="flex w-full flex-col gap-4 overflow-scroll text-text-on-light">
+  <div class="flex w-full flex-col gap-4 overflow-scroll text-foreground">
     <div class="grid w-full grid-cols-[1fr_auto] gap-x-4">
       @if (createUserError() === createUserErrorOptions.EMAIL_EXISTS) {
         <p class="text-error">A user with this email already exists</p>

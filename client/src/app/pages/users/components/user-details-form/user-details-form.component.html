@@ -1,8 +1,8 @@
-<div class="flex w-full flex-col gap-4 rounded-2xl border border-gray-200 bg-white/90 p-4 text-text-on-light">
+<div class="nb-border flex w-full flex-col gap-4 rounded-base bg-secondary-background/90 p-4 text-foreground">
   <div class="grid grid-cols-[1fr_auto] gap-x-4">
     <div>
       <p class="font-heading text-xl">User Details</p>
-      <hr class="mt-2 mb-4 border border-border bg-text-on-light" />
+      <hr class="mt-2 mb-4 border-2 border-border bg-foreground" />
       <form
         class="grid-rows-auto grid grid-cols-1 gap-4"
         [formGroup]="userDetailsForm"
@@ -80,15 +80,15 @@
     </div>
     <div>
       <p class="text-xl">Profile Image</p>
-      <hr class="mt-2 mb-4 border border-border bg-text-on-light" />
-      <div class="group relative w-fit rounded-2xl border-2 border-gray-200">
+      <hr class="mt-2 mb-4 border-2 border-border bg-foreground" />
+      <div class="group relative w-fit rounded-base nb-border">
         @if (!user().avatarUrl) {
           <div class="flex aspect-4/3 h-full w-72 items-center justify-center bg-amber-950/10">
             <span class="font-extrabold">[NO IMAGE PROVIDED]</span>
           </div>
         } @else {
           <img
-            class="col-start-1 row-start-1 h-full w-full max-w-72 rounded-2xl object-cover"
+            class="col-start-1 row-start-1 h-full w-full max-w-72 rounded-base object-cover"
             [src]="user().avatarUrl"
             alt="User profile image"
           />
@@ -101,7 +101,7 @@
           type="file"
         />
         <button
-          class="absolute bottom-2 left-1/2 flex h-fit w-fit -translate-x-1/2 -translate-y-1/2 cursor-pointer flex-row items-center rounded-full border border-gray-300 bg-white/90 p-2 text-text-on-light opacity-0 transition-all duration-200 ease-in-out group-hover:opacity-100 hover:pointer-events-auto"
+          class="absolute bottom-2 left-1/2 flex h-fit w-fit -translate-x-1/2 -translate-y-1/2 cursor-pointer flex-row items-center nb-border rounded-base bg-secondary-background/90 p-2 text-foreground opacity-0 transition-all duration-200 ease-in-out group-hover:opacity-100 hover:pointer-events-auto"
           (click)="fileInput.click()"
         >
           <svg
@@ -125,7 +125,7 @@
         <app-button (handleClick)="changePasswordSignal.set(true)" label="Change Password" variant="text" />
       } @else {
         <div class="mt-4 flex flex-col gap-2">
-          <p class="text-xl text-text-on-light">Change Password</p>
+          <p class="text-xl text-foreground">Change Password</p>
           <form class="flex flex-col gap-4" [formGroup]="passwordForm" (submit)="changePassword()">
             @if (changePasswordSignalError() === 'incorrectCurrent') {
               <p class="text-error">Incorrect current password.</p>

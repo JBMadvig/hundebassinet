@@ -10,8 +10,8 @@ describe('UserComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [UserComponent],
-            providers: [provideRouter([]), provideHttpClient()],
+            imports: [ UserComponent ],
+            providers: [ provideRouter([]), provideHttpClient() ],
         }).compileComponents();
 
         fixture = TestBed.createComponent(UserComponent);

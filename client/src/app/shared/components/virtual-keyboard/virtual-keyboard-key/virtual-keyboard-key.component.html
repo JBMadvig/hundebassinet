@@ -1,17 +1,16 @@
 @let key = this.key();
 @let isShift = this.isShift();
 @let isCapsLock = this.isCapsLock();
+@let isActive = (key.value === 'CapsLock' && isCapsLock) || (key.value === 'Shift' && isShift);
 
 <button
-  class="h-12 min-w-12 cursor-pointer rounded-md border shadow-sm transition-all duration-100 ease-in-out hover:-translate-y-0.5 hover:bg-gray-400"
+  class="h-12 min-w-12 cursor-pointer rounded-base nb-border bg-secondary-background font-base text-foreground shadow-shadow transition-all hover:translate-x-boxShadowX hover:translate-y-boxShadowY hover:shadow-none"
   [ngClass]="{
     'min-w-24': key.value === 'Backspace' || key.value === 'Shift',
     'min-w-16': key.value === 'Tab',
     'min-w-20': key.value === 'CapsLock' || key.value === 'Enter',
     'min-w-52': key.value === 'Space',
-    'border-prime-green2 bg-prime-green text-white':
-      (key.value === 'CapsLock' && isCapsLock) || (key.value === 'Shift' && isShift),
-    'border-gray-300 bg-white text-text-blue': (key.value !== 'CapsLock' && isCapsLock) || (key.value !== 'Shift' && isShift),
+    'bg-main text-main-foreground': isActive,
     'min-w-12':
       key.value !== 'Backspace' &&
       key.value !== 'Shift' &&

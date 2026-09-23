@@ -1,3 +1,5 @@
+@import 'tailwindcss';
+
 @font-face {
   font-family: 'Inter';
   src: url('/assets/Inter/Inter-VariableFont_opsz,wght.ttf') format('truetype');
@@ -30,59 +32,56 @@
   font-display: swap;
 }
 
-/* Custom orange glow shadow for user card hover */
-.shadow-prime-orange-glow {
-  box-shadow: 0 8px 32px 0 var(--color-prime-orange, #f18f01aa), 0 1.5px 8px 0 var(--color-prime-orange, #f18f0130);
-}
-@import 'tailwindcss';
-
 @source './**/*.{html,ts,css}';
 
 @theme {
+  /* --- fonts (unchanged families) --- */
   --font-heading: 'Plus Jakarta Sans', sans-serif;
   --font-body: 'Inter', sans-serif;
+  --font-weight-base: 500; /* -> font-base */
 
-  /* New color palette */
-  /* Primary accent */
-  --color-accent: #6366F1; /* Default state (buttons, active filter) */
-  --color-accent-hover: #818CF8; /* Hover/press state */
-  --color-accent-muted: #4F46E5; /* Pressed/active state */
-  --color-accent-disabled: #3730A3; /* Disabled state */
+  /* --- neobrutalism geometry --- */
+  --radius-base: 5px; /* -> rounded-base */
+  --spacing-boxShadowX: 4px; /* -> translate-x-boxShadowX */
+  --spacing-boxShadowY: 4px;
+  --spacing-reverseBoxShadowX: -4px;
+  --spacing-reverseBoxShadowY: -4px;
+  --shadow-shadow: 4px 4px 0px 0px var(--color-border); /* -> shadow-shadow */
 
-  /* Secondary accent */
-  --color-highlight: #D4A06A; /* Prices, subtotals, balance, menu icons */
-  --color-highlight-hover: #E0B57E; /* Hover state */
-  --color-highlight-muted: #B8885A; /* Pressed state */
-  --color-highlight-disabled: #6B5D45; /* Disabled state */
+  /* --- core palette --- */
+  --color-background: hsl(214 95% 93%); /* page */
+  --color-secondary-background: #ffffff; /* cards, inputs */
+  --color-foreground: #000000;
+  --color-main: hsl(217 100% 66%); /* #5294ff */
+  --color-main-foreground: #000000;
+  --color-border: #000000;
+  --color-ring: #000000;
+  --color-overlay: rgb(0 0 0 / 0.8);
 
-  /* Surface colors - cards, sidebade and containers on the bg */
-  --color-surface: #1E2254;	/* Card backgrounds, sidebar bg */
-  --color-surface-raised: #272B66;	/* Hover on surface, elevated cards */
-  --color-surface-overlay: #323878;	/* Modals/dialogs overlay panel bg */
-  --color-border: rgba(255,255,255,0.12); /* Default borders on dark surfaces */
-  --color-border-strong: rgba(255,255,255,0.25); /* Emphasized borders */
-
-  /* Text colors */
-  --color-text-primary: #F0F0F5; /* Primary text on dark surfaces */
-  --color-text-secondary: #A0A3C4; /* Secondary/muted text on dark surfaces */
-  --color-text-on-light: #1A1D3E; /* Text on light surfaces (item cards) */
-  --color-text-disabled-accent: rgba(124,110,246,0.5); /* Disabled state for accent text */
-
-  /* State colors */ 
-  --color-success: #34D399; /**/
-  --color-success-hover: #5EEAD4; /**/
-  --color-succes-text: rgba(52,211,153,0.15); /**/
-  --color-error: #F87171; /**/
-  --color-error-hover: #FCA5A5; /**/
-  --color-error-bg: rgba(248,113,113,0.15); /**/
-  --color-warning: #FBBF24; /**/
-  --color-warning-hover: #FCD34D; /**/
-  --color-warning-bg: rgba(251,191,36,0.15); /**/
-  --color-info: #60A5FA; /**/
-  --color-info-hover: #93C5FD; /**/
-  --color-info-bg: rgba(96,165,250,0.15); /**/
+  /* --- bold accents (reference chart palette) --- */
+  --color-nb-green: #05e17a;
+  --color-nb-red: #ff4d50;
+  --color-nb-yellow: #facc00;
+  --color-nb-blue: #5294ff;
+  --color-nb-violet: #7a83ff;
 
   --spacing-sidebar: 380px;
+
+  /* --- remaining semantic tokens --- */
+  --color-text-secondary: rgb(0 0 0 / 0.6);
+
+  --color-success: #05e17a;
+  --color-success-hover: #3aeb9a;
+  --color-succes-text: #05e17a;
+  --color-error: #ff4d50;
+  --color-error-hover: #ff7a7c;
+  --color-error-bg: #ff4d50;
+  --color-warning: #facc00;
+  --color-warning-hover: #ffd83d;
+  --color-warning-bg: #facc00;
+  --color-info: #5294ff;
+  --color-info-hover: #7aaeff;
+  --color-info-bg: #5294ff;
 }
 
 /*
@@ -99,7 +98,7 @@
   ::before,
   ::backdrop,
   ::file-selector-button {
-    border-color: var(--color-gray-200, currentColor);
+    border-color: var(--color-border);
   }
 
   button:not(:disabled) {
@@ -107,26 +106,40 @@
   }
 
   h1 {
-    @apply font-heading text-5xl;
+    @apply font-heading text-5xl font-bold;
   }
 
   h2 {
-    @apply font-heading text-4xl;
+    @apply font-heading text-4xl font-bold;
   }
 
   h3 {
-    @apply font-heading text-3xl;
+    @apply font-heading text-3xl font-bold;
   }
 
   h4 {
-    @apply font-heading text-2xl;
+    @apply font-heading text-2xl font-bold;
+  }
+}
+
+@layer components {
+  .nb-border {
+    @apply border-2 border-border;
+  }
+  .nb-focus {
+    @apply focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2;
+  }
+  /* For a bordered wrapper div around the actual focusable control (e.g. an icon + input + buttons row) —
+     focus-within reacts when the child is focused, since focus-visible on the wrapper itself never fires. */
+  .nb-focus-within {
+    @apply focus-within:ring-2 focus-within:ring-black focus-within:ring-offset-2;
   }
 }
 
 /* You can add global styles to this file, and also import other style files */
 html,
 body {
-  @apply h-full font-body;
+  @apply h-full font-body font-base;
 }
 
 .loader-on-light-bg,
@@ -157,14 +170,11 @@ body {
   100%  {transform:scaleY(-1) rotate(-135deg)}
 }
 
-.loader-on-dark-bg {
-  border: 2px solid var(--color-text-primary);
-}
+.loader-on-dark-bg,
 .loader-on-light-bg {
-  border: 2px solid var(--color-text-on-light);
+  border: 2px solid var(--color-foreground);
 }
 
 .font-numeric {
     font-variant-numeric: tabular-nums;
 }
-

@@ -23,7 +23,7 @@ describe('SidebarUserDetailsComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [SidebarUserDetailsComponent],
+            imports: [ SidebarUserDetailsComponent ],
             providers: [
                 {
                     provide: AuthService,

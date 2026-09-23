@@ -22,8 +22,8 @@ describe('UserDetailsFormComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [UserDetailsFormComponent],
-            providers: [provideHttpClient()],
+            imports: [ UserDetailsFormComponent ],
+            providers: [ provideHttpClient() ],
         }).compileComponents();
 
         fixture = TestBed.createComponent(UserDetailsFormComponent);

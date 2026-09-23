@@ -3,10 +3,10 @@ select {
 }
 
 ::picker(select) {
-    border: 1px solid rgba(26, 29, 62, 0.15);
-    border-radius: 1rem;
+    border: 2px solid #000;
+    border-radius: 5px;
     padding: 0.25rem 0;
-    background-color: rgba(255, 255, 255, 0.95);
+    background-color: #ffffff;
 }
 
 option {
@@ -14,11 +14,11 @@ option {
 }
 
 option:hover {
-    background-color: rgba(99, 102, 241, 0.1);
+    background-color: var(--color-main);
 }
 
 option:checked {
-    background-color: rgba(99, 102, 241, 0.15);
+    background-color: var(--color-main);
 }
 
 select::select-arrow {

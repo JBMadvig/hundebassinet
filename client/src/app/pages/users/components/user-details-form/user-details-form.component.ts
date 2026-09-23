@@ -40,8 +40,8 @@ export class UserDetailsFormComponent implements OnInit {
     private formBuilder = inject(FormBuilder);
     private usersApiService = inject(UsersApiService);
 
-    public readonly roleList = rolesList;
-    public readonly currencyOptions = currencyDropdownOptions;
+    public get roleList() { return rolesList; }
+    public get currencyOptions() { return currencyDropdownOptions; }
     public currentUser = this.authService.currentUser;
 
     public userDetailsForm = this.formBuilder.group({

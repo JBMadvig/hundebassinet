@@ -8,7 +8,7 @@ describe('ItemTypeHeaderComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [ItemTypeHeaderComponent],
+            imports: [ ItemTypeHeaderComponent ],
         }).compileComponents();
 
         fixture = TestBed.createComponent(ItemTypeHeaderComponent);

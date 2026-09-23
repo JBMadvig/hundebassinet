@@ -1,4 +1,4 @@
-<section class="flex w-full flex-row gap-4 overflow-x-auto px-4 py-2">
+<section class="flex w-full flex-row gap-4 flex-wrap px-4 py-2">
   @for (category of currentStockFilter(); track category) {
     <app-filter-bar-button
       [currentFilter]="currentFilter()"

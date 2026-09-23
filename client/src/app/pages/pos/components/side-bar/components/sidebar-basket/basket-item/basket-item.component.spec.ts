@@ -24,7 +24,7 @@ describe('BasketItemComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [BasketItemComponent],
+            imports: [ BasketItemComponent ],
         }).compileComponents();
 
         fixture = TestBed.createComponent(BasketItemComponent);
