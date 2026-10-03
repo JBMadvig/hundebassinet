@@ -24,6 +24,10 @@ export interface InventoryRequest {
     page: number,
     entriesPrPage: number,
 }
+export interface CollectionResponse {
+    items: Item[],
+    currency: string,
+}
 export interface InventoryResponse {
     items: Item[],
     itemsInSearch: number,

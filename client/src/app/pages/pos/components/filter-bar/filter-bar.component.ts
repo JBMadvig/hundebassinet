@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, output, signal } from '@angular/core';
+import { Component, computed, inject, output, signal } from '@angular/core';
 
-import { FilterType, Item } from '../../../../shared/types/items.types';
-import { testItems } from '../../testdata';
+import { CollectionService } from '@services/collection.service';
+
+import { FilterType } from '../../../../shared/types/items.types';
 import { FilterBarButtonComponent } from './filter-bar-button/filter-bar-button.component';
 
 @Component({
@@ -16,14 +17,14 @@ import { FilterBarButtonComponent } from './filter-bar-button/filter-bar-button.
 })
 export class FilterBarComponent {
 
-    private items: Item[] = testItems;
+    private collectionService = inject(CollectionService);
 
     public currentFilter = signal<FilterType>('all');
 
     public currentFilterOutput = output<FilterType>();
 
     public currentStockFilter = computed(() => {
-        const inStockItems = this.items.filter(item => item.currentStock > 0);
+        const inStockItems = this.collectionService.itemsResource.value().filter(item => item.currentStock > 0);
         const categories = inStockItems.map(item => item.primaryCategory);
         return [ ...new Set(categories) ];
     });

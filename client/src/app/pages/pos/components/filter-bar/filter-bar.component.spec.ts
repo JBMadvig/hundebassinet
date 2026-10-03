@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Item } from '../../../../shared/types/items.types';
+import { InventoryService } from '@services/inventory.service';
+
 import { FilterBarComponent } from './filter-bar.component';
 
 describe('FilterBarComponent', () => {
@@ -10,12 +11,15 @@ describe('FilterBarComponent', () => {
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             imports: [ FilterBarComponent ],
+            providers: [
+                { provide: InventoryService, useValue: {
+                    getCollectionItems: () => Promise.resolve({ items: [], currency: 'DKK' }),
+                } },
+            ],
         }).compileComponents();
 
         fixture = TestBed.createComponent(FilterBarComponent);
         component = fixture.componentInstance;
-        // Override private items to prevent issues with testdata in test environment
-        (component as unknown as { items: Item[] }).items = [];
         fixture.detectChanges();
     });
 

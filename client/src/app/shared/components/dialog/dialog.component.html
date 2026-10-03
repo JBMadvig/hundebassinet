@@ -1,6 +1,6 @@
 <dialog
   #dialogEl
-  class="m-0 flex h-full max-h-none w-full max-w-none items-start justify-center bg-transparent p-0 pt-23 border-none outline-none"
+  class="m-0 open:flex h-full max-h-none w-full max-w-none items-start justify-center bg-transparent p-0 pt-23 border-none outline-none"
   (cancel)="onCancel($event)"
 >
   <div
@@ -25,7 +25,7 @@
           <ng-content select="[headerAction]"></ng-content>
         </div>
         <button
-          class="flex size-8 shrink-0 items-center justify-center self-start rounded-base nb-border bg-secondary-background text-foreground shadow-shadow transition-all hover:translate-x-boxShadowX hover:translate-y-boxShadowY hover:shadow-none"
+          class="flex size-8 shrink-0 items-center justify-center self-start rounded-base nb-border bg-secondary-background text-foreground nb-press"
           (click)="onHandleClose()"
         >
           <i>

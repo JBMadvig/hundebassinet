@@ -50,7 +50,7 @@
           </ng-template>
           <ng-template #rowTemplate [appTypedTemplate]="typeToken" let-data>
             <tr
-              class="cursor-pointer"
+              class="nb-press-row cursor-pointer"
               [queryParams]="data.id === currentUser()?.id ? { returnTo: '/users' } : null"
               [routerLink]="data.id === currentUser()?.id ? ['/users/me'] : ['/users', data.id]"
             >

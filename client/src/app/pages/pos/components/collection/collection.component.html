@@ -1,11 +1,17 @@
 <section class="grid h-full w-full grid-rows-1 overflow-hidden">
   <div class="overflow-y-auto scroll-smooth">
-    <ul class="grid w-full grid-flow-row grid-cols-[repeat(auto-fill,minmax(230px,1fr))] gap-2 p-2">
-      @for (item of sortAndFilterCategories(); track item.id) {
-        <li class="max-w-[350px]">
-          <app-item [item]="item"></app-item>
-        </li>
-      }
-    </ul>
+    @if (itemsResource.isLoading()) {
+      <p class="p-4 text-foreground">Loading items...</p>
+    } @else if (itemsResource.error()) {
+      <p class="p-4 text-lg text-error">Error fetching items. Please try again later.</p>
+    } @else {
+      <ul class="grid w-full grid-flow-row grid-cols-[repeat(auto-fill,minmax(230px,1fr))] gap-2 p-2">
+        @for (item of sortAndFilterCategories(); track item.id) {
+          <li class="max-w-[350px]">
+            <app-item [item]="item"></app-item>
+          </li>
+        }
+      </ul>
+    }
   </div>
 </section>

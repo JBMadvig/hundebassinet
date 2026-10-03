@@ -4,7 +4,7 @@
 @let isActive = (key.value === 'CapsLock' && isCapsLock) || (key.value === 'Shift' && isShift);
 
 <button
-  class="h-12 min-w-12 cursor-pointer rounded-base nb-border bg-secondary-background font-base text-foreground shadow-shadow transition-all hover:translate-x-boxShadowX hover:translate-y-boxShadowY hover:shadow-none"
+  class="h-12 min-w-12 cursor-pointer rounded-base nb-border bg-secondary-background font-base text-foreground nb-press"
   [ngClass]="{
     'min-w-24': key.value === 'Backspace' || key.value === 'Shift',
     'min-w-16': key.value === 'Tab',

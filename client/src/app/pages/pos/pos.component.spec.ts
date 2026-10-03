@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 
+import { InventoryService } from '@services/inventory.service';
+
 import { CollectionComponent } from './components/collection/collection.component';
 import { FilterBarComponent } from './components/filter-bar/filter-bar.component';
 import { SidebarUserDetailsComponent } from './components/side-bar/components/sidebar-user-details/sidebar-user-details.component';
@@ -13,7 +15,12 @@ describe('PosComponent', () => {
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             imports: [ PosComponent ],
-            providers: [ provideRouter([]) ],
+            providers: [
+                provideRouter([]),
+                { provide: InventoryService, useValue: {
+                    getCollectionItems: () => Promise.resolve({ items: [], currency: 'DKK' }),
+                } },
+            ],
         })
             .overrideComponent(FilterBarComponent, { set: { template: '' } })
             .overrideComponent(CollectionComponent, { set: { template: '' } })

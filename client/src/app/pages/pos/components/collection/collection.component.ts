@@ -3,7 +3,6 @@ import { Component, computed, inject } from '@angular/core';
 import { CollectionService } from '@services/collection.service';
 
 import { Item } from '../../../../shared/types/items.types';
-import { testItems } from '../../testdata';
 import { ItemComponent } from './item/item.component';
 
 @Component({
@@ -17,23 +16,24 @@ import { ItemComponent } from './item/item.component';
 export class CollectionComponent {
     private collectionService = inject(CollectionService);
 
-    public items: Item[] = testItems;
+    public itemsResource = this.collectionService.itemsResource;
 
     public currentFilter = this.collectionService.currentFilter;
     public searchQuery = this.collectionService.searchQuery;
 
     public sortAndFilterCategories = computed(()=> {
         // Filter items based on selected category
+        const items = this.itemsResource.value();
         let filteredItems: Item[];
         switch (this.currentFilter()) {
             case 'all':
-                filteredItems = this.items;
+                filteredItems = items;
                 break;
             case 'search':
-                filteredItems = this.items.filter(item => item.name.toLowerCase().includes(this.searchQuery().toLowerCase()));
+                filteredItems = items.filter(item => item.name.toLowerCase().includes(this.searchQuery().toLowerCase()));
                 break;
             default:
-                filteredItems = this.items.filter(item => item.primaryCategory === this.currentFilter());
+                filteredItems = items.filter(item => item.primaryCategory === this.currentFilter());
         }
 
         // Sort items by primaryCategory. Return as Item[]

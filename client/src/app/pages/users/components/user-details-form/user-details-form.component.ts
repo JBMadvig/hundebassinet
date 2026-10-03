@@ -48,7 +48,8 @@ export class UserDetailsFormComponent implements OnInit {
         name: [ '', [ Validators.required, Validators.minLength(2) ] ],
         email: [ '', [ Validators.required, emailValidator ] ],
         role: [ '' ],
-        balance: 0,
+        // The text input writes strings, so the value can be a number (initial) or a string (after editing)
+        balance: [ 0 as number | string, [ Validators.required, Validators.pattern(/^-?\d+([.,]\d+)?$/) ] ],
         currency: [ 'DKK', [ currencyValidator() ] ],
     });
     public passwordForm = this.formBuilder.group({
@@ -100,7 +101,7 @@ export class UserDetailsFormComponent implements OnInit {
         return this.nameFormSignal() !== user.name
         || this.emailFormSignal() !== user.email
         || this.roleFormSignal() !== user.role
-        || this.balanceFormSignal() !== user.balance;
+        || (this.balanceFormSignal() !== undefined && this.parseBalance(this.balanceFormSignal()) !== user.balance);
     });
 
     public roleListComputedValue = computed(() => {
@@ -168,8 +169,9 @@ export class UserDetailsFormComponent implements OnInit {
         if (form.role.value !== user.role) {
             payload.role = form.role.value ?? user.role;
         }
-        if (form.balance.value !== user.balance) {
-            payload.balance = form.balance.value ?? user.balance;
+        const balance = this.parseBalance(form.balance.value);
+        if (balance !== null && balance !== user.balance) {
+            payload.balance = balance;
         }
 
         if (Object.keys(payload).length === 0) return;
@@ -191,6 +193,14 @@ export class UserDetailsFormComponent implements OnInit {
         } catch (error) {
             this.errorService.handleError(error, 'Update user details');
         }
+    }
+
+    /** Converts the balance control value (number or string, "," or "." decimals) to a number, or null if empty/invalid. */
+    private parseBalance(value: unknown): number | null {
+        if (value === null || value === undefined || value === '') return null;
+
+        const parsed = Number(String(value).replace(',', '.'));
+        return Number.isNaN(parsed) ? null : parsed;
     }
 
     public async changePassword() {

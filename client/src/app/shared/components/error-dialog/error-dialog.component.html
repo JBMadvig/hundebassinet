@@ -2,7 +2,7 @@
   <app-dialog
     dialogTitle="Error Occurred"
     [visible]="errorService.errorOccurred()"
-    (closeModal)="errorService.clearError()"
+    (closeDialog)="errorService.clearError()"
   >
     <div class="md:max-w-150 w-full">
       <p class="font-heading font-semibold md:text-nowrap">

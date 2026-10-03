@@ -1,5 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { InventoryService } from '@services/inventory.service';
+
 import { CollectionComponent } from './collection.component';
 
 describe('CollectionComponent', () => {
@@ -9,12 +11,15 @@ describe('CollectionComponent', () => {
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             imports: [ CollectionComponent ],
+            providers: [
+                { provide: InventoryService, useValue: {
+                    getCollectionItems: () => Promise.resolve({ items: [], currency: 'DKK' }),
+                } },
+            ],
         }).compileComponents();
 
         fixture = TestBed.createComponent(CollectionComponent);
         component = fixture.componentInstance;
-        // Override items to prevent issues with testdata in test environment
-        component.items = [];
         fixture.detectChanges();
     });
 

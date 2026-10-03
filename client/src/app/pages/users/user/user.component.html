@@ -35,7 +35,6 @@
 
 @if (showDeleteUserDialog() && userResourceValue) {
   <app-dialog
-    (handleClose)="showDeleteUserDialog.set(false)"
     [(visible)]="showDeleteUserDialog"
     dialogTitle="Delete user"
   >

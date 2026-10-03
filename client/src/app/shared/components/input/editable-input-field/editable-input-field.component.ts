@@ -66,6 +66,10 @@ export class EditableInputFieldComponent implements OnInit {
         return this.valueFormControl?.value;
     }
 
+    get isEmpty() {
+        return this.value === null || this.value === undefined || this.value === '';
+    }
+
     get controlName() {
         return this.formControlNameDirective.name;
     }

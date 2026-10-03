@@ -4,7 +4,7 @@ import { firstValueFrom, map } from 'rxjs';
 
 import { environment } from '@environment';
 
-import { CreateItemRequest, CreateItemResponse, InventoryRequest, InventoryResponse, UpdateItemReponse, UpdateItemRequest } from '../types/items.types';
+import { CollectionResponse, CreateItemRequest, CreateItemResponse, InventoryRequest, InventoryResponse, UpdateItemReponse, UpdateItemRequest } from '../types/items.types';
 import { mapItemFrom } from '../utils/map-inventory';
 
 @Injectable({
@@ -18,6 +18,15 @@ export class InventoryService {
     public searchInventoryItems(body: InventoryRequest): Promise<InventoryResponse> {
         return firstValueFrom(
             this.http.post<InventoryResponse>(`${this.apiUrl}/get-items-inventory`, body).pipe(
+                map((resp) => ({ ...resp, items: resp.items.map(mapItemFrom) })),
+            ),
+        );
+    }
+
+    // Fetch all items for the /pos collection view
+    public getCollectionItems(): Promise<CollectionResponse> {
+        return firstValueFrom(
+            this.http.get<CollectionResponse>(`${this.apiUrl}/get-items-collection`).pipe(
                 map((resp) => ({ ...resp, items: resp.items.map(mapItemFrom) })),
             ),
         );

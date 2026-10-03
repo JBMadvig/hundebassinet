@@ -32,7 +32,6 @@
 
 @if (showDeleteAccountDialog() && user(); as currentUser) {
   <app-dialog
-    (handleClose)="showDeleteAccountDialog.set(false)"
     [(visible)]="showDeleteAccountDialog"
     dialogTitle="Delete account"
   >

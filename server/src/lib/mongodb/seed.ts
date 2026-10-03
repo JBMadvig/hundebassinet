@@ -1,4 +1,35 @@
+import { ItemModel } from './models/item.model';
 import { UserModel, UserRoles } from './models/user.model';
+import { seedItems } from './seed-data/items';
+
+async function seedMockItems() {
+    // Never seed mock items into a production database
+    if (process.env['NODE_ENV'] === 'production') {
+        return;
+    }
+
+    const itemCount = await ItemModel.estimatedDocumentCount();
+    if (itemCount > 0) {
+        console.log('✅ Items already exist, skipping item seed');
+        return;
+    }
+
+    console.log(`📝 Seeding ${seedItems.length} mock items...`);
+
+    await ItemModel.bulkWrite(
+        seedItems.map(item => ({
+            insertOne: {
+                document: {
+                    ...item,
+                    totalStockValue: item.averagePrice * item.currentStock,
+                },
+            },
+        })),
+        { timestamps: false }, // Preserve the createdAt/updatedAt dates from seedItems
+    );
+
+    console.log('✅ Mock items seeded successfully');
+}
 
 export async function seedDatabase() {
     console.log('🌱 Checking database seed status...');
@@ -36,6 +67,8 @@ export async function seedDatabase() {
         } else {
             console.log('✅ SUDO Admin user already exists, skipping seed');
         }
+
+        await seedMockItems();
     } catch (error) {
         console.error('❌ Error seeding database:', error);
         throw error;

@@ -1,5 +1,5 @@
 <button
-  class="nb-border transition-all hover:translate-x-boxShadowX hover:translate-y-boxShadowY hover:shadow-none grid h-full w-full cursor-pointer grid-cols-1 grid-rows-[auto_1fr] overflow-y-hidden rounded-base bg-secondary-background shadow-shadow"
+  class="nb-border nb-press grid h-full w-full cursor-pointer grid-cols-1 grid-rows-[auto_1fr] overflow-y-hidden rounded-base bg-secondary-background"
   (click)="basketService.addItemToBasket(item())"
 >
   <app-item-type-header [itemTypeId]="item().primaryCategory" />

@@ -37,5 +37,6 @@ export class ErrorService {
     public clearError() {
         this.errorOccurred.set(false);
         this.errorMessage.set(null);
+        this.location.set(null);
     }
 }

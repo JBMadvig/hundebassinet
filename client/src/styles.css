@@ -46,7 +46,10 @@
   --spacing-boxShadowY: 4px;
   --spacing-reverseBoxShadowX: -4px;
   --spacing-reverseBoxShadowY: -4px;
+  --spacing-hoverShadowX: 1px; /* -> translate-x-hoverShadowX */
+  --spacing-hoverShadowY: 1px;
   --shadow-shadow: 4px 4px 0px 0px var(--color-border); /* -> shadow-shadow */
+  --shadow-shadowHover: 3px 3px 0px 0px var(--color-border); /* -> shadow-shadowHover */
 
   /* --- core palette --- */
   --color-background: hsl(214 95% 93%); /* page */
@@ -125,6 +128,33 @@
 @layer components {
   .nb-border {
     @apply border-2 border-border;
+  }
+  /* Pressable neobrutalist surface: slight sink on hover, full sink while pressed */
+  .nb-press {
+    @apply shadow-shadow transition-all duration-100 hover:translate-x-hoverShadowX hover:translate-y-hoverShadowY hover:shadow-shadowHover active:translate-x-boxShadowX active:translate-y-boxShadowY active:shadow-none;
+  }
+  /* Table-row version of nb-press: rows sit flush, so instead of moving the row we draw an inset
+     shadow on the top/left edge (on the cells, since box-shadow on <tr> is unreliable). */
+  .nb-press-row > td {
+    @apply transition-shadow duration-100;
+  }
+  @media (hover: hover) {
+    .nb-press-row:hover > td {
+      box-shadow: inset 0 var(--spacing-hoverShadowY) 0 0 var(--color-border);
+    }
+    .nb-press-row:hover > td:first-child {
+      box-shadow:
+        inset 0 var(--spacing-hoverShadowY) 0 0 var(--color-border),
+        inset var(--spacing-hoverShadowX) 0 0 0 var(--color-border);
+    }
+  }
+  .nb-press-row:active > td {
+    box-shadow: inset 0 var(--spacing-boxShadowY) 0 0 var(--color-border);
+  }
+  .nb-press-row:active > td:first-child {
+    box-shadow:
+      inset 0 var(--spacing-boxShadowY) 0 0 var(--color-border),
+      inset var(--spacing-boxShadowX) 0 0 0 var(--color-border);
   }
   .nb-focus {
     @apply focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2;

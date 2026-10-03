@@ -23,7 +23,7 @@
         <div class="flex flex-col items-center gap-4">
           <p class="text-sm text-error">{{ error() }}</p>
           <button
-            class="nb-border transition-all hover:translate-x-boxShadowX hover:translate-y-boxShadowY hover:shadow-none rounded-base bg-main px-6 py-2 text-sm text-main-foreground shadow-shadow"
+            class="nb-border nb-press rounded-base bg-main px-6 py-2 text-sm text-main-foreground"
             (click)="generateQr()"
           >
             Retry
@@ -51,7 +51,7 @@
 
     <!-- Scan Item button -->
     <a
-      class="nb-border transition-all hover:translate-x-boxShadowX hover:translate-y-boxShadowY hover:shadow-none flex items-center gap-2 rounded-base bg-main px-6 py-2 text-sm font-medium text-main-foreground shadow-shadow"
+      class="nb-border nb-press flex items-center gap-2 rounded-base bg-main px-6 py-2 text-sm font-medium text-main-foreground"
       routerLink="/scan-item"
     >
       <svg fill="currentColor" height="18" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg">

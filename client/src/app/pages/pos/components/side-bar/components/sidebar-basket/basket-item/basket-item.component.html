@@ -10,13 +10,13 @@
       </p>
       <div>
         <button
-          class="nb-border transition-all hover:translate-x-boxShadowX hover:translate-y-boxShadowY hover:shadow-none mr-2 rounded-base bg-error px-4 py-2 text-foreground shadow-shadow"
+          class="nb-border nb-press mr-2 rounded-base bg-error px-4 py-2 text-foreground"
           (click)="basketService.removeItemCompletelyFromBasket(item()); deleteItemDialogOpen.set(false)"
         >
           Yes
         </button>
         <button
-          class="nb-border transition-all hover:translate-x-boxShadowX hover:translate-y-boxShadowY hover:shadow-none rounded-base bg-background px-4 py-2 text-foreground shadow-shadow"
+          class="nb-border nb-press rounded-base bg-background px-4 py-2 text-foreground"
           (click)="deleteItemDialogOpen.set(false)"
         >
           No

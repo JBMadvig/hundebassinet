@@ -4,7 +4,7 @@
       class="grid w-full grid-cols-1 grid-rows-1 items-center justify-items-center rounded-base nb-border font-base leading-4"
       [ngClass]="{
         'bg-main text-main-foreground opacity-50 shadow-none pointer-events-none': loading() || isDisabled(),
-        'bg-main text-main-foreground shadow-shadow transition-all hover:translate-x-boxShadowX hover:translate-y-boxShadowY hover:shadow-none': !loading() && !isDisabled(),
+        'bg-main text-main-foreground nb-press': !loading() && !isDisabled(),
         'h-10 px-4': size() === 'medium',
         'h-9 px-3': size() === 'small',
       }"
@@ -39,7 +39,7 @@
       class="w-full rounded-base nb-border font-base leading-4 text-foreground"
       [ngClass]="{
         'bg-nb-yellow opacity-50 shadow-none pointer-events-none': loading() || isDisabled(),
-        'bg-nb-yellow shadow-shadow transition-all hover:translate-x-boxShadowX hover:translate-y-boxShadowY hover:shadow-none': !loading() && !isDisabled(),
+        'bg-nb-yellow nb-press': !loading() && !isDisabled(),
         'h-10 px-4': size() === 'medium',
         'h-9 px-3': size() === 'small',
       }"
@@ -65,7 +65,7 @@
       class="grid w-full grid-cols-1 grid-rows-1 items-center justify-items-center rounded-base nb-border font-base leading-4 text-foreground"
       [ngClass]="{
         'bg-secondary-background opacity-50 shadow-none pointer-events-none': loading() || isDisabled(),
-        'bg-secondary-background shadow-shadow transition-all hover:translate-x-boxShadowX hover:translate-y-boxShadowY hover:shadow-none': !loading() && !isDisabled(),
+        'bg-secondary-background nb-press': !loading() && !isDisabled(),
         'h-10 px-4': size() === 'medium',
         'h-9 px-3': size() === 'small',
       }"
@@ -99,7 +99,7 @@
       class="w-full rounded-base nb-border font-base leading-4 text-foreground"
       [ngClass]="{
         'bg-error opacity-50 shadow-none pointer-events-none': loading() || isDisabled(),
-        'bg-error shadow-shadow transition-all hover:translate-x-boxShadowX hover:translate-y-boxShadowY hover:shadow-none': !loading() && !isDisabled(),
+        'bg-error nb-press': !loading() && !isDisabled(),
         'h-10 px-4': size() === 'medium',
         'h-9 px-3': size() === 'small',
       }"
